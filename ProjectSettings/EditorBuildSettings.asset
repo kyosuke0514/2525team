@@ -8,6 +8,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
+  - enabled: 1
+    path: Assets/Scenes/TaitolScene.unity
+    guid: 464584ef0ad7d1b4ba57f6859ccc7abe
+  - enabled: 1
+    path: Assets/Scenes/SentakuScene.unity
+    guid: 86f8ec11a21acea4191368ef61e96af3
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
