@@ -551,6 +551,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1652385629}
   - component: {fileID: 1652385630}
+  - component: {fileID: 1652385631}
   m_Layer: 0
   m_Name: PlayerIcon
   m_TagString: Untagged
@@ -632,6 +633,20 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &1652385631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1652385628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b8965f0442e83249bf86caee82d7768, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Player
+  playerX: 1
+  playerY: 1
 --- !u!1 &1735030414
 GameObject:
   m_ObjectHideFlags: 0
@@ -720,6 +735,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1824957434}
+  - component: {fileID: 1824957435}
   m_Layer: 0
   m_Name: MapManager
   m_TagString: Untagged
@@ -744,6 +760,19 @@ Transform:
   - {fileID: 1356616528}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1824957435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1824957433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24eab0fa3b5ab1245976e8134933f263, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Map2D
+  player: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
