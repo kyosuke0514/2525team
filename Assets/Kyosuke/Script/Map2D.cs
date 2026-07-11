@@ -1,24 +1,33 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Map2D : MonoBehaviour
 {
-    [SerializeField] TextAsset mapText;     //マップデータテキスト
-    [SerializeField] GameObject[] prefabs;  //壁床プレハブ
-    [SerializeField] Transform map2D;       //マップまとめる親オブジェ
-
-    private bool[,] discoverd;
+    [SerializeField] private Player player;
+   
     private int width = 20;
     private int height = 20;
 
-    private int playerY = 1;
-    private int playerX = 1;
+    private int[,] map;
+    private bool[,] discoverd;
 
     void Start()
     {
+        map = new int[width, height];
         discoverd = new bool[width, height];
-        discoverd[playerY, playerX] = true;
-    }
 
+        for (int y = 0; y < height; y++)
+        {
+            for (int x = 0; x < width; x++)
+            {
+                if (x == 0 || x == width - 1 || y == 0 || y == height - 1)
+                {
+                    map[y, x] = 1;
+                }else
+                {
+                    map[y, x] = 0;
+                }
+            }
+        }
+        discoverd[player.playerY, player.playerX] = true;
+    }
 }

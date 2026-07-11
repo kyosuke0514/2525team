@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public int playerX = 1;
+    public int playerY = 1;
     //•ûŒü
     public enum DIRECTION
     {
@@ -12,7 +14,4 @@ public class Player : MonoBehaviour
         MAX
     }
 
-    public DIRECTION direction;
-    public Vector2Int currentPos, nextPos;
-    int[,] move = { { 0, -1 }, { 1, 0 }, { 0, 1 }, { -1, 0 } };
 }
