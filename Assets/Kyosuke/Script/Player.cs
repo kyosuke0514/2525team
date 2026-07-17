@@ -1,63 +1,69 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private Map2D map2D;
-
-    public int playerX = 1;
-    public int playerY = 1;
-    //•ûŒü
     public enum DIRECTION
     {
-        UP,
-        LEFT,
-        DOWN,
+        TOP,
         RIGHT,
-        MAX
+        DOWN,
+        LEFT
     }
-    public DIRECTION direction = DIRECTION.RIGHT;
 
-    void Update()
+    public DIRECTION direction;
+
+    public Vector2Int currentPos,nextPos;
+    public MapGenerator mapGenerator;
+
+
+    int[,] move =
     {
-        if (Input.GetKeyDown(KeyCode.W))
+        {0, -1},
+        {1, 0},
+        {0, 1},
+        {-1, 0}
+    };
+
+    private void Start()
+    {
+
+        direction = DIRECTION.DOWN;
+    }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            int nextX = playerX;
-            int nextY = playerY;
-
-            //ˆÚ“®
-            switch (direction)
-            {
-                case DIRECTION.UP:
-                    nextY--;
-                    break;
-
-                case DIRECTION.LEFT:
-                    nextX--;
-                    break;
-
-                case DIRECTION.DOWN:
-                    nextY++;
-                    break;
-
-                case DIRECTION.RIGHT:
-                    nextX++;
-                    break;
-            }
-
-            //•Ç‚¶‚á‚È‚¯‚ê‚ÎˆÚ“®
-            if (!map2D.IsWall(nextX, nextY))
-            {
-                playerX = nextX;
-                playerY = nextY;
-
-                map2D.Discover(playerX, playerY);
-            }
-            Debug.Log($"X:{playerX} Y:{playerY}");
+            direction = DIRECTION.TOP;
+            _move();
         }
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            direction = DIRECTION.RIGHT;
+            _move();
+        }
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            direction = DIRECTION.DOWN;
+            _move();
+        }
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            direction = DIRECTION.LEFT;
+            _move();
+        }
+    }
 
-        transform.localPosition =
-        new Vector3(playerX, -playerY, 0);
-
-
+    void _move()
+    {
+        
+        Debug.Log("move");
+        nextPos = currentPos + new Vector2Int(move[(int)direction, 0], move[(int)direction, 1]);
+        if (mapGenerator.GetNextMapType(nextPos) != MapGenerator.MAP_TYPE.WALL)
+        {
+            transform.localPosition = mapGenerator.ScreenPos(nextPos);
+            currentPos = nextPos;
+        }
     }
 }
