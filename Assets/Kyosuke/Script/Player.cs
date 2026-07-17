@@ -13,10 +13,9 @@ public class Player : MonoBehaviour
     }
 
     public DIRECTION direction;
+    public Vector2Int currentPos, nextPos;
 
-    public Vector2Int currentPos,nextPos;
     public MapGenerator mapGenerator;
-
 
     int[,] move =
     {
@@ -25,12 +24,12 @@ public class Player : MonoBehaviour
         {0, 1},
         {-1, 0}
     };
-
     private void Start()
     {
-
+        mapGenerator = transform.parent.GetComponent<MapGenerator>();
         direction = DIRECTION.DOWN;
     }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.UpArrow))
@@ -54,16 +53,10 @@ public class Player : MonoBehaviour
             _move();
         }
     }
-
     void _move()
     {
-        
-        Debug.Log("move");
         nextPos = currentPos + new Vector2Int(move[(int)direction, 0], move[(int)direction, 1]);
-        if (mapGenerator.GetNextMapType(nextPos) != MapGenerator.MAP_TYPE.WALL)
-        {
-            transform.localPosition = mapGenerator.ScreenPos(nextPos);
-            currentPos = nextPos;
-        }
+        transform.localPosition = mapGenerator.ScreenPos(nextPos);
+        currentPos = nextPos;
     }
 }
