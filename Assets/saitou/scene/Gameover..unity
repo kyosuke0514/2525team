@@ -233,10 +233,10 @@ RectTransform:
   - {fileID: 919497479}
   m_Father: {fileID: 873071786}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 19, y: -206}
-  m_SizeDelta: {x: 648.0235, y: 156.2395}
+  m_AnchorMin: {x: 0.5156458, y: 0.5}
+  m_AnchorMax: {x: 0.5156458, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -250}
+  m_SizeDelta: {x: 689.3163, y: 197.5323}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &285980665
 MonoBehaviour:
@@ -321,7 +321,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.8443396, g: 0.74166685, b: 0.56554824, a: 1}
+  m_Color: {r: 0.8599419, g: 1, b: 0.5424528, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -507,7 +507,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Button
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -622,8 +622,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 19, y: 223}
-  m_SizeDelta: {x: 1545.291, y: 483.2522}
+  m_AnchoredPosition: {x: 19.04, y: 203}
+  m_SizeDelta: {x: 1617.3716, y: 523.7976}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1166454335
 MonoBehaviour:
