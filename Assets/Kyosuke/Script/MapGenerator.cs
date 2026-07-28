@@ -2,15 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class MapGenerator : MonoBehaviour
 {
+    //map.txtを読み込む
     [SerializeField] TextAsset mapText;
     [SerializeField] GameObject[] prefabs;
-    [SerializeField] private Transform mapRoot;
+    [SerializeField] Transform map2D;
 
-    //追加
-    enum MAP_TYPE
+    Vector2 centerPos;
+
+    float mapSize;
+
+    public enum MAP_TYPE
     {
         GROUND, //0
         WALL,   //1
@@ -18,49 +21,84 @@ public class MapGenerator : MonoBehaviour
     }
     MAP_TYPE[,] mapTable;
 
-   
+    public MAP_TYPE GetNextMapType(Vector2Int _pos)
+    {
+
+        return mapTable[_pos.x, _pos.y];
+    }
+    private void Start()
+    {
+        _loadMapData();
+        _createMap();
+        map2D.position = new Vector3(5f, 0);
+    }
+    void _createMap()
+    {
+        mapSize = prefabs[1].GetComponent<SpriteRenderer>().bounds.size.x;
+
+        if (mapTable.GetLength(0) % 2 == 0)
+        {
+            centerPos.x = mapTable.GetLength(0) / 2 * mapSize - (mapSize / 2);
+        }
+        else
+        {
+            centerPos.x = mapTable.GetLength(0) / 2 * mapSize;
+        }
+
+        if (mapTable.GetLength(1) % 2 == 0)
+        {
+            centerPos.y = mapTable.GetLength(1) / 2 * mapSize - (mapSize / 2);
+        }
+        else
+        {
+            centerPos.y = mapTable.GetLength(1) / 2 * mapSize;
+        }
+
+
+        for (int y = 0; y < mapTable.GetLength(1); y++)
+        {
+            for (int x = 0; x < mapTable.GetLength(0); x++)
+            {
+                Vector2Int pos = new Vector2Int(x, y);
+                GameObject _ground = Instantiate(prefabs[(int)MAP_TYPE.GROUND], transform);
+                GameObject _map = Instantiate(prefabs[(int)mapTable[x, y]]);
+                _ground.transform.position = ScreenPos(pos);
+                _map.transform.position = ScreenPos(pos);
+
+                //追記　マップタイプがプレイヤーの場合
+                //PlayerスクリプトのcurrentPosにposを代入する
+                if (mapTable[x, y] == MAP_TYPE.PLAYER)
+                {
+                    _map.GetComponent<Player>().currentPos = pos;
+
+                }
+            }
+        }
+    }
+    public Vector2 ScreenPos(Vector2Int _pos)
+    {
+        return new Vector2(
+             _pos.x * mapSize - centerPos.x,
+             -(_pos.y * mapSize - centerPos.y));
+    }
 
     void _loadMapData()
     {
         string[] mapLines = mapText.text.Split(new[] { '\n', '\r' }, System.StringSplitOptions.RemoveEmptyEntries);
 
-
+        //行の数
         int row = mapLines.Length;
+        //列の数
         int col = mapLines[0].Split(new char[] { ',' }).Length;
+        //初期化
         mapTable = new MAP_TYPE[col, row];
 
-        //追加　行の数だけループ
         for (int y = 0; y < row; y++)
         {
-            //1行をカンマ区切りで分割
             string[] mapValues = mapLines[y].Split(new char[] { ',' });
-            //列の数だけループ
             for (int x = 0; x < col; x++)
             {
-                //mapValuesのx番目をMAP_TYPEにキャストしてmapTable[x,y]番目に代入
                 mapTable[x, y] = (MAP_TYPE)int.Parse(mapValues[x]);
-            }
-        }
-    }
-
-    void Start()
-    {
-        _loadMapData();
-        _createMap();
-    }
-
-    void _createMap()
-    {
-        //mapTableの行のループ
-        for (int y = 0; y < mapTable.GetLength(1); y++)
-        {
-            //mapTableの列のループ
-            for (int x = 0; x < mapTable.GetLength(0); x++)
-            {
-                //prefabsの中のmapTable[x,y]に当たるものを生成
-                GameObject _map = Instantiate(prefabs[(int)mapTable[x, y]]);
-                //生成したゲームオブジェクトの位置を設定
-                _map.transform.position = new Vector2(x, y);
             }
         }
     }
