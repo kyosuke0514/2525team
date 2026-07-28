@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;シーン移動に必要
+using UnityEngine.SceneManagement;
 using UnityEngine.UI; //ボタンコンポーネントを操作する為に必要
 
 public class Starge2 : MonoBehaviour

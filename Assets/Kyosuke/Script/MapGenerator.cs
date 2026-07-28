@@ -9,7 +9,10 @@ public class MapGenerator : MonoBehaviour
     [SerializeField] GameObject[] prefabs;
     [SerializeField] Transform map2D;
 
+
     Vector2 centerPos;
+
+    public Player player;
 
     float mapSize;
 
@@ -23,7 +26,6 @@ public class MapGenerator : MonoBehaviour
 
     public MAP_TYPE GetNextMapType(Vector2Int _pos)
     {
-
         return mapTable[_pos.x, _pos.y];
     }
     private void Start()
@@ -60,8 +62,8 @@ public class MapGenerator : MonoBehaviour
             for (int x = 0; x < mapTable.GetLength(0); x++)
             {
                 Vector2Int pos = new Vector2Int(x, y);
-                GameObject _ground = Instantiate(prefabs[(int)MAP_TYPE.GROUND], transform);
-                GameObject _map = Instantiate(prefabs[(int)mapTable[x, y]]);
+                GameObject _ground = Instantiate(prefabs[(int)MAP_TYPE.GROUND], map2D);
+                GameObject _map = Instantiate(prefabs[(int)mapTable[x, y]], map2D);
                 _ground.transform.position = ScreenPos(pos);
                 _map.transform.position = ScreenPos(pos);
 
@@ -69,7 +71,10 @@ public class MapGenerator : MonoBehaviour
                 //PlayerスクリプトのcurrentPosにposを代入する
                 if (mapTable[x, y] == MAP_TYPE.PLAYER)
                 {
-                    _map.GetComponent<Player>().currentPos = pos;
+                    //_map.GetComponent<Player>().currentPos = pos;
+                    player = _map.GetComponent<Player>();
+                    player.currentPos = pos;
+                    player.mapGenerator = this;
 
                 }
             }
