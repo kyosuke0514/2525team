@@ -31,6 +31,7 @@ public class GameOverButton : MonoBehaviour
 
         yield return new WaitForSeconds(0.3f);
 
-        // SceneManager.LoadScene("タイトルかステージ選択");
+        // SceneManager.LoadScene("もう一度メインゲーム");
+       //SceneManager.LoadScene(GameManager.stageName);
     }
 }
