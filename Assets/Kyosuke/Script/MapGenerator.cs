@@ -8,7 +8,8 @@ public class MapGenerator : MonoBehaviour
     [SerializeField] TextAsset mapText;
     [SerializeField] GameObject[] prefabs;
     [SerializeField] Transform map2D;
-
+    [SerializeField]
+    float miniMapScale = 0.3f;
 
     Vector2 centerPos;
 
@@ -32,7 +33,7 @@ public class MapGenerator : MonoBehaviour
     {
         _loadMapData();
         _createMap();
-        map2D.position = new Vector3(5f, 0);
+        map2D.position = new Vector3(-7f, -3.8f,0);
     }
     void _createMap()
     {
@@ -64,8 +65,8 @@ public class MapGenerator : MonoBehaviour
                 Vector2Int pos = new Vector2Int(x, y);
                 GameObject _ground = Instantiate(prefabs[(int)MAP_TYPE.GROUND], map2D);
                 GameObject _map = Instantiate(prefabs[(int)mapTable[x, y]], map2D);
-                _ground.transform.position = ScreenPos(pos);
-                _map.transform.position = ScreenPos(pos);
+                _ground.transform.localPosition = ScreenPos(pos);
+                _map.transform.localPosition = ScreenPos(pos);
 
                 //追記　マップタイプがプレイヤーの場合
                 //PlayerスクリプトのcurrentPosにposを代入する
@@ -83,8 +84,9 @@ public class MapGenerator : MonoBehaviour
     public Vector2 ScreenPos(Vector2Int _pos)
     {
         return new Vector2(
-             _pos.x * mapSize - centerPos.x,
-             -(_pos.y * mapSize - centerPos.y));
+    (_pos.x * mapSize - centerPos.x) * miniMapScale,
+    -(_pos.y * mapSize - centerPos.y) * miniMapScale
+);
     }
 
     void _loadMapData()
