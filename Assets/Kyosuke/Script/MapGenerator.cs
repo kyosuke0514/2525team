@@ -8,8 +8,8 @@ public class MapGenerator : MonoBehaviour
     [SerializeField] TextAsset mapText;
     [SerializeField] GameObject[] prefabs;
     [SerializeField] Transform map2D;
-    [SerializeField]
-    float miniMapScale = 0.3f;
+    [SerializeField] float miniMapScale = 0.3f;
+    [SerializeField] Vector2 miniMapOffset = new Vector2(-7.4f, -3.5f);
 
     Vector2 centerPos;
 
@@ -33,11 +33,11 @@ public class MapGenerator : MonoBehaviour
     {
         _loadMapData();
         _createMap();
-        map2D.position = new Vector3(-7f, -3.8f,0);
     }
     void _createMap()
     {
-        mapSize = prefabs[1].GetComponent<SpriteRenderer>().bounds.size.x;
+        float tileSize = prefabs[1].GetComponent<SpriteRenderer>().bounds.size.x;
+        mapSize = tileSize;
 
         if (mapTable.GetLength(0) % 2 == 0)
         {
@@ -67,6 +67,8 @@ public class MapGenerator : MonoBehaviour
                 GameObject _map = Instantiate(prefabs[(int)mapTable[x, y]], map2D);
                 _ground.transform.localPosition = ScreenPos(pos);
                 _map.transform.localPosition = ScreenPos(pos);
+                _ground.transform.localScale = Vector3.one * miniMapScale;
+                _map.transform.localScale = Vector3.one * miniMapScale;
 
                 //追記　マップタイプがプレイヤーの場合
                 //PlayerスクリプトのcurrentPosにposを代入する
@@ -84,9 +86,9 @@ public class MapGenerator : MonoBehaviour
     public Vector2 ScreenPos(Vector2Int _pos)
     {
         return new Vector2(
-    (_pos.x * mapSize - centerPos.x) * miniMapScale,
-    -(_pos.y * mapSize - centerPos.y) * miniMapScale
-);
+            (_pos.x * mapSize - centerPos.x) * miniMapScale + miniMapOffset.x,
+            (-(_pos.y * mapSize - centerPos.y)) * miniMapScale + miniMapOffset.y
+        );
     }
 
     void _loadMapData()

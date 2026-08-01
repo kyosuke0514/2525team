@@ -37,35 +37,33 @@ public class View3D : MonoBehaviour
         Vector2Int farF = GetMapPos(3, 0);
         Vector2Int farR = GetMapPos(3, 1);
 
-        // Near
-        nearLeft.SetActive(
-            mapGenerator.GetNextMapType(nearL) == MapGenerator.MAP_TYPE.WALL);
+        // ===== •Ç”»’è =====
+        bool nearLeftWall = mapGenerator.GetNextMapType(nearL) == MapGenerator.MAP_TYPE.WALL;
+        bool nearFrontWall = mapGenerator.GetNextMapType(nearF) == MapGenerator.MAP_TYPE.WALL;
+        bool nearRightWall = mapGenerator.GetNextMapType(nearR) == MapGenerator.MAP_TYPE.WALL;
 
-        nearFront.SetActive(
-            mapGenerator.GetNextMapType(nearF) == MapGenerator.MAP_TYPE.WALL);
+        bool midLeftWall = mapGenerator.GetNextMapType(midL) == MapGenerator.MAP_TYPE.WALL;
+        bool midFrontWall = mapGenerator.GetNextMapType(midF) == MapGenerator.MAP_TYPE.WALL;
+        bool midRightWall = mapGenerator.GetNextMapType(midR) == MapGenerator.MAP_TYPE.WALL;
 
-        nearRight.SetActive(
-            mapGenerator.GetNextMapType(nearR) == MapGenerator.MAP_TYPE.WALL);
+        bool farLeftWall = mapGenerator.GetNextMapType(farL) == MapGenerator.MAP_TYPE.WALL;
+        bool farFrontWall = mapGenerator.GetNextMapType(farF) == MapGenerator.MAP_TYPE.WALL;
+        bool farRightWall = mapGenerator.GetNextMapType(farR) == MapGenerator.MAP_TYPE.WALL;
 
-        // Mid
-        midLeft.SetActive(
-            mapGenerator.GetNextMapType(midL) == MapGenerator.MAP_TYPE.WALL);
+        // ===== Near =====
+        nearLeft.SetActive(nearLeftWall);
+        nearFront.SetActive(nearFrontWall);
+        nearRight.SetActive(nearRightWall);
 
-        midFront.SetActive(
-            mapGenerator.GetNextMapType(midF) == MapGenerator.MAP_TYPE.WALL);
+        // ===== Mid =====
+        midLeft.SetActive(!nearLeftWall && midLeftWall);
+        midFront.SetActive(!nearFrontWall && midFrontWall);
+        midRight.SetActive(!nearRightWall && midRightWall);
 
-        midRight.SetActive(
-            mapGenerator.GetNextMapType(midR) == MapGenerator.MAP_TYPE.WALL);
-
-        // Far
-        farLeft.SetActive(
-            mapGenerator.GetNextMapType(farL) == MapGenerator.MAP_TYPE.WALL);
-
-        farFront.SetActive(
-            mapGenerator.GetNextMapType(farF) == MapGenerator.MAP_TYPE.WALL);
-
-        farRight.SetActive(
-            mapGenerator.GetNextMapType(farR) == MapGenerator.MAP_TYPE.WALL);
+        // ===== Far =====
+        farLeft.SetActive(!nearLeftWall && !midLeftWall && farLeftWall);
+        farFront.SetActive(!nearFrontWall && !midFrontWall && farFrontWall);
+        farRight.SetActive(!nearRightWall && !midRightWall && farRightWall);
     }
 
     Vector2Int GetMapPos(int forward, int side)
