@@ -5,13 +5,16 @@ using UnityEngine;
 public class MapGenerator : MonoBehaviour
 {
     //map.txtを読み込む
-    [SerializeField] TextAsset mapText;
+    [SerializeField] TextAsset map1F;
+    [SerializeField] TextAsset map2F;
     [SerializeField] GameObject[] prefabs;
     [SerializeField] Transform map2D;
     [SerializeField] float miniMapScale = 0.3f;
     [SerializeField] Vector2 miniMapOffset = new Vector2(-7.4f, -3.5f);
 
     Vector2 centerPos;
+
+    int currentFloor = 1;
 
     public Player player;
 
@@ -21,7 +24,7 @@ public class MapGenerator : MonoBehaviour
     {
         GROUND, //0
         WALL,   //1
-        PLAYER  //2
+        PLAYER
     }
     MAP_TYPE[,] mapTable;
 
@@ -33,7 +36,15 @@ public class MapGenerator : MonoBehaviour
     {
         _loadMapData();
         _createMap();
+
+        Invoke(nameof(TestFloor), 3f);
     }
+
+    void TestFloor()
+    {
+        ChangeFloor(2);
+    }
+
     void _createMap()
     {
         float tileSize = prefabs[1].GetComponent<SpriteRenderer>().bounds.size.x;
@@ -74,11 +85,11 @@ public class MapGenerator : MonoBehaviour
                 //PlayerスクリプトのcurrentPosにposを代入する
                 if (mapTable[x, y] == MAP_TYPE.PLAYER)
                 {
-                    //_map.GetComponent<Player>().currentPos = pos;
-                    player = _map.GetComponent<Player>();
                     player.currentPos = pos;
+                    player.transform.localPosition = ScreenPos(pos);
                     player.mapGenerator = this;
 
+                    Destroy(_map);
                 }
             }
         }
@@ -93,12 +104,23 @@ public class MapGenerator : MonoBehaviour
 
     void _loadMapData()
     {
-        string[] mapLines = mapText.text.Split(new[] { '\n', '\r' }, System.StringSplitOptions.RemoveEmptyEntries);
+        TextAsset currentMap;
+
+        if (currentFloor == 1)
+        {
+            currentMap = map1F;
+        }
+        else
+        {
+            currentMap = map2F;
+        }
+
+        string[] mapLines = currentMap.text.Split(new[] { '\n', '\r' }, System.StringSplitOptions.RemoveEmptyEntries);
 
         //行の数
         int row = mapLines.Length;
         //列の数
-        int col = mapLines[0].Split(new char[] { ',' }).Length;
+        int col = mapLines[0].Split(',').Length;
         //初期化
         mapTable = new MAP_TYPE[col, row];
 
@@ -110,5 +132,24 @@ public class MapGenerator : MonoBehaviour
                 mapTable[x, y] = (MAP_TYPE)int.Parse(mapValues[x]);
             }
         }
+    }
+
+    public void ChangeFloor(int floor)
+    {
+
+        List<Transform> children = new List<Transform>();
+
+        foreach (Transform child in map2D)
+        {
+            children.Add(child);
+        }
+
+        foreach (Transform child in children)
+        {
+            Destroy(child.gameObject);
+        }
+
+        _loadMapData();
+        _createMap();
     }
 }
