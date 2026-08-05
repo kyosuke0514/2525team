@@ -5,18 +5,20 @@ using UnityEngine;
 public class MapGenerator : MonoBehaviour
 {
     //map.txtを読み込む
-    [SerializeField] TextAsset map1F;
-    [SerializeField] TextAsset map2F;
+    [SerializeField] StageData[] stages;
     [SerializeField] GameObject[] prefabs;
     [SerializeField] Transform map2D;
     [SerializeField] float miniMapScale = 0.3f;
     [SerializeField] Vector2 miniMapOffset = new Vector2(-7.4f, -3.5f);
 
     Vector2 centerPos;
+    public Vector2Int startPos;
 
-    int currentFloor = 1;
+    int currentStage = 0;
+    int currentFloor = 0;
 
     public Player player;
+
 
     float mapSize;
 
@@ -24,25 +26,28 @@ public class MapGenerator : MonoBehaviour
     {
         GROUND, //0
         WALL,   //1
-        PLAYER
+        PLAYER, //2
+        STAIR,  //3
+        GOAL,   //4
+        PIT
     }
     MAP_TYPE[,] mapTable;
 
     public MAP_TYPE GetNextMapType(Vector2Int _pos)
     {
+        // マップ外なら壁として扱う
+        if (_pos.x < 0 || _pos.x >= mapTable.GetLength(0) ||
+            _pos.y < 0 || _pos.y >= mapTable.GetLength(1))
+        {
+            return MAP_TYPE.WALL;
+        }
+
         return mapTable[_pos.x, _pos.y];
     }
     private void Start()
     {
         _loadMapData();
         _createMap();
-
-        Invoke(nameof(TestFloor), 3f);
-    }
-
-    void TestFloor()
-    {
-        ChangeFloor(2);
     }
 
     void _createMap()
@@ -85,6 +90,8 @@ public class MapGenerator : MonoBehaviour
                 //PlayerスクリプトのcurrentPosにposを代入する
                 if (mapTable[x, y] == MAP_TYPE.PLAYER)
                 {
+                    startPos = pos;
+
                     player.currentPos = pos;
                     player.transform.localPosition = ScreenPos(pos);
                     player.mapGenerator = this;
@@ -104,16 +111,7 @@ public class MapGenerator : MonoBehaviour
 
     void _loadMapData()
     {
-        TextAsset currentMap;
-
-        if (currentFloor == 1)
-        {
-            currentMap = map1F;
-        }
-        else
-        {
-            currentMap = map2F;
-        }
+        TextAsset currentMap = stages[currentStage].floors[currentFloor];
 
         string[] mapLines = currentMap.text.Split(new[] { '\n', '\r' }, System.StringSplitOptions.RemoveEmptyEntries);
 
@@ -134,22 +132,64 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
-    public void ChangeFloor(int floor)
+    public Vector2Int FindStairPos()
     {
-
-        List<Transform> children = new List<Transform>();
-
-        foreach (Transform child in map2D)
+        for (int y = 0; y < mapTable.GetLength(1); y++)
         {
-            children.Add(child);
+            for (int x = 0; x < mapTable.GetLength(0); x++)
+            {
+                if (mapTable[x, y] == MAP_TYPE.STAIR)
+                {
+                    return new Vector2Int(x, y);
+                }
+            }
         }
 
-        foreach (Transform child in children)
+        return Vector2Int.zero;
+    }
+
+    public void ChangeFloor(int floor, bool moveToStair = true)
+    {
+        if (floor < 0 || floor >= stages[currentStage].floors.Length)
+            return;
+
+        currentFloor = floor;
+
+        while (map2D.childCount > 0)
         {
-            Destroy(child.gameObject);
+            DestroyImmediate(map2D.GetChild(0).gameObject);
         }
 
         _loadMapData();
         _createMap();
+
+        // 階段移動のときだけ階段へ移動
+        if (moveToStair)
+        {
+            Vector2Int stairPos = FindStairPos();
+
+            player.currentPos = stairPos;
+            player.transform.localPosition = ScreenPos(stairPos);
+        }
+    }
+
+    public void ChangeStage(int stage)
+    {
+        currentStage = stage;
+        currentFloor = 0;
+
+        while (map2D.childCount > 0)
+        {
+            DestroyImmediate(map2D.GetChild(0).gameObject);
+        }
+
+        _loadMapData();
+        _createMap();
+    }
+
+
+    public int CurrentFloor
+    {
+        get { return currentFloor; }
     }
 }
