@@ -27,12 +27,11 @@ public class Player : MonoBehaviour
     };
 
     [SerializeField] Transform directionArrow;
-    Vector3[] arrowPositions = new[] { new Vector3(0, 0.35f), new Vector3(0.35f, 0), new Vector3(0f, -0.35f), new Vector3(-0.35f, 0f) };
+    Vector3[] arrowPositions = new[] { new Vector3(0, 0.5f), new Vector3(0.5f, 0), new Vector3(0f, -0.5f), new Vector3(-0.5f, 0f) };
 
     public MapGenerator mapGenerator;
     private void Start()
     {
-        //mapGenerator = transform.parent.GetComponent<MapGenerator>();
         direction = DIRECTION.DOWN;
         _viewArrow();
     }
@@ -71,19 +70,70 @@ public class Player : MonoBehaviour
     //追加　矢印の位置を変更
     void _viewArrow()
     {
-        //if (directionArrow == null)
-        //{
-        //    return;
-        //}
         directionArrow.localPosition = arrowPositions[(int)direction];
     }
     void _move(int dir)
     {
-        nextPos = currentPos + new Vector2Int(move[(int)direction, 0] * dir, move[(int)direction, 1] * dir);
+        nextPos = currentPos + new Vector2Int(
+            move[(int)direction, 0] * dir,
+            move[(int)direction, 1] * dir);
+
+        Debug.Log(nextPos);
+
         if (mapGenerator.GetNextMapType(nextPos) != MapGenerator.MAP_TYPE.WALL)
         {
-            transform.localPosition = mapGenerator.ScreenPos(nextPos);
+            Debug.Log("壁じゃない");
+
             currentPos = nextPos;
+
+            Debug.Log("現在位置：" + currentPos);
+
+            transform.localPosition = mapGenerator.ScreenPos(currentPos);
+
+            CheckEvent();
         }
+    }
+
+    void CheckEvent()
+    {
+        MapGenerator.MAP_TYPE type = mapGenerator.GetNextMapType(currentPos);
+
+        if (type == MapGenerator.MAP_TYPE.STAIR)
+        {
+            if (mapGenerator.CurrentFloor == 0)
+                mapGenerator.ChangeFloor(1);
+            else
+                mapGenerator.ChangeFloor(0);
+        }
+
+        if (type == MapGenerator.MAP_TYPE.GOAL)
+        {
+            Debug.Log("ステージクリア！");
+        }
+
+        if (type == MapGenerator.MAP_TYPE.PIT)
+        {
+            Debug.Log("落とし穴！");
+
+            // 今いる座標を保存
+            Vector2Int fallPos = currentPos;
+
+            // 2Fなら1Fへ落ちる
+            if (mapGenerator.CurrentFloor == 1)
+            {
+                // 階段へ移動しないで1Fへ
+                mapGenerator.ChangeFloor(0, false);
+
+                // 保存した座標へ移動
+                currentPos = fallPos;
+                transform.localPosition = mapGenerator.ScreenPos(currentPos);
+            }
+            else
+            {
+                currentPos = mapGenerator.startPos;
+                transform.localPosition = mapGenerator.ScreenPos(currentPos);
+            }
+        }
+        
     }
 }
