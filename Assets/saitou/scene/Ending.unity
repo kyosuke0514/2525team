@@ -130,6 +130,7 @@ GameObject:
   - component: {fileID: 1067837497}
   - component: {fileID: 1067837499}
   - component: {fileID: 1067837498}
+  - component: {fileID: 1067837500}
   m_Layer: 5
   m_Name: Fe
   m_TagString: Untagged
@@ -194,6 +195,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1067837496}
   m_CullTransparentMesh: 1
+--- !u!114 &1067837500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1067837496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69e164a8cce84c34e913a28dc70fb186, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Fade3
+  fadeImage: {fileID: 1067837498}
 --- !u!1 &1283322178
 GameObject:
   m_ObjectHideFlags: 0
