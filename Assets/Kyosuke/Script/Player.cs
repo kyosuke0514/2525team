@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+
+    [SerializeField] private HP hp;
+
     public enum DIRECTION
     {
         TOP,
@@ -16,7 +19,8 @@ public class Player : MonoBehaviour
     public DIRECTION direction;
     public Vector2Int currentPos, nextPos;
 
-
+    public int maxHP = 5;
+    public int currentHP;
 
     int[,] move =
     {
@@ -33,6 +37,10 @@ public class Player : MonoBehaviour
     private void Start()
     {
         direction = DIRECTION.DOWN;
+        currentHP = maxHP;
+
+        hp.Update();
+
         _viewArrow();
     }
 
@@ -94,6 +102,26 @@ public class Player : MonoBehaviour
         }
     }
 
+    
+
+    public HP hP;
+    public void Damage(int damage)
+    {
+        currentHP -= damage;
+
+        Debug.Log("HP : " + currentHP);
+
+        if (currentHP < 0)
+            currentHP = 0;
+
+        hp.Update();
+
+        if (currentHP <= 0)
+        {
+            Debug.Log("ゲームオーバー");
+        }
+    }
+
     void CheckEvent()
     {
         MapGenerator.MAP_TYPE type = mapGenerator.GetNextMapType(currentPos);
@@ -114,6 +142,9 @@ public class Player : MonoBehaviour
         if (type == MapGenerator.MAP_TYPE.PIT)
         {
             Debug.Log("落とし穴！");
+
+            // ダメージを受ける
+            Damage(1);
 
             // 今いる座標を保存
             Vector2Int fallPos = currentPos;
@@ -136,4 +167,6 @@ public class Player : MonoBehaviour
         }
         
     }
+
+    
 }
