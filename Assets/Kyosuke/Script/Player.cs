@@ -39,6 +39,12 @@ public class Player : MonoBehaviour
         direction = DIRECTION.DOWN;
         currentHP = maxHP;
 
+        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+        if (sr != null)
+        {
+            sr.sortingOrder = 30;
+        }
+
         hp.Update();
 
         _viewArrow();
@@ -79,6 +85,12 @@ public class Player : MonoBehaviour
     void _viewArrow()
     {
         directionArrow.localPosition = arrowPositions[(int)direction];
+        SpriteRenderer arrowSR = directionArrow.GetComponent<SpriteRenderer>();
+
+        if (arrowSR != null)
+        {
+            arrowSR.sortingOrder = 31;
+        }
     }
     void _move(int dir)
     {

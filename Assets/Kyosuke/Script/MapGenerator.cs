@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class MapGenerator : MonoBehaviour
@@ -73,6 +74,7 @@ public class MapGenerator : MonoBehaviour
             centerPos.y = mapTable.GetLength(1) / 2 * mapSize;
         }
 
+        
 
         for (int y = 0; y < mapTable.GetLength(1); y++)
         {
@@ -86,6 +88,18 @@ public class MapGenerator : MonoBehaviour
                 _ground.transform.localScale = Vector3.one * miniMapScale;
                 _map.transform.localScale = Vector3.one * miniMapScale;
 
+                SpriteRenderer groundSR = _ground.GetComponent<SpriteRenderer>();
+                SpriteRenderer mapSR = _map.GetComponent<SpriteRenderer>();
+
+                if (groundSR != null)
+                {
+                    groundSR.sortingOrder = 10;
+                }
+
+                if (mapSR != null)
+                {
+                    mapSR.sortingOrder = 20;
+                }
                 //追記　マップタイプがプレイヤーの場合
                 //PlayerスクリプトのcurrentPosにposを代入する
                 if (mapTable[x, y] == MAP_TYPE.PLAYER)

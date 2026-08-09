@@ -7,14 +7,20 @@ public class View3D : MonoBehaviour
     [SerializeField] GameObject nearFront;
     [SerializeField] GameObject nearLeft;
     [SerializeField] GameObject nearRight;
+    [SerializeField] GameObject nearLeftPath;
+    [SerializeField] GameObject nearRightPath;
 
     [SerializeField] GameObject midFront;
     [SerializeField] GameObject midLeft;
     [SerializeField] GameObject midRight;
+    [SerializeField] GameObject midLeftPath;
+    [SerializeField] GameObject midRightPath;
 
     [SerializeField] GameObject farFront;
     [SerializeField] GameObject farLeft;
     [SerializeField] GameObject farRight;
+    [SerializeField] GameObject farLeftPath;
+    [SerializeField] GameObject farRightPath;
     void Update()
     {
         UpdateView();
@@ -56,14 +62,25 @@ public class View3D : MonoBehaviour
         nearRight.SetActive(nearRightWall);
 
         // ===== Mid =====
-        midLeft.SetActive(!nearLeftWall && midLeftWall);
-        midFront.SetActive(!nearFrontWall && midFrontWall);
-        midRight.SetActive(!nearRightWall && midRightWall);
+        midLeft.SetActive(midLeftWall);
+        midFront.SetActive(midFrontWall);
+        midRight.SetActive(midRightWall);
 
         // ===== Far =====
-        farLeft.SetActive(!nearLeftWall && !midLeftWall && farLeftWall);
-        farFront.SetActive(!nearFrontWall && !midFrontWall && farFrontWall);
-        farRight.SetActive(!nearRightWall && !midRightWall && farRightWall);
+        farLeft.SetActive(farLeftWall);
+        farFront.SetActive(farFrontWall);
+        farRight.SetActive(farRightWall);
+
+        // ===== ç∂âEÇÃí òH =====
+
+        nearLeftPath.SetActive(!nearLeftWall);
+        nearRightPath.SetActive(!nearRightWall);
+
+        midLeftPath.SetActive(!midLeftWall);
+        midRightPath.SetActive(!midRightWall);
+
+        farLeftPath.SetActive(!farLeftWall);
+        farRightPath.SetActive(!farRightWall);
     }
 
     Vector2Int GetMapPos(int forward, int side)
