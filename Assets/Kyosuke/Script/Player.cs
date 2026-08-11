@@ -6,6 +6,7 @@ public class Player : MonoBehaviour
 {
 
     [SerializeField] private HP hp;
+    
 
     public enum DIRECTION
     {
@@ -140,10 +141,7 @@ public class Player : MonoBehaviour
 
         if (type == MapGenerator.MAP_TYPE.STAIR)
         {
-            if (mapGenerator.CurrentFloor == 0)
-                mapGenerator.ChangeFloor(1);
-            else
-                mapGenerator.ChangeFloor(0);
+            mapGenerator.CheckStair();
         }
 
         if (type == MapGenerator.MAP_TYPE.GOAL)

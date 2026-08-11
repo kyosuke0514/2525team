@@ -9,6 +9,7 @@ public class MapGenerator : MonoBehaviour
     [SerializeField] StageData[] stages;
     [SerializeField] GameObject[] prefabs;
     [SerializeField] Transform map2D;
+    [SerializeField] GameObject Panel;
     [SerializeField] float miniMapScale = 0.3f;
     [SerializeField] Vector2 miniMapOffset = new Vector2(-7.4f, -3.5f);
 
@@ -47,6 +48,7 @@ public class MapGenerator : MonoBehaviour
     }
     private void Start()
     {
+        Panel.SetActive(false);
         _loadMapData();
         _createMap();
     }
@@ -161,7 +163,13 @@ public class MapGenerator : MonoBehaviour
 
         return Vector2Int.zero;
     }
-
+    public void CheckStair()
+    {
+        if (GetNextMapType(player.currentPos) == MAP_TYPE.STAIR)
+        {
+            Panel.SetActive(true);
+        }
+    }
     public void ChangeFloor(int floor, bool moveToStair = true)
     {
         if (floor < 0 || floor >= stages[currentStage].floors.Length)
