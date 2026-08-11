@@ -112,19 +112,20 @@ public class View3D : MonoBehaviour
 
         // ===== ç∂âEÇÃí òH =====
 
-        nearLeftPath.SetActive(!nearLeftWall);
-        nearRightPath.SetActive(!nearRightWall);
+        // ===== ç∂âEÇÃí òH =====
+        nearLeftPath.SetActive(false);
+        nearRightPath.SetActive(false);
 
-        midLeftPath.SetActive(!midLeftWall);
-        midRightPath.SetActive(!midRightWall);
+        midLeftPath.SetActive(false);
+        midRightPath.SetActive(false);
 
-        farLeftPath.SetActive(!farLeftWall);
-        farRightPath.SetActive(!farRightWall);
+        farLeftPath.SetActive(false);
+        farRightPath.SetActive(false);
 
         bool openSpace =
-    !nearLeftWall && !nearRightWall &&
-    !midLeftWall && !midRightWall &&
-    !farLeftWall && !farRightWall;
+        !nearLeftWall && !nearRightWall &&
+        !midLeftWall && !midRightWall &&
+        !farLeftWall && !farRightWall;
 
         if (openSpace)
         {
@@ -158,6 +159,39 @@ public class View3D : MonoBehaviour
 
             farLeft2.SetActive(false);
             farRight2.SetActive(false);
+        }
+
+        // Near
+        if (!nearLeftWall && !nearLeft2Wall)
+        {
+            nearLeftPath.SetActive(true);
+        }
+
+        if (!nearRightWall && !nearRight2Wall)
+        {
+            nearRightPath.SetActive(true);
+        }
+
+        // Mid
+        if (!midLeftWall && !midLeft2Wall)
+        {
+            midLeftPath.SetActive(true);
+        }
+
+        if (!midRightWall && !midRight2Wall)
+        {
+            midRightPath.SetActive(true);
+        }
+
+        // Far
+        if (!farLeftWall && !farLeft2Wall)
+        {
+            farLeftPath.SetActive(true);
+        }
+
+        if (!farRightWall && !farRight2Wall)
+        {
+            farRightPath.SetActive(true);
         }
 
         bool leftPath =
