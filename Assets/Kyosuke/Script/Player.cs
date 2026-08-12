@@ -23,6 +23,8 @@ public class Player : MonoBehaviour
     public int maxHP = 5;
     public int currentHP;
 
+    public bool isPuzzle = false;
+
     int[,] move =
     {
         {0, -1},
@@ -53,6 +55,9 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        if (isPuzzle)
+            return;
+
         if (Input.GetKeyDown(KeyCode.W))
         {
             _move(1);
@@ -138,6 +143,11 @@ public class Player : MonoBehaviour
     void CheckEvent()
     {
         MapGenerator.MAP_TYPE type = mapGenerator.GetNextMapType(currentPos);
+
+        if (type == MapGenerator.MAP_TYPE.PUZZLE)
+        {
+            mapGenerator.OpenPuzzle();
+        }
 
         if (type == MapGenerator.MAP_TYPE.STAIR)
         {

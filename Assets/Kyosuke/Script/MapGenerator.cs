@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -10,6 +11,13 @@ public class MapGenerator : MonoBehaviour
     [SerializeField] GameObject[] prefabs;
     [SerializeField] Transform map2D;
     [SerializeField] GameObject Panel;
+    [SerializeField] GameObject Puzzle;
+    [SerializeField] UnityEngine.UI.Button yesButton;
+    [SerializeField] UnityEngine.UI.Button noButton;
+    [SerializeField] TMP_InputField redInput;
+    [SerializeField] TMP_InputField greenInput;
+    [SerializeField] TMP_InputField blueInput;
+    [SerializeField] UnityEngine.UI.Button answerButton;
     [SerializeField] float miniMapScale = 0.3f;
     [SerializeField] Vector2 miniMapOffset = new Vector2(-7.4f, -3.5f);
 
@@ -21,6 +29,8 @@ public class MapGenerator : MonoBehaviour
 
     public Player player;
 
+   
+
 
     float mapSize;
 
@@ -31,7 +41,8 @@ public class MapGenerator : MonoBehaviour
         PLAYER, //2
         STAIR,  //3
         GOAL,   //4
-        PIT
+        PIT,
+        PUZZLE
     }
     MAP_TYPE[,] mapTable;
 
@@ -49,6 +60,11 @@ public class MapGenerator : MonoBehaviour
     private void Start()
     {
         Panel.SetActive(false);
+        Puzzle.SetActive(false);
+
+        yesButton.onClick.AddListener(Yes);
+        noButton.onClick.AddListener(No);
+
         _loadMapData();
         _createMap();
     }
@@ -163,6 +179,26 @@ public class MapGenerator : MonoBehaviour
 
         return Vector2Int.zero;
     }
+
+    bool puzzleSolved = false;
+    public void CheckPuzzle()
+    {
+        if (redInput.text == "2" &&
+            greenInput.text == "3" &&
+            blueInput.text == "9")
+        {
+            Debug.Log("ì‰âÇ´ê≥âÅI");
+
+            puzzleSolved = true;
+
+            Puzzle.SetActive(false);
+            player.isPuzzle = false;
+        }
+        else
+        {
+            Debug.Log("ïsê≥âÅI");
+        }
+    }
     public void CheckStair()
     {
         if (GetNextMapType(player.currentPos) == MAP_TYPE.STAIR)
@@ -170,6 +206,35 @@ public class MapGenerator : MonoBehaviour
             Panel.SetActive(true);
         }
     }
+
+    public void OpenPuzzle()
+    {
+        if (puzzleSolved)
+            return;
+
+        Puzzle.SetActive(true);
+        player.isPuzzle = true;
+    }
+
+    public void Yes()
+    {
+        Panel.SetActive(false);
+
+        if (currentFloor == 0)
+        {
+            ChangeFloor(1);
+        }
+        else
+        {
+            ChangeFloor(0);
+        }
+    }
+
+    public void No()
+    {
+        Panel.SetActive(false);
+    }
+
     public void ChangeFloor(int floor, bool moveToStair = true)
     {
         if (floor < 0 || floor >= stages[currentStage].floors.Length)
