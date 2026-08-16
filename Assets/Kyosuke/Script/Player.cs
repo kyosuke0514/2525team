@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-
     [SerializeField] private HP hp;
     
-
     public enum DIRECTION
     {
         TOP,
@@ -49,18 +47,20 @@ public class Player : MonoBehaviour
         }
 
         hp.Update();
-
         _viewArrow();
     }
 
     private void Update()
     {
+        
+        
         if (isPuzzle)
             return;
 
         if (Input.GetKeyDown(KeyCode.W))
         {
             _move(1);
+            Debug.Log("Wきた！");
         }
         if (Input.GetKeyDown(KeyCode.D))
         {
@@ -120,9 +120,6 @@ public class Player : MonoBehaviour
         }
     }
 
-    
-
-    public HP hP;
     public void Damage(int damage)
     {
         currentHP -= damage;
@@ -149,6 +146,11 @@ public class Player : MonoBehaviour
             mapGenerator.OpenPuzzle();
         }
 
+        if (type == MapGenerator.MAP_TYPE.PUZZLE2)
+        {
+            mapGenerator.OpenPuzzle2();
+        }
+
         if (type == MapGenerator.MAP_TYPE.STAIR)
         {
             mapGenerator.CheckStair();
@@ -161,32 +163,25 @@ public class Player : MonoBehaviour
 
         if (type == MapGenerator.MAP_TYPE.PIT)
         {
-            Debug.Log("落とし穴！");
+            Debug.Log("落とし穴に落ちた！");
 
-            // ダメージを受ける
             Damage(1);
 
-            // 今いる座標を保存
-            Vector2Int fallPos = currentPos;
-
-            // 2Fなら1Fへ落ちる
             if (mapGenerator.CurrentFloor == 1)
             {
-                // 階段へ移動しないで1Fへ
+                Debug.Log("2F → 1F");
+
                 mapGenerator.ChangeFloor(0, false);
 
-                // 保存した座標へ移動
-                currentPos = fallPos;
-                transform.localPosition = mapGenerator.ScreenPos(currentPos);
+                Debug.Log("1Fへ移動完了！");
             }
             else
             {
+                Debug.Log("1F → スタート地点");
+
                 currentPos = mapGenerator.startPos;
                 transform.localPosition = mapGenerator.ScreenPos(currentPos);
             }
         }
-        
     }
-
-    
 }

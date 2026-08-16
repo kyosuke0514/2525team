@@ -12,11 +12,16 @@ public class MapGenerator : MonoBehaviour
     [SerializeField] Transform map2D;
     [SerializeField] GameObject Panel;
     [SerializeField] GameObject Puzzle;
+    [SerializeField] GameObject Puzzle2;
     [SerializeField] UnityEngine.UI.Button yesButton;
     [SerializeField] UnityEngine.UI.Button noButton;
     [SerializeField] TMP_InputField redInput;
     [SerializeField] TMP_InputField greenInput;
     [SerializeField] TMP_InputField blueInput;
+    [SerializeField] TMP_InputField redInput2;
+    [SerializeField] TMP_InputField greenInput2;
+    [SerializeField] TMP_InputField yellowInput2;
+    [SerializeField] TMP_InputField blueInput2;
     [SerializeField] UnityEngine.UI.Button answerButton;
     [SerializeField] float miniMapScale = 0.3f;
     [SerializeField] Vector2 miniMapOffset = new Vector2(-7.4f, -3.5f);
@@ -28,10 +33,6 @@ public class MapGenerator : MonoBehaviour
     int currentFloor = 0;
 
     public Player player;
-
-   
-
-
     float mapSize;
 
     public enum MAP_TYPE
@@ -41,8 +42,9 @@ public class MapGenerator : MonoBehaviour
         PLAYER, //2
         STAIR,  //3
         GOAL,   //4
-        PIT,
-        PUZZLE
+        PIT,    //5
+        PUZZLE, //6
+        PUZZLE2 //7
     }
     MAP_TYPE[,] mapTable;
 
@@ -61,6 +63,7 @@ public class MapGenerator : MonoBehaviour
     {
         Panel.SetActive(false);
         Puzzle.SetActive(false);
+        Puzzle2.SetActive(false);
 
         yesButton.onClick.AddListener(Yes);
         noButton.onClick.AddListener(No);
@@ -91,8 +94,6 @@ public class MapGenerator : MonoBehaviour
         {
             centerPos.y = mapTable.GetLength(1) / 2 * mapSize;
         }
-
-        
 
         for (int y = 0; y < mapTable.GetLength(1); y++)
         {
@@ -176,11 +177,11 @@ public class MapGenerator : MonoBehaviour
                 }
             }
         }
-
         return Vector2Int.zero;
     }
 
     bool puzzleSolved = false;
+    bool puzzle2Solved = false;
     public void CheckPuzzle()
     {
         if (redInput.text == "2" &&
@@ -188,9 +189,7 @@ public class MapGenerator : MonoBehaviour
             blueInput.text == "9")
         {
             Debug.Log("謎解き正解！");
-
             puzzleSolved = true;
-
             Puzzle.SetActive(false);
             player.isPuzzle = false;
         }
@@ -199,6 +198,28 @@ public class MapGenerator : MonoBehaviour
             Debug.Log("不正解！");
         }
     }
+    public void CheckPuzzle2F()
+    {
+        Debug.Log("赤：" + redInput2.text);
+        Debug.Log("緑：" + greenInput2.text);
+        Debug.Log("黄：" + yellowInput2.text);
+        Debug.Log("青：" + blueInput2.text);
+        if (redInput2.text == "1" &&
+            greenInput2.text == "3" &&
+            yellowInput2.text == "7" &&
+            blueInput2.text == "5")
+        {
+            Debug.Log("2F謎解き正解！");
+            puzzle2Solved = true;
+            Puzzle2.SetActive(false);
+            player.isPuzzle = false;
+        }
+        else
+        {
+            Debug.Log("不正解！");
+        }
+    }
+
     public void CheckStair()
     {
         if (GetNextMapType(player.currentPos) == MAP_TYPE.STAIR)
@@ -216,6 +237,15 @@ public class MapGenerator : MonoBehaviour
         player.isPuzzle = true;
     }
 
+    public void OpenPuzzle2()
+    {
+        if (puzzle2Solved)
+            return;
+
+        Puzzle2.SetActive(true);
+        player.isPuzzle = true;
+    }
+    
     public void Yes()
     {
         Panel.SetActive(false);
@@ -237,20 +267,33 @@ public class MapGenerator : MonoBehaviour
 
     public void ChangeFloor(int floor, bool moveToStair = true)
     {
+        Debug.Log("ChangeFloor開始：" + floor);
+
         if (floor < 0 || floor >= stages[currentStage].floors.Length)
+        {
+            Debug.Log("階数が範囲外！");
             return;
+        }
 
         currentFloor = floor;
+
+        Debug.Log("currentFloor変更：" + currentFloor);
 
         while (map2D.childCount > 0)
         {
             DestroyImmediate(map2D.GetChild(0).gameObject);
         }
 
+        Debug.Log("古いマップ削除完了");
+
         _loadMapData();
+
+        Debug.Log("マップ読み込み完了");
+
         _createMap();
 
-        // 階段移動のときだけ階段へ移動
+        Debug.Log("新しいマップ作成完了");
+
         if (moveToStair)
         {
             Vector2Int stairPos = FindStairPos();
@@ -258,6 +301,8 @@ public class MapGenerator : MonoBehaviour
             player.currentPos = stairPos;
             player.transform.localPosition = ScreenPos(stairPos);
         }
+
+        Debug.Log("ChangeFloor終了");
     }
 
     public void ChangeStage(int stage)
@@ -273,7 +318,6 @@ public class MapGenerator : MonoBehaviour
         _loadMapData();
         _createMap();
     }
-
 
     public int CurrentFloor
     {
