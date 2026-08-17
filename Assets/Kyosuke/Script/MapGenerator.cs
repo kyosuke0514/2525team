@@ -225,6 +225,7 @@ public class MapGenerator : MonoBehaviour
         if (GetNextMapType(player.currentPos) == MAP_TYPE.STAIR)
         {
             Panel.SetActive(true);
+            player.isPuzzle = true;
         }
     }
 
@@ -249,6 +250,7 @@ public class MapGenerator : MonoBehaviour
     public void Yes()
     {
         Panel.SetActive(false);
+        player.isPuzzle = false;
 
         if (currentFloor == 0)
         {
@@ -263,6 +265,7 @@ public class MapGenerator : MonoBehaviour
     public void No()
     {
         Panel.SetActive(false);
+        player.isPuzzle = false;
     }
 
     public void ChangeFloor(int floor, bool moveToStair = true)
