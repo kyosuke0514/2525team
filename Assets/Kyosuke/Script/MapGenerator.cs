@@ -22,6 +22,8 @@ public class MapGenerator : MonoBehaviour
     [SerializeField] TMP_InputField greenInput2;
     [SerializeField] TMP_InputField yellowInput2;
     [SerializeField] TMP_InputField blueInput2;
+    [SerializeField] TMP_Text stageText;
+    [SerializeField] TMP_Text floorText;
     [SerializeField] UnityEngine.UI.Button answerButton;
     [SerializeField] float miniMapScale = 0.3f;
     [SerializeField] Vector2 miniMapOffset = new Vector2(-7.4f, -3.5f);
@@ -70,6 +72,13 @@ public class MapGenerator : MonoBehaviour
 
         _loadMapData();
         _createMap();
+        _updateStageText();
+    }
+
+    void _updateStageText()
+    {
+        stageText.text = "Stage" + (currentStage + 1);
+        floorText.text = (currentFloor + 1) + "F";
     }
 
     void _createMap()
@@ -296,6 +305,8 @@ public class MapGenerator : MonoBehaviour
         _createMap();
 
         Debug.Log("新しいマップ作成完了");
+
+        _updateStageText();
 
         if (moveToStair)
         {
