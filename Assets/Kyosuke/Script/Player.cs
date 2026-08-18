@@ -37,7 +37,7 @@ public class Player : MonoBehaviour
     public MapGenerator mapGenerator;
     private void Start()
     {
-        direction = DIRECTION.DOWN;
+        direction = DIRECTION.TOP;
         currentHP = maxHP;
 
         SpriteRenderer sr = GetComponent<SpriteRenderer>();
@@ -52,26 +52,32 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        
-        
+        Debug.Log("Player Update");
+
         if (isPuzzle)
+        {
+            Debug.Log("PuzzleíÜÇ»ÇÃÇ≈à⁄ìÆÇ≈Ç´Ç‹ÇπÇÒ");
             return;
+        }
 
         if (Input.GetKeyDown(KeyCode.W))
         {
+            Debug.Log("WâüÇµÇΩÅI");
             _move(1);
-            Debug.Log("WÇ´ÇΩÅI");
         }
+
         if (Input.GetKeyDown(KeyCode.D))
         {
             direction++;
             _setDirection();
             _viewArrow();
         }
+
         if (Input.GetKeyDown(KeyCode.S))
         {
             _move(-1);
         }
+
         if (Input.GetKeyDown(KeyCode.A))
         {
             direction--;
