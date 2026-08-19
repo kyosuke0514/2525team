@@ -24,6 +24,9 @@ public class MapGenerator : MonoBehaviour
     [SerializeField] TMP_InputField blueInput2;
     [SerializeField] TMP_Text stageText;
     [SerializeField] TMP_Text floorText;
+    [SerializeField] UnityEngine.UI.Image stairImage;
+    [SerializeField] Sprite stairUpSprite;
+    [SerializeField] Sprite stairDownSprite;
     [SerializeField] UnityEngine.UI.Button answerButton;
     [SerializeField] float miniMapScale = 0.3f;
     [SerializeField] Vector2 miniMapOffset = new Vector2(-7.4f, -3.5f);
@@ -233,6 +236,17 @@ public class MapGenerator : MonoBehaviour
     {
         if (GetNextMapType(player.currentPos) == MAP_TYPE.STAIR)
         {
+            if (currentFloor == 0)
+            {
+                // 1F Å® 2F
+                stairImage.sprite = stairUpSprite;
+            }
+            else
+            {
+                // 2F Å® 1F
+                stairImage.sprite = stairDownSprite;
+            }
+
             Panel.SetActive(true);
             player.isPuzzle = true;
         }
