@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MapGenerator : MonoBehaviour
 {
@@ -24,7 +25,7 @@ public class MapGenerator : MonoBehaviour
     [SerializeField] TMP_InputField blueInput2;
     [SerializeField] TMP_Text stageText;
     [SerializeField] TMP_Text floorText;
-    [SerializeField] UnityEngine.UI.Image stairImage;
+    [SerializeField] Image stairImage;
     [SerializeField] Sprite stairUpSprite;
     [SerializeField] Sprite stairDownSprite;
     [SerializeField] UnityEngine.UI.Button answerButton;
@@ -236,6 +237,8 @@ public class MapGenerator : MonoBehaviour
     {
         if (GetNextMapType(player.currentPos) == MAP_TYPE.STAIR)
         {
+            
+
             if (currentFloor == 0)
             {
                 // 1F Å® 2F
@@ -247,6 +250,8 @@ public class MapGenerator : MonoBehaviour
                 stairImage.sprite = stairDownSprite;
             }
 
+            // âÊëúÇï\é¶Ç∑ÇÈ
+            stairImage.gameObject.SetActive(true);
             Panel.SetActive(true);
             player.isPuzzle = true;
         }
