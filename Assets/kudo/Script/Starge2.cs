@@ -1,35 +1,38 @@
 using UnityEngine;
+
+using UnityEngine.SceneManagement;//ã‚·ãƒ¼ãƒ³ç§»å‹•ã«å¿…è¦
 using UnityEngine.SceneManagement;
-using UnityEngine.UI; //ƒ{ƒ^ƒ“ƒRƒ“ƒ|[ƒlƒ“ƒg‚ğ‘€ì‚·‚éˆ×‚É•K—v
+
+using UnityEngine.UI; //ãƒœã‚¿ãƒ³ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’æ“ä½œã™ã‚‹ç‚ºã«å¿…è¦
 
 public class Starge2 : MonoBehaviour
 {
     void Start()
     {
-        //©•ª‚ÌƒIƒuƒWƒFƒNƒg‚©‚çƒRƒ“ƒ|[ƒlƒ“ƒg‚ğæ“¾
+        //è‡ªåˆ†ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‹ã‚‰ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’å–å¾—
         Button myBotton = GetComponent<Button>();
 
-        //‚Ü‚¾•Û‘¶‚³‚ê‚Ä‚¢‚È‚¢i–¢ƒNƒŠƒAj‚È‚ç‚O‚ª•Ô‚Á‚Ä‚­‚é
-        int isClesred = PlayerPrefs.GetInt("Stage1_Cleared, 0");
+        //ã¾ã ä¿å­˜ã•ã‚Œã¦ã„ãªã„ï¼ˆæœªã‚¯ãƒªã‚¢ï¼‰ãªã‚‰ï¼ãŒè¿”ã£ã¦ãã‚‹
+        int isClesred = PlayerPrefs.GetInt("Stage1_Cleared", 0);
 
         if (isClesred == 1)
         {
-            myBotton.interactable = true; //ƒ{ƒ^ƒ“‚ğ‰Ÿ‚¹‚é‚æ‚¤‚É‚·‚é
+            myBotton.interactable = true; //ãƒœã‚¿ãƒ³ã‚’æŠ¼ã›ã‚‹ã‚ˆã†ã«ã™ã‚‹
         }
         else
         {
-            myBotton.interactable = false; //ƒ{ƒ^ƒ“‚ğ‰Ÿ‚¹‚È‚¢‚æ‚¤‚É
+            myBotton.interactable = false; //ãƒœã‚¿ãƒ³ã‚’æŠ¼ã›ãªã„ã‚ˆã†ã«
         }
 
     }
-        //ƒ{ƒ^ƒ“‚ªƒNƒŠƒbƒN‚³‚ê‚½‚ÉŒÄ‚Ño‚·ŠÖ”
+        //ãƒœã‚¿ãƒ³ãŒã‚¯ãƒªãƒƒã‚¯ã•ã‚ŒãŸæ™‚ã«å‘¼ã³å‡ºã™é–¢æ•°
         public void OnClickStart()
         {
-           //ˆÚ“®‚µ‚½‚¢ƒV[ƒ“
+           //ç§»å‹•ã—ãŸã„ã‚·ãƒ¼ãƒ³
            SceneManager.LoadScene("");
         }  
 }
 
-//ƒNƒŠƒA‰æ–Ê‚ÌŸ‚Öƒ{ƒ^ƒ“‚Æ‚©‚É‚±‚ÌƒR[ƒh‚ğ‘‚­
+//ã‚¯ãƒªã‚¢ç”»é¢ã®æ¬¡ã¸ãƒœã‚¿ãƒ³ã¨ã‹ã«ã“ã®ã‚³ãƒ¼ãƒ‰ã‚’æ›¸ã
 //PlaterPrefs.SetInt("Stage1_Cleared", 1);
-//PlayerPrefs.Save(); //ƒf[ƒ^‚ğŠmÀ‚É•Û‘¶
+//PlayerPrefs.Save(); //ãƒ‡ãƒ¼ã‚¿ã‚’ç¢ºå®Ÿã«ä¿å­˜
