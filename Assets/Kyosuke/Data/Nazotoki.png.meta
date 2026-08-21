@@ -1,0 +1,975 @@
+fileFormatVersion: 2
+guid: 8c5c1da03d843de40a38e18dc8c79c95
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 4951810147014601817
+    second: Nazotoki_0
+  - first:
+      213: -7218546594170068542
+    second: Nazotoki_1
+  - first:
+      213: 256149858874996447
+    second: Nazotoki_2
+  - first:
+      213: 4237286031339578937
+    second: Nazotoki_3
+  - first:
+      213: 1058855802860526449
+    second: Nazotoki_4
+  - first:
+      213: 7639169133742437258
+    second: Nazotoki_5
+  - first:
+      213: 6984282800977261458
+    second: Nazotoki_6
+  - first:
+      213: 7408894224887300744
+    second: Nazotoki_7
+  - first:
+      213: 4506049111323997070
+    second: Nazotoki_8
+  - first:
+      213: -4064566696703917733
+    second: Nazotoki_9
+  - first:
+      213: 3145563599114160971
+    second: Nazotoki_10
+  - first:
+      213: 837789797315797688
+    second: Nazotoki_11
+  - first:
+      213: 8289001100268132669
+    second: Nazotoki_12
+  - first:
+      213: 3586385236066962882
+    second: Nazotoki_13
+  - first:
+      213: -728681342049205958
+    second: Nazotoki_14
+  - first:
+      213: 316405969704966257
+    second: Nazotoki_15
+  - first:
+      213: 9176105372227584390
+    second: Nazotoki_16
+  - first:
+      213: -1020619670209222832
+    second: Nazotoki_17
+  - first:
+      213: 474715070546231835
+    second: Nazotoki_18
+  - first:
+      213: -8007120264004853097
+    second: Nazotoki_19
+  - first:
+      213: 4773439460228531164
+    second: Nazotoki_20
+  - first:
+      213: 4739126837784392531
+    second: Nazotoki_21
+  - first:
+      213: -7714664823294705255
+    second: Nazotoki_22
+  - first:
+      213: -7299159862343135829
+    second: Nazotoki_23
+  - first:
+      213: -5926822987385775467
+    second: Nazotoki_24
+  - first:
+      213: 120928466521725059
+    second: Nazotoki_25
+  - first:
+      213: 5061255724214594567
+    second: Nazotoki_26
+  - first:
+      213: -4768364902674496767
+    second: Nazotoki_27
+  - first:
+      213: 7545340529898894835
+    second: Nazotoki_28
+  - first:
+      213: -3588637048178278301
+    second: Nazotoki_29
+  - first:
+      213: -573407505666675699
+    second: Nazotoki_30
+  - first:
+      213: 778373176474922941
+    second: Nazotoki_31
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Nazotoki_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 46
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 95ceaf7c71d58b440800000000000000
+      internalID: 4951810147014601817
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nazotoki_1
+      rect:
+        serializedVersion: 2
+        x: 46
+        y: 0
+        width: 48
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2c123eb3e1292db90800000000000000
+      internalID: -7218546594170068542
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nazotoki_2
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 12
+        width: 37
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fd6b28380f60e8300800000000000000
+      internalID: 256149858874996447
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nazotoki_3
+      rect:
+        serializedVersion: 2
+        x: 147
+        y: 2
+        width: 11
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 93668b5023dddca30800000000000000
+      internalID: 4237286031339578937
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nazotoki_4
+      rect:
+        serializedVersion: 2
+        x: 163
+        y: 31
+        width: 22
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 17bdcdd1ebfc1be00800000000000000
+      internalID: 1058855802860526449
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nazotoki_5
+      rect:
+        serializedVersion: 2
+        x: 193
+        y: 1
+        width: 42
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a83b8d36ad7c30a60800000000000000
+      internalID: 7639169133742437258
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nazotoki_6
+      rect:
+        serializedVersion: 2
+        x: 243
+        y: 0
+        width: 37
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 293be1304382de060800000000000000
+      internalID: 6984282800977261458
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nazotoki_7
+      rect:
+        serializedVersion: 2
+        x: 295
+        y: 2
+        width: 36
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 882c9d42b0ea1d660800000000000000
+      internalID: 7408894224887300744
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nazotoki_8
+      rect:
+        serializedVersion: 2
+        x: 340
+        y: 25
+        width: 18
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e837eeceac3b88e30800000000000000
+      internalID: 4506049111323997070
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nazotoki_9
+      rect:
+        serializedVersion: 2
+        x: 392
+        y: 30
+        width: 15
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b518415df12c797c0800000000000000
+      internalID: -4064566696703917733
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nazotoki_10
+      rect:
+        serializedVersion: 2
+        x: 412
+        y: 30
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b4b499f6d6947ab20800000000000000
+      internalID: 3145563599114160971
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nazotoki_11
+      rect:
+        serializedVersion: 2
+        x: 418
+        y: 33
+        width: 10
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8b26471c16d60ab00800000000000000
+      internalID: 837789797315797688
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nazotoki_12
+      rect:
+        serializedVersion: 2
+        x: 440
+        y: 1
+        width: 34
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d39dd4c6592780370800000000000000
+      internalID: 8289001100268132669
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nazotoki_13
+      rect:
+        serializedVersion: 2
+        x: 479
+        y: 2
+        width: 41
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2cd0a77ee5665c130800000000000000
+      internalID: 3586385236066962882
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nazotoki_14
+      rect:
+        serializedVersion: 2
+        x: 524
+        y: 0
+        width: 48
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a31c3bc1e2433e5f0800000000000000
+      internalID: -728681342049205958
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nazotoki_15
+      rect:
+        serializedVersion: 2
+        x: 575
+        y: 1
+        width: 41
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 178d3159d89146400800000000000000
+      internalID: 316405969704966257
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nazotoki_16
+      rect:
+        serializedVersion: 2
+        x: 621
+        y: 0
+        width: 46
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 681cd2d0833185f70800000000000000
+      internalID: 9176105372227584390
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nazotoki_17
+      rect:
+        serializedVersion: 2
+        x: 673
+        y: 2
+        width: 11
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 057276241d706d1f0800000000000000
+      internalID: -1020619670209222832
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nazotoki_18
+      rect:
+        serializedVersion: 2
+        x: 689
+        y: 31
+        width: 22
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b12ce6d67d6869600800000000000000
+      internalID: 474715070546231835
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nazotoki_19
+      rect:
+        serializedVersion: 2
+        x: 717
+        y: 0
+        width: 47
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 792a82e1b8ef0e090800000000000000
+      internalID: -8007120264004853097
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nazotoki_20
+      rect:
+        serializedVersion: 2
+        x: 765
+        y: 1
+        width: 47
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cd301c7f5e9ae3240800000000000000
+      internalID: 4773439460228531164
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nazotoki_21
+      rect:
+        serializedVersion: 2
+        x: 817
+        y: 1
+        width: 38
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 353b8afffb2c4c140800000000000000
+      internalID: 4739126837784392531
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nazotoki_22
+      rect:
+        serializedVersion: 2
+        x: 873
+        y: 35
+        width: 23
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 991415e973100f490800000000000000
+      internalID: -7714664823294705255
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nazotoki_23
+      rect:
+        serializedVersion: 2
+        x: 928
+        y: 15
+        width: 8
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bad8f3e17cc24ba90800000000000000
+      internalID: -7299159862343135829
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nazotoki_24
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 1
+        width: 29
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 59a504605e1bfbda0800000000000000
+      internalID: -5926822987385775467
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nazotoki_25
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 4
+        width: 27
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3889242bccf9da100800000000000000
+      internalID: 120928466521725059
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nazotoki_26
+      rect:
+        serializedVersion: 2
+        x: 339
+        y: 2
+        width: 40
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 70c2937f3413d3640800000000000000
+      internalID: 5061255724214594567
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nazotoki_27
+      rect:
+        serializedVersion: 2
+        x: 385
+        y: 19
+        width: 15
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 10385a8826d53ddb0800000000000000
+      internalID: -4768364902674496767
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nazotoki_28
+      rect:
+        serializedVersion: 2
+        x: 387
+        y: 2
+        width: 39
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3f53bf92c3f66b860800000000000000
+      internalID: 7545340529898894835
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nazotoki_29
+      rect:
+        serializedVersion: 2
+        x: 686
+        y: 4
+        width: 27
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 360078b3e99923ec0800000000000000
+      internalID: -3588637048178278301
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nazotoki_30
+      rect:
+        serializedVersion: 2
+        x: 867
+        y: 1
+        width: 33
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d0ce13169e8da08f0800000000000000
+      internalID: -573407505666675699
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nazotoki_31
+      rect:
+        serializedVersion: 2
+        x: 928
+        y: 3
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dbfea7ea7465dca00800000000000000
+      internalID: 778373176474922941
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Nazotoki_0: 4951810147014601817
+      Nazotoki_1: -7218546594170068542
+      Nazotoki_10: 3145563599114160971
+      Nazotoki_11: 837789797315797688
+      Nazotoki_12: 8289001100268132669
+      Nazotoki_13: 3586385236066962882
+      Nazotoki_14: -728681342049205958
+      Nazotoki_15: 316405969704966257
+      Nazotoki_16: 9176105372227584390
+      Nazotoki_17: -1020619670209222832
+      Nazotoki_18: 474715070546231835
+      Nazotoki_19: -8007120264004853097
+      Nazotoki_2: 256149858874996447
+      Nazotoki_20: 4773439460228531164
+      Nazotoki_21: 4739126837784392531
+      Nazotoki_22: -7714664823294705255
+      Nazotoki_23: -7299159862343135829
+      Nazotoki_24: -5926822987385775467
+      Nazotoki_25: 120928466521725059
+      Nazotoki_26: 5061255724214594567
+      Nazotoki_27: -4768364902674496767
+      Nazotoki_28: 7545340529898894835
+      Nazotoki_29: -3588637048178278301
+      Nazotoki_3: 4237286031339578937
+      Nazotoki_30: -573407505666675699
+      Nazotoki_31: 778373176474922941
+      Nazotoki_4: 1058855802860526449
+      Nazotoki_5: 7639169133742437258
+      Nazotoki_6: 6984282800977261458
+      Nazotoki_7: 7408894224887300744
+      Nazotoki_8: 4506049111323997070
+      Nazotoki_9: -4064566696703917733
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
