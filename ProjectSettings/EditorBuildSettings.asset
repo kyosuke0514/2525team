@@ -5,17 +5,17 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/saitou/scene/Gameover..unity
-    guid: ec06be041e0460a41a2cb61d47a41507
   - enabled: 1
     path: Assets/Kyosuke/Scene/Main.unity
     guid: 116dfb56128edf74aa2a0f01aa7c0ad3
-  - enabled: 1
-    path: Assets/kudo/SentakuScene.unity
-    guid: 86f8ec11a21acea4191368ef61e96af3
-  - enabled: 1
+  - enabled: 0
     path: Assets/kudo/TaitolScene.unity
     guid: 464584ef0ad7d1b4ba57f6859ccc7abe
+  - enabled: 0
+    path: Assets/kudo/SentakuScene.unity
+    guid: 86f8ec11a21acea4191368ef61e96af3
+  - enabled: 0
+    path: Assets/saitou/scene/Gameover..unity
+    guid: ec06be041e0460a41a2cb61d47a41507
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0
