@@ -9,7 +9,6 @@ public class Player : MonoBehaviour
     //==================================================
 
     [SerializeField] private HP hp;
-    [SerializeField] Transform directionArrow;
 
 
     //==================================================
@@ -68,17 +67,6 @@ public class Player : MonoBehaviour
     };
 
 
-    //==================================================
-    // 向き矢印
-    //==================================================
-
-    Vector3[] arrowPositions =
-    {
-        new Vector3(0, 0.5f),
-        new Vector3(0.5f, 0),
-        new Vector3(0f, -0.5f),
-        new Vector3(-0.5f, 0f)
-    };
 
 
     //==================================================
@@ -103,9 +91,6 @@ public class Player : MonoBehaviour
 
         // HP表示を更新
         hp.Update();
-
-        // 向き矢印を表示
-        _viewArrow();
     }
 
 
@@ -136,7 +121,7 @@ public class Player : MonoBehaviour
         {
             direction++;
             _setDirection();
-            _viewArrow();
+            
         }
 
         // 後退
@@ -150,7 +135,7 @@ public class Player : MonoBehaviour
         {
             direction--;
             _setDirection();
-            _viewArrow();
+            
         }
     }
 
@@ -168,24 +153,6 @@ public class Player : MonoBehaviour
         direction = (DIRECTION)d;
     }
 
-
-    //==================================================
-    // 向き矢印の表示
-    //==================================================
-
-    void _viewArrow()
-    {
-        directionArrow.localPosition =
-            arrowPositions[(int)direction];
-
-        SpriteRenderer arrowSR =
-            directionArrow.GetComponent<SpriteRenderer>();
-
-        if (arrowSR != null)
-        {
-            arrowSR.sortingOrder = 31;
-        }
-    }
 
 
     //==================================================
@@ -220,6 +187,9 @@ public class Player : MonoBehaviour
 
             // 通った場所を記録
             mapGenerator.DiscoverPlayerPosition();
+
+            // 3×3ミニマップを更新
+            mapGenerator.UpdateMinimap();
 
             // 移動先のイベントを確認
             CheckEvent();

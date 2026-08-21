@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static MapGenerator;
 
 public class MapGenerator : MonoBehaviour
 {
@@ -53,6 +54,10 @@ public class MapGenerator : MonoBehaviour
     [SerializeField] float miniMapScale = 0.3f;
     [SerializeField] Vector2 miniMapOffset = new Vector2(-7.4f, -3.5f);
 
+    // 3*3ミニマップ
+    [SerializeField] Transform minimap;
+    [SerializeField] float minimapTileSize = 100f;
+    [SerializeField] Sprite playerArrowSprite;
 
     //==================================================
     // マップ関連
@@ -116,6 +121,24 @@ public class MapGenerator : MonoBehaviour
         _loadMapData();
         _createMap();
         _updateStageText();
+        UpdateMinimap();
+
+        // 元の2Dマップは非表示にする
+        SpriteRenderer[] mapSprites =
+            map2D.GetComponentsInChildren<SpriteRenderer>();
+
+        foreach (SpriteRenderer sr in mapSprites)
+        {
+            sr.enabled = false;
+        }
+        // プレイヤーの見た目だけ非表示
+        SpriteRenderer playerSR =
+            player.GetComponent<SpriteRenderer>();
+
+        if (playerSR != null)
+        {
+            playerSR.enabled = false;
+        }
     }
 
 
@@ -417,10 +440,201 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
+    public void UpdateMinimap()
+    {
+        Debug.Log("★★★ ミニマップ更新 ★★★");
 
-    //==================================================
-    // プレイヤー位置・探索記録
-    //==================================================
+        //==================================================
+        // 3×3ミニマップを更新
+        //==================================================
+
+        // 前に作った3×3マップを削除
+        for (int i = minimap.childCount - 1; i >= 0; i--)
+        {
+            Destroy(minimap.GetChild(i).gameObject);
+        }
+
+
+        //==================================================
+        // プレイヤーを中心に3×3を表示
+        //==================================================
+
+        for (int y = -1; y <= 1; y++)
+        {
+            for (int x = -1; x <= 1; x++)
+            {
+                // プレイヤーから見たマップ上の位置
+                Vector2Int pos =
+                    player.currentPos +
+                    new Vector2Int(x, y);
+
+                // マップ外なら壁として扱う
+                MAP_TYPE type =
+                    GetNextMapType(pos);
+
+
+                //==================================================
+                // マスを作成
+                //==================================================
+
+                GameObject tile =
+                    Instantiate(
+                        prefabs[(int)MAP_TYPE.GROUND],
+                        minimap
+                    );
+
+                SpriteRenderer sr =
+                    tile.GetComponent<SpriteRenderer>();
+
+
+                if (sr != null)
+                {
+                    // マップの種類に応じた画像を取得
+                    SpriteRenderer original =
+                        prefabs[(int)type]
+                        .GetComponent<SpriteRenderer>();
+
+                    if (original != null)
+                    {
+                        sr.sprite = original.sprite;
+                    }
+
+                    // プレイヤーの初期位置だった場所は
+                    // ミニマップでは普通の床として表示
+                    if (type == MAP_TYPE.PLAYER)
+                    {
+                        SpriteRenderer ground =
+                            prefabs[(int)MAP_TYPE.GROUND]
+                            .GetComponent<SpriteRenderer>();
+
+                        if (ground != null)
+                        {
+                            sr.sprite = ground.sprite;
+                        }
+
+                        sr.color = Color.black;
+                    }
+
+                    // 色を設定
+                    if (x == 0 && y == 0)
+                    {
+                        // プレイヤー → 白
+                        sr.color = Color.white;
+
+                        // プレイヤーを一番手前に表示
+                        sr.sortingOrder = 110;
+                    }
+                    else if (type == MAP_TYPE.WALL)
+                    {
+                        // 壁 → グレー
+                        sr.color = Color.gray;
+
+                        sr.sortingOrder = 100;
+                    }
+                    else
+                    {
+                        // 床 → 黒
+                        sr.color = Color.black;
+
+                        sr.sortingOrder = 100;
+                    }
+
+                    //==================================================
+                    // プレイヤーを中央に表示
+                    //==================================================
+
+                    if (x == 0 && y == 0)
+                    {
+                        if (x == 0 && y == 0)
+                        {
+                            //==================================================
+                            // 中央は「黒い床」
+                            //==================================================
+
+                            sr.color = Color.black;
+                            sr.sortingOrder = 100;
+
+
+                            //==================================================
+                            // その上にプレイヤーの矢印を作る
+                            //==================================================
+
+                            GameObject arrow =
+                                new GameObject("MinimapPlayerArrow");
+
+                            arrow.transform.SetParent(minimap);
+
+                            arrow.transform.localPosition = Vector3.zero;
+
+                            arrow.transform.localScale =
+                                Vector3.one * 100f;
+
+                            SpriteRenderer arrowSR =
+                                arrow.AddComponent<SpriteRenderer>();
+
+                            // 作った矢印画像
+                            arrowSR.sprite = playerArrowSprite;
+
+                            // 白色
+                            arrowSR.color = Color.white;
+
+                            // 床より前
+                            arrowSR.sortingOrder = 110;
+
+
+                            //==================================================
+                            // プレイヤーの向き
+                            //==================================================
+
+                            switch (player.direction)
+                            {
+                                case Player.DIRECTION.TOP:
+                                    arrow.transform.localRotation =
+                                        Quaternion.Euler(0, 0, 0);
+                                    break;
+
+                                case Player.DIRECTION.RIGHT:
+                                    arrow.transform.localRotation =
+                                        Quaternion.Euler(0, 0, -90);
+                                    break;
+
+                                case Player.DIRECTION.DOWN:
+                                    arrow.transform.localRotation =
+                                        Quaternion.Euler(0, 0, 180);
+                                    break;
+
+                                case Player.DIRECTION.LEFT:
+                                    arrow.transform.localRotation =
+                                        Quaternion.Euler(0, 0, 90);
+                                    break;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        sr.sortingOrder = 100;
+                    }
+                }
+
+
+                //==================================================
+                // 3×3上の位置
+                //==================================================
+
+                tile.transform.localPosition =
+                    new Vector3(
+                        x * minimapTileSize,
+                        -y * minimapTileSize,
+                        0
+                    );
+
+                // 3×3用の大きさ
+                tile.transform.localScale =
+                    Vector3.one*100f;
+            }
+        }
+    }
+    
 
     public void DiscoverPlayerPosition()
     {
