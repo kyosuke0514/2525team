@@ -200,7 +200,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 419274723}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1392742770}
+        m_TargetAssemblyTypeName: StageSelectManager, Assembly-CSharp
+        m_MethodName: LoadStageScene
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &419274723
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -320,7 +332,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 516165205}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1392742770}
+        m_TargetAssemblyTypeName: StageSelectManager, Assembly-CSharp
+        m_MethodName: LoadStageScene
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &516165205
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -751,13 +775,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
+      - m_Target: {fileID: 1392742770}
+        m_TargetAssemblyTypeName: StageSelectManager, Assembly-CSharp
+        m_MethodName: LoadStageScene
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
