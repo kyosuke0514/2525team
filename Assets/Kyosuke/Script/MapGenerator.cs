@@ -46,6 +46,10 @@ public class MapGenerator : MonoBehaviour
     [SerializeField] Sprite stairUpSprite;
     [SerializeField] Sprite stairDownSprite;
 
+    // 謎解き確認
+    [SerializeField] Image puzzleConfirmImage;
+    [SerializeField] Sprite puzzleConfirmSprite;
+
     // 全体マップ
     [SerializeField] GameObject FullMap;
     [SerializeField] GameObject fullMapTilePrefab;
@@ -103,7 +107,8 @@ public class MapGenerator : MonoBehaviour
 
     bool puzzleSolved = false;
     bool puzzle2Solved = false;
-
+    bool puzzleConfirm = false;
+    bool puzzle2Confirm = false;
 
     //==================================================
     // 初期化
@@ -114,6 +119,7 @@ public class MapGenerator : MonoBehaviour
         Panel.SetActive(false);
         Puzzle.SetActive(false);
         Puzzle2.SetActive(false);
+        puzzleConfirmImage.gameObject.SetActive(false);
 
         yesButton.onClick.AddListener(Yes);
         noButton.onClick.AddListener(No);
@@ -749,7 +755,10 @@ public class MapGenerator : MonoBehaviour
             return;
         }
 
-        Puzzle.SetActive(true);
+        puzzleConfirm = true;
+        puzzleConfirmImage.sprite = puzzleConfirmSprite;
+        puzzleConfirmImage.gameObject.SetActive(true);
+        Panel.SetActive(true);
         player.isPuzzle = true;
     }
 
@@ -760,7 +769,10 @@ public class MapGenerator : MonoBehaviour
             return;
         }
 
-        Puzzle2.SetActive(true);
+        puzzle2Confirm = true;
+        puzzleConfirmImage.sprite = puzzleConfirmSprite;
+        puzzleConfirmImage.gameObject.SetActive(true);
+        Panel.SetActive(true);
         player.isPuzzle = true;
     }
 
@@ -794,8 +806,32 @@ public class MapGenerator : MonoBehaviour
     public void Yes()
     {
         Panel.SetActive(false);
+        puzzleConfirmImage.gameObject.SetActive(false);
         player.isPuzzle = false;
 
+        // Puzzle1
+        if (puzzleConfirm)
+        {
+            puzzleConfirm = false;
+
+            Puzzle.SetActive(true);
+            player.isPuzzle = true;
+
+            return;
+        }
+
+        // Puzzle2
+        if (puzzle2Confirm)
+        {
+            puzzle2Confirm = false;
+
+            Puzzle2.SetActive(true);
+            player.isPuzzle = true;
+
+            return;
+        }
+
+        // 階段の場合
         if (currentFloor == 0)
         {
             ChangeFloor(1);
@@ -809,6 +845,9 @@ public class MapGenerator : MonoBehaviour
     public void No()
     {
         Panel.SetActive(false);
+        puzzleConfirmImage.gameObject.SetActive(false);
+        puzzleConfirm = false;
+        puzzle2Confirm = false;
         player.isPuzzle = false;
     }
 
