@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;シーン移動に必要
+using UnityEngine.SceneManagement;//シーン移動に必要
 using UnityEngine.UI; //ボタンコンポーネントを操作する為に必要
 
 public class Starge2 : MonoBehaviour
@@ -10,7 +10,7 @@ public class Starge2 : MonoBehaviour
         Button myBotton = GetComponent<Button>();
 
         //まだ保存されていない（未クリア）なら０が返ってくる
-        int isClesred = PlayerPrefs.GetInt("Stage1_Cleared, 0");
+        int isClesred = PlayerPrefs.GetInt("Stage1_Cleared", 0);
 
         if (isClesred == 1)
         {
