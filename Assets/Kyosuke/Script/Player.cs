@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
     //==================================================
 
     [SerializeField] private HP hp;
-
+    [SerializeField] GameObject treasureChestImage;
 
     //==================================================
     // プレイヤーの向き
@@ -236,6 +236,7 @@ public class Player : MonoBehaviour
         if (type == MapGenerator.MAP_TYPE.GOAL)
         {
             Debug.Log("ステージクリア！");
+            mapGenerator.ShowTreasureChest();
         }
 
 
