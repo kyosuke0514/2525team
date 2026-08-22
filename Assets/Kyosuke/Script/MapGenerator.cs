@@ -63,6 +63,8 @@ public class MapGenerator : MonoBehaviour
     [SerializeField] float minimapTileSize = 100f;
     [SerializeField] Sprite playerArrowSprite;
 
+    [SerializeField] GameObject treasureChestImage;
+
     //==================================================
     // マップ関連
     //==================================================
@@ -120,6 +122,7 @@ public class MapGenerator : MonoBehaviour
         Puzzle.SetActive(false);
         Puzzle2.SetActive(false);
         puzzleConfirmImage.gameObject.SetActive(false);
+        treasureChestImage.SetActive(false);
 
         yesButton.onClick.AddListener(Yes);
         noButton.onClick.AddListener(No);
@@ -640,7 +643,13 @@ public class MapGenerator : MonoBehaviour
             }
         }
     }
-    
+
+    public void ShowTreasureChest()
+    {
+        treasureChestImage.SetActive(true);
+
+        player.isPuzzle = true;
+    }
 
     public void DiscoverPlayerPosition()
     {
