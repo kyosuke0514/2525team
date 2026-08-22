@@ -28,7 +28,8 @@ public class MapGenerator : MonoBehaviour
     [SerializeField] TMP_Text floorText;
 
     // 謎解き入力
-    [SerializeField] TMP_InputField redInput;
+    [SerializeField] TMP_Text redNumberText;
+    int redNumber = 1;
     [SerializeField] TMP_InputField greenInput;
     [SerializeField] TMP_InputField blueInput;
 
@@ -123,6 +124,8 @@ public class MapGenerator : MonoBehaviour
         Puzzle2.SetActive(false);
         puzzleConfirmImage.gameObject.SetActive(false);
         treasureChestImage.SetActive(false);
+
+        redNumberText.text = redNumber.ToString();
 
         yesButton.onClick.AddListener(Yes);
         noButton.onClick.AddListener(No);
@@ -715,23 +718,41 @@ public class MapGenerator : MonoBehaviour
     // 謎解き
     //==================================================
 
-    public void CheckPuzzle()
+    public void RedUp()
     {
-        if (redInput.text == "2" &&
-            greenInput.text == "3" &&
-            blueInput.text == "9")
+        if (redNumber < 9)
         {
-            Debug.Log("謎解き正解！");
-
-            puzzleSolved = true;
-            Puzzle.SetActive(false);
-            player.isPuzzle = false;
-        }
-        else
-        {
-            Debug.Log("不正解！");
+            redNumber++;
+            redNumberText.text = redNumber.ToString();
         }
     }
+
+    public void RedDown()
+    {
+        if (redNumber > 1)
+        {
+            redNumber--;
+            redNumberText.text = redNumber.ToString();
+        }
+    }
+
+    //public void CheckPuzzle()
+    //{
+    //    if (redInput.text == "2" &&
+    //        greenInput.text == "3" &&
+    //        blueInput.text == "9")
+    //    {
+    //        Debug.Log("謎解き正解！");
+
+    //        puzzleSolved = true;
+    //        Puzzle.SetActive(false);
+    //        player.isPuzzle = false;
+    //    }
+    //    else
+    //    {
+    //        Debug.Log("不正解！");
+    //    }
+    //}
 
     public void CheckPuzzle2F()
     {
