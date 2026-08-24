@@ -29,14 +29,20 @@ public class MapGenerator : MonoBehaviour
 
     // 謎解き入力
     [SerializeField] TMP_Text redNumberText;
+    [SerializeField] TMP_Text greenNumberText;
+    [SerializeField] TMP_Text blueNumberText;
     int redNumber = 1;
-    [SerializeField] TMP_InputField greenInput;
-    [SerializeField] TMP_InputField blueInput;
+    int greenNumber = 1;
+    int blueNumber = 1;
 
-    [SerializeField] TMP_InputField redInput2;
-    [SerializeField] TMP_InputField greenInput2;
-    [SerializeField] TMP_InputField yellowInput2;
-    [SerializeField] TMP_InputField blueInput2;
+    [SerializeField] TMP_Text redNumberText2;
+    [SerializeField] TMP_Text greenNumberText2;
+    [SerializeField] TMP_Text yellowNumberText2;
+    [SerializeField] TMP_Text blueNumberText2;
+    int redNumber2 = 1;
+    int greenNumber2 = 1;
+    int yellowNumber2 = 1;
+    int blueNumber2 = 1;
 
     [SerializeField] UnityEngine.UI.Button yesButton;
     [SerializeField] UnityEngine.UI.Button noButton;
@@ -126,6 +132,8 @@ public class MapGenerator : MonoBehaviour
         treasureChestImage.SetActive(false);
 
         redNumberText.text = redNumber.ToString();
+        greenNumberText.text = greenNumber.ToString();
+        blueNumberText.text = blueNumber.ToString();
 
         yesButton.onClick.AddListener(Yes);
         noButton.onClick.AddListener(No);
@@ -466,7 +474,6 @@ public class MapGenerator : MonoBehaviour
             Destroy(minimap.GetChild(i).gameObject);
         }
 
-
         //==================================================
         // プレイヤーを中心に3×3を表示
         //==================================================
@@ -695,13 +702,9 @@ public class MapGenerator : MonoBehaviour
 
     public Vector2Int FindStairPos()
     {
-        for (int y = 0;
-             y < mapTable.GetLength(1);
-             y++)
+        for (int y = 0;y < mapTable.GetLength(1);y++)
         {
-            for (int x = 0;
-                 x < mapTable.GetLength(0);
-                 x++)
+            for (int x = 0;x < mapTable.GetLength(0);x++)
             {
                 if (mapTable[x, y] == MAP_TYPE.STAIR)
                 {
@@ -709,7 +712,6 @@ public class MapGenerator : MonoBehaviour
                 }
             }
         }
-
         return Vector2Int.zero;
     }
 
@@ -736,35 +738,140 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
-    //public void CheckPuzzle()
-    //{
-    //    if (redInput.text == "2" &&
-    //        greenInput.text == "3" &&
-    //        blueInput.text == "9")
-    //    {
-    //        Debug.Log("謎解き正解！");
+    public void GreenUp()
+    {
+        if (greenNumber < 9)
+        {
+            greenNumber++;
+            greenNumberText.text = greenNumber.ToString();
+        }
+    }
 
-    //        puzzleSolved = true;
-    //        Puzzle.SetActive(false);
-    //        player.isPuzzle = false;
-    //    }
-    //    else
-    //    {
-    //        Debug.Log("不正解！");
-    //    }
-    //}
+    public void GreenDown()
+    {
+        if (greenNumber > 1)
+        {
+            greenNumber--;
+            greenNumberText.text = greenNumber.ToString();
+        }
+    }
+
+    public void BlueUp()
+    {
+        if (blueNumber < 9)
+        {
+            blueNumber++;
+            blueNumberText.text = blueNumber.ToString();
+        }
+    }
+
+    public void BlueDown()
+    {
+        if (blueNumber > 1)
+        {
+            blueNumber--;
+            blueNumberText.text = blueNumber.ToString();
+        }
+    }
+
+    public void RedUp2()
+    {
+        if (redNumber2 < 9)
+        {
+            redNumber2++;
+            redNumberText2.text = redNumber2.ToString();                                                                               
+        }
+    }
+
+    public void RedDown2()
+    {
+        if (redNumber2 > 1)
+        {
+            redNumber2--;
+            redNumberText2.text = redNumber2.ToString();
+        }
+    }
+
+
+    public void GreenUp2()
+    {
+        if (greenNumber2 < 9)
+        {
+            greenNumber2++;
+            greenNumberText2.text = greenNumber2.ToString();
+        }
+    }
+
+    public void GreenDown2()
+    {
+        if (greenNumber2 > 1)
+        {
+            greenNumber2--;
+            greenNumberText2.text = greenNumber2.ToString();
+        }
+    }
+
+
+    public void YellowUp2()
+    {
+        if (yellowNumber2 < 9)
+        {
+            yellowNumber2++;
+            yellowNumberText2.text = yellowNumber2.ToString();
+        }
+    }
+
+    public void YellowDown2()
+    {
+        if (yellowNumber2 > 1)
+        {
+            yellowNumber2--;
+            yellowNumberText2.text = yellowNumber2.ToString();
+        }
+    }
+
+
+    public void BlueUp2()
+    {
+        if (blueNumber2 < 9)
+        {
+            blueNumber2++;
+            blueNumberText2.text = blueNumber2.ToString();
+        }
+    }
+
+    public void BlueDown2()
+    {
+        if (blueNumber2 > 1)
+        {
+            blueNumber2--;
+            blueNumberText2.text = blueNumber2.ToString();
+        }
+    }
+    public void CheckPuzzle()
+    {
+        if (redNumber == 2 &&
+            greenNumber ==3 &&
+            blueNumber == 9)
+        {
+            Debug.Log("謎解き正解！");
+
+            puzzleSolved = true;
+            Puzzle.SetActive(false);
+            player.isPuzzle = false;
+        }
+        else
+        {
+            Debug.Log("不正解！");
+       }
+    }
 
     public void CheckPuzzle2F()
     {
-        Debug.Log("赤：" + redInput2.text);
-        Debug.Log("緑：" + greenInput2.text);
-        Debug.Log("黄：" + yellowInput2.text);
-        Debug.Log("青：" + blueInput2.text);
-
-        if (redInput2.text == "1" &&
-            greenInput2.text == "3" &&
-            yellowInput2.text == "7" &&
-            blueInput2.text == "5")
+        if (redNumber2 == 1 &&
+            greenNumber2 == 3 &&
+            yellowNumber2 == 7 &&
+            blueNumber2 == 5)
         {
             Debug.Log("2F謎解き正解！");
 
