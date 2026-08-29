@@ -934,9 +934,9 @@ MonoBehaviour:
   - {fileID: 419274722}
   - {fileID: 516165204}
   stageImages: []
-  clearedSprite: {fileID: -5768281924708241068, guid: 0ed946d80fe80674d9c3f3c6c80b05e4, type: 3}
-  unclearedSprite: {fileID: -1624792121557530710, guid: 556d1d8a37505aa488758723e6998d85, type: 3}
-  lockedSprite: {fileID: -2633596239931208775, guid: 6015cf040dcd8314f81b89d8968c57bd, type: 3}
+  clearedSprite: {fileID: -8881475718103617523, guid: 6a2d728345b1dce449ea6bbd0144818a, type: 3}
+  unclearedSprite: {fileID: -8933646307540013256, guid: 3bbd3cd9815be494d8ceff7ed66cd623, type: 3}
+  lockedSprite: {fileID: -1356123486509985370, guid: 0f5700321a80811419e0da66da50271d, type: 3}
   playerCursor: {fileID: 1738564854}
   yOffset: 100
 --- !u!4 &1392742771
