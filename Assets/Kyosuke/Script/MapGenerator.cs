@@ -91,10 +91,14 @@ public class MapGenerator : MonoBehaviour
     MAP_TYPE[,] mapTable;
 
     // 探索済みマップ
-    Dictionary<string, bool[,]> discoveredMaps =
-        new Dictionary<string, bool[,]>();
+    Dictionary<string, bool[,]> discoveredMaps =new Dictionary<string, bool[,]>();
+    // 発見した落とし穴
+    Dictionary<string, bool[,]> discoveredPitMaps = new Dictionary<string, bool[,]>();
 
+    // 現在の階の探索済みマップ
     bool[,] discovered;
+    // 現在の階の落とし穴探索済み
+    bool[,] discoveredPit;　
 
     Vector2 centerPos;
     float mapSize;
@@ -241,12 +245,19 @@ public class MapGenerator : MonoBehaviour
         // ステージ・階層ごとに探索状況を保存
         string mapKey = currentStage + "_" + currentFloor;
 
+        // 探索済み
         if (!discoveredMaps.ContainsKey(mapKey))
         {
             discoveredMaps[mapKey] = new bool[col, row];
         }
 
         discovered = discoveredMaps[mapKey];
+
+        // 落とし穴
+        if (!discoveredPitMaps.ContainsKey(mapKey))
+        {
+            discoveredPitMaps[mapKey] = new bool[col, row];
+        }
     }
 
 
@@ -488,6 +499,21 @@ public class MapGenerator : MonoBehaviour
                 // マップ外なら壁として扱う
                 MAP_TYPE type = GetNextMapType(pos);
 
+                string mapKey = currentStage + "_" + currentFloor;
+
+                bool pitDiscovered = false;
+
+                if (pos.x >= 0 &&
+                pos.x < mapTable.GetLength(0) &&
+                pos.y >= 0 &&
+                pos.y < mapTable.GetLength(1))
+                {
+                    if (discoveredPitMaps.ContainsKey(mapKey))
+                    {
+                        pitDiscovered =
+                            discoveredPitMaps[mapKey][pos.x, pos.y];
+                    }
+                }
 
                 //==================================================
                 // マスを作成
@@ -496,6 +522,10 @@ public class MapGenerator : MonoBehaviour
                 GameObject tile =Instantiate(prefabs[(int)MAP_TYPE.GROUND],minimap);
 
                 SpriteRenderer sr = tile.GetComponent<SpriteRenderer>();
+                
+                // 黒背景として使う
+                sr.color = Color.black;
+                sr.sortingOrder = 100;
 
 
                 if (sr != null)
@@ -505,7 +535,74 @@ public class MapGenerator : MonoBehaviour
 
                     if (original != null)
                     {
-                        sr.sprite = original.sprite;
+                        // 謎解き・階段は表示
+                        if (type == MAP_TYPE.STAIR ||
+                            type == MAP_TYPE.PUZZLE ||
+                            type == MAP_TYPE.PUZZLE2)
+                        {
+                            // 黒背景
+                            sr.sprite = prefabs[(int)MAP_TYPE.GROUND]
+                                .GetComponent<SpriteRenderer>().sprite;
+
+                            sr.color = Color.black;
+                            sr.sortingOrder = 100;
+
+                            // アイコン
+                            GameObject icon = new GameObject("MinimapIcon");
+
+                            icon.transform.SetParent(tile.transform);
+                            icon.transform.localPosition = Vector3.zero;
+                            icon.transform.localScale = Vector3.one;
+
+                            SpriteRenderer iconSR =
+                                icon.AddComponent<SpriteRenderer>();
+
+                            iconSR.sprite = original.sprite;
+                            iconSR.color = Color.white;
+                            iconSR.sortingOrder = 110;
+                        }
+
+                        // 落とし穴は「落ちたことがある場合だけ」表示
+                        else if (type == MAP_TYPE.PIT && pitDiscovered)
+                        {
+                            // 黒背景
+                            sr.sprite = prefabs[(int)MAP_TYPE.GROUND]
+                                .GetComponent<SpriteRenderer>().sprite;
+
+                            sr.color = Color.black;
+                            sr.sortingOrder = 100;
+
+                            // 落とし穴アイコン
+                            GameObject icon = new GameObject("MinimapIcon");
+
+                            icon.transform.SetParent(tile.transform);
+                            icon.transform.localPosition = Vector3.zero;
+                            icon.transform.localScale = Vector3.one;
+
+                            SpriteRenderer iconSR =
+                                icon.AddComponent<SpriteRenderer>();
+
+                            iconSR.sprite = original.sprite;
+                            iconSR.color = Color.white;
+                            iconSR.sortingOrder = 110;
+                        }
+
+                        // 落とし穴にまだ落ちていない
+                        else if (type == MAP_TYPE.PIT)
+                        {
+                            // 黒背景だけ
+                            sr.sprite = prefabs[(int)MAP_TYPE.GROUND]
+                                .GetComponent<SpriteRenderer>().sprite;
+
+                            sr.color = Color.black;
+                            sr.sortingOrder = 100;
+                        }
+
+                        // その他のマス
+                        else
+                        {
+                            sr.sprite = original.sprite;
+                        }
                     }
 
                     // プレイヤーの初期位置だった場所は
@@ -527,11 +624,9 @@ public class MapGenerator : MonoBehaviour
                     // 色を設定
                     if (x == 0 && y == 0)
                     {
-                        // プレイヤー → 白
-                        sr.color = Color.white;
-
                         // プレイヤーを一番手前に表示
-                        sr.sortingOrder = 110;
+                        sr.color = Color.black;
+                        sr.sortingOrder = 100;
                     }
                     else if (type == MAP_TYPE.WALL)
                     {
@@ -655,6 +750,17 @@ public class MapGenerator : MonoBehaviour
         {
             discovered[x, y] = true;
         }
+    }
+    public void DiscoverPit(Vector2Int pos)
+    {
+        string mapKey = currentStage + "_" + currentFloor;
+
+        if (discoveredPitMaps.ContainsKey(mapKey))
+        {
+            discoveredPitMaps[mapKey][pos.x, pos.y] = true;
+        }
+
+        UpdateMinimap();
     }
 
     public Vector2 ScreenPos(Vector2Int _pos)

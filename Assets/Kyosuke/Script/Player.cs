@@ -248,6 +248,8 @@ public class Player : MonoBehaviour
         {
             Debug.Log("—‚Æ‚µŒŠ‚É—‚¿‚½I");
 
+            mapGenerator.DiscoverPit(currentPos);
+
             Damage(1);
 
 

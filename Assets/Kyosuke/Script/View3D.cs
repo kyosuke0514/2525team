@@ -193,11 +193,12 @@ public class View3D : MonoBehaviour
         }
 
         bool leftPath =
-    mapGenerator.GetNextMapType(GetMapPos(1, -1)) != MapGenerator.MAP_TYPE.WALL &&
-    mapGenerator.GetNextMapType(GetMapPos(1, -2)) != MapGenerator.MAP_TYPE.WALL;
+        mapGenerator.GetNextMapType(GetMapPos(1, -1)) != MapGenerator.MAP_TYPE.WALL &&
+        mapGenerator.GetNextMapType(GetMapPos(1, -2)) != MapGenerator.MAP_TYPE.WALL;
         bool rightPath =
-    mapGenerator.GetNextMapType(GetMapPos(1, 1)) != MapGenerator.MAP_TYPE.WALL &&
-    mapGenerator.GetNextMapType(GetMapPos(1, 2)) != MapGenerator.MAP_TYPE.WALL;
+        mapGenerator.GetNextMapType(GetMapPos(1, 1)) != MapGenerator.MAP_TYPE.WALL &&
+        mapGenerator.GetNextMapType(GetMapPos(1, 2)) != MapGenerator.MAP_TYPE.WALL;
+
         if (leftPath)
         {
             Debug.Log("ç∂Ç…í òHÇ™ë±Ç¢ÇƒÇ¢ÇÈÅI");
