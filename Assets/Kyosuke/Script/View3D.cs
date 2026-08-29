@@ -111,8 +111,6 @@ public class View3D : MonoBehaviour
         farRight2.SetActive(farRight2Wall);
 
         // ===== ¶‰E‚Ì’Ê˜H =====
-
-        // ===== ¶‰E‚Ì’Ê˜H =====
         nearLeftPath.SetActive(false);
         nearRightPath.SetActive(false);
 
