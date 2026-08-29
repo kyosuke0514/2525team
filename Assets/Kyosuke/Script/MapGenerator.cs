@@ -91,9 +91,11 @@ public class MapGenerator : MonoBehaviour
     MAP_TYPE[,] mapTable;
 
     // 探索済みマップ
-    Dictionary<string, bool[,]> discoveredMaps =new Dictionary<string, bool[,]>();
+    Dictionary<string, bool[,]> discoveredMaps = new Dictionary<string, bool[,]>();
     // 発見した落とし穴
     Dictionary<string, bool[,]> discoveredPitMaps = new Dictionary<string, bool[,]>();
+    // 謎解きクリア済み
+    Dictionary<string, bool[,]> solvedPuzzleMaps = new Dictionary<string, bool[,]>();
 
     // 現在の階の探索済みマップ
     bool[,] discovered;
@@ -476,37 +478,42 @@ public class MapGenerator : MonoBehaviour
         Debug.Log("★★★ ミニマップ更新 ★★★");
 
         //==================================================
-        // 5×5ミニマップを更新
+        // 前のミニマップを削除
         //==================================================
 
-        // 前に作った5×5マップを削除
         for (int i = minimap.childCount - 1; i >= 0; i--)
         {
             Destroy(minimap.GetChild(i).gameObject);
         }
 
+
         //==================================================
-        // プレイヤーを中心に5×5を表示
+        // 5×5ミニマップを作成
         //==================================================
 
         for (int y = -2; y <= 2; y++)
         {
             for (int x = -2; x <= 2; x++)
             {
-                // プレイヤーから見たマップ上の位置
-                Vector2Int pos = player.currentPos + new Vector2Int(x, y);
+                Vector2Int pos =
+                    player.currentPos + new Vector2Int(x, y);
 
-                // マップ外なら壁として扱う
                 MAP_TYPE type = GetNextMapType(pos);
 
-                string mapKey = currentStage + "_" + currentFloor;
+                string mapKey =
+                    currentStage + "_" + currentFloor;
+
+
+                //==================================================
+                // 落とし穴が発見済みか
+                //==================================================
 
                 bool pitDiscovered = false;
 
                 if (pos.x >= 0 &&
-                pos.x < mapTable.GetLength(0) &&
-                pos.y >= 0 &&
-                pos.y < mapTable.GetLength(1))
+                    pos.x < mapTable.GetLength(0) &&
+                    pos.y >= 0 &&
+                    pos.y < mapTable.GetLength(1))
                 {
                     if (discoveredPitMaps.ContainsKey(mapKey))
                     {
@@ -515,221 +522,183 @@ public class MapGenerator : MonoBehaviour
                     }
                 }
 
+
                 //==================================================
-                // マスを作成
+                // 黒い背景を作成
                 //==================================================
 
-                GameObject tile =Instantiate(prefabs[(int)MAP_TYPE.GROUND],minimap);
+                GameObject tile =
+                    Instantiate(
+                        prefabs[(int)MAP_TYPE.GROUND],
+                        minimap
+                    );
 
-                SpriteRenderer sr = tile.GetComponent<SpriteRenderer>();
-                
-                // 黒背景として使う
+                SpriteRenderer sr =
+                    tile.GetComponent<SpriteRenderer>();
+
+                if (sr == null)
+                    continue;
+
+
+                // 黒背景
                 sr.color = Color.black;
                 sr.sortingOrder = 100;
 
 
-                if (sr != null)
+                //==================================================
+                // マップの種類に応じて表示
+                //==================================================
+
+                if (type == MAP_TYPE.WALL)
                 {
-                    // マップの種類に応じた画像を取得
-                    SpriteRenderer original = prefabs[(int)type].GetComponent<SpriteRenderer>();
-
-                    if (original != null)
-                    {
-                        // 謎解き・階段は表示
-                        if (type == MAP_TYPE.STAIR ||
-                            type == MAP_TYPE.PUZZLE ||
-                            type == MAP_TYPE.PUZZLE2)
-                        {
-                            // 黒背景
-                            sr.sprite = prefabs[(int)MAP_TYPE.GROUND]
-                                .GetComponent<SpriteRenderer>().sprite;
-
-                            sr.color = Color.black;
-                            sr.sortingOrder = 100;
-
-                            // アイコン
-                            GameObject icon = new GameObject("MinimapIcon");
-
-                            icon.transform.SetParent(tile.transform);
-                            icon.transform.localPosition = Vector3.zero;
-                            icon.transform.localScale = Vector3.one;
-
-                            SpriteRenderer iconSR =
-                                icon.AddComponent<SpriteRenderer>();
-
-                            iconSR.sprite = original.sprite;
-                            iconSR.color = Color.white;
-                            iconSR.sortingOrder = 110;
-                        }
-
-                        // 落とし穴は「落ちたことがある場合だけ」表示
-                        else if (type == MAP_TYPE.PIT && pitDiscovered)
-                        {
-                            // 黒背景
-                            sr.sprite = prefabs[(int)MAP_TYPE.GROUND]
-                                .GetComponent<SpriteRenderer>().sprite;
-
-                            sr.color = Color.black;
-                            sr.sortingOrder = 100;
-
-                            // 落とし穴アイコン
-                            GameObject icon = new GameObject("MinimapIcon");
-
-                            icon.transform.SetParent(tile.transform);
-                            icon.transform.localPosition = Vector3.zero;
-                            icon.transform.localScale = Vector3.one;
-
-                            SpriteRenderer iconSR =
-                                icon.AddComponent<SpriteRenderer>();
-
-                            iconSR.sprite = original.sprite;
-                            iconSR.color = Color.white;
-                            iconSR.sortingOrder = 110;
-                        }
-
-                        // 落とし穴にまだ落ちていない
-                        else if (type == MAP_TYPE.PIT)
-                        {
-                            // 黒背景だけ
-                            sr.sprite = prefabs[(int)MAP_TYPE.GROUND]
-                                .GetComponent<SpriteRenderer>().sprite;
-
-                            sr.color = Color.black;
-                            sr.sortingOrder = 100;
-                        }
-
-                        // その他のマス
-                        else
-                        {
-                            sr.sprite = original.sprite;
-                        }
-                    }
-
-                    // プレイヤーの初期位置だった場所は
-                    // ミニマップでは普通の床として表示
-                    if (type == MAP_TYPE.PLAYER)
-                    {
-                        SpriteRenderer ground =
-                            prefabs[(int)MAP_TYPE.GROUND]
-                            .GetComponent<SpriteRenderer>();
-
-                        if (ground != null)
-                        {
-                            sr.sprite = ground.sprite;
-                        }
-
-                        sr.color = Color.black;
-                    }
-
-                    // 色を設定
-                    if (x == 0 && y == 0)
-                    {
-                        // プレイヤーを一番手前に表示
-                        sr.color = Color.black;
-                        sr.sortingOrder = 100;
-                    }
-                    else if (type == MAP_TYPE.WALL)
-                    {
-                        // 壁 → グレー
-                        sr.color = Color.gray;
-
-                        sr.sortingOrder = 100;
-                    }
-                    else
-                    {
-                        // 床 → 黒
-                        sr.color = Color.black;
-
-                        sr.sortingOrder = 100;
-                    }
-
-                    //==================================================
-                    // プレイヤーを中央に表示
-                    //==================================================
-
-                    if (x == 0 && y == 0)
-                    {
-                        if (x == 0 && y == 0)
-                        {
-                            //==================================================
-                            // 中央は「黒い床」
-                            //==================================================
-
-                            sr.color = Color.black;
-                            sr.sortingOrder = 100;
-
-
-                            //==================================================
-                            // その上にプレイヤーの矢印を作る
-                            //==================================================
-
-                            GameObject arrow =
-                                new GameObject("MinimapPlayerArrow");
-
-                            arrow.transform.SetParent(minimap);
-
-                            arrow.transform.localPosition = Vector3.zero;
-
-                            arrow.transform.localScale =
-                                Vector3.one * 100f;
-
-                            SpriteRenderer arrowSR =
-                                arrow.AddComponent<SpriteRenderer>();
-
-                            // 作った矢印画像
-                            arrowSR.sprite = playerArrowSprite;
-
-                            // 白色
-                            arrowSR.color = Color.white;
-
-                            // 床より前
-                            arrowSR.sortingOrder = 110;
-
-
-                            //==================================================
-                            // プレイヤーの向き
-                            //==================================================
-
-                            switch (player.direction)
-                            {
-                                case Player.DIRECTION.TOP:
-                                    arrow.transform.localRotation =
-                                        Quaternion.Euler(0, 0, 0);
-                                    break;
-
-                                case Player.DIRECTION.RIGHT:
-                                    arrow.transform.localRotation =
-                                        Quaternion.Euler(0, 0, -90);
-                                    break;
-
-                                case Player.DIRECTION.DOWN:
-                                    arrow.transform.localRotation =
-                                        Quaternion.Euler(0, 0, 180);
-                                    break;
-
-                                case Player.DIRECTION.LEFT:
-                                    arrow.transform.localRotation =
-                                        Quaternion.Euler(0, 0, 90);
-                                    break;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        sr.sortingOrder = 100;
-                    }
+                    // 壁
+                    sr.color = Color.gray;
+                }
+                else if (type == MAP_TYPE.STAIR)
+                {
+                    // 階段
+                    CreateMinimapIcon(tile, type);
+                }
+                else if (type == MAP_TYPE.PUZZLE && !puzzleSolved)
+                {
+                    // 1F謎解き
+                    CreateMinimapIcon(tile, type);
+                }
+                else if (type == MAP_TYPE.PUZZLE2 && !puzzle2Solved)
+                {
+                    // 2F謎解き
+                    CreateMinimapIcon(tile, type);
+                }
+                else if (type == MAP_TYPE.PIT && pitDiscovered)
+                {
+                    // 発見済み落とし穴
+                    CreateMinimapIcon(tile, type);
                 }
 
 
                 //==================================================
-                // 5×5上の位置
+                // プレイヤーのいる場所
                 //==================================================
 
-                tile.transform.localPosition = new Vector3(x * minimapTileSize, -y * minimapTileSize, 0);
+                if (x == 0 && y == 0)
+                {
+                    CreatePlayerArrow();
+                }
 
-                // 5×5用の大きさ
-                tile.transform.localScale = Vector3.one * 100f;
+
+                //==================================================
+                // 位置・大きさ
+                //==================================================
+
+                tile.transform.localPosition =
+                    new Vector3(
+                        x * minimapTileSize,
+                        -y * minimapTileSize,
+                        0
+                    );
+
+                tile.transform.localScale =
+                    Vector3.one * 100f;
             }
+        }
+    }
+
+    private void CreateMinimapIcon(GameObject tile, MAP_TYPE type)
+    {
+        SpriteRenderer original =
+            prefabs[(int)type].GetComponent<SpriteRenderer>();
+
+        if (original == null)
+            return;
+
+
+        //==================================================
+        // アイコン作成
+        //==================================================
+
+        GameObject icon =
+            new GameObject("MinimapIcon");
+
+        icon.transform.SetParent(tile.transform);
+
+        icon.transform.localPosition =
+            Vector3.zero;
+
+        icon.transform.localScale =
+            Vector3.one;
+
+
+        SpriteRenderer iconSR =
+            icon.AddComponent<SpriteRenderer>();
+
+        iconSR.sprite = original.sprite;
+
+        iconSR.color = Color.white;
+
+        // 黒背景より前
+        iconSR.sortingOrder = 110;
+    }
+
+    private void CreatePlayerArrow()
+    {
+        GameObject arrow =
+            new GameObject("MinimapPlayerArrow");
+
+        arrow.transform.SetParent(minimap);
+
+        arrow.transform.localPosition =
+            Vector3.zero;
+
+        arrow.transform.localScale =
+            Vector3.one * 100f;
+
+
+        SpriteRenderer arrowSR =
+            arrow.AddComponent<SpriteRenderer>();
+
+        arrowSR.sprite = playerArrowSprite;
+
+        arrowSR.color = Color.white;
+
+        arrowSR.sortingOrder = 110;
+
+
+        //==================================================
+        // プレイヤーの向き
+        //==================================================
+
+        switch (player.direction)
+        {
+            case Player.DIRECTION.TOP:
+
+                arrow.transform.localRotation =
+                    Quaternion.Euler(0, 0, 0);
+
+                break;
+
+
+            case Player.DIRECTION.RIGHT:
+
+                arrow.transform.localRotation =
+                    Quaternion.Euler(0, 0, -90);
+
+                break;
+
+
+            case Player.DIRECTION.DOWN:
+
+                arrow.transform.localRotation =
+                    Quaternion.Euler(0, 0, 180);
+
+                break;
+
+
+            case Player.DIRECTION.LEFT:
+
+                arrow.transform.localRotation =
+                    Quaternion.Euler(0, 0, 90);
+
+                break;
         }
     }
 
@@ -949,11 +918,12 @@ public class MapGenerator : MonoBehaviour
             puzzleSolved = true;
             Puzzle.SetActive(false);
             player.isPuzzle = false;
+            UpdateMinimap();
         }
         else
         {
             Debug.Log("不正解！");
-       }
+        }
     }
 
     public void CheckPuzzle2F()
@@ -968,6 +938,7 @@ public class MapGenerator : MonoBehaviour
             puzzle2Solved = true;
             Puzzle2.SetActive(false);
             player.isPuzzle = false;
+            UpdateMinimap();
         }
         else
         {
