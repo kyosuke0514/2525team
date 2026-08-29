@@ -112,30 +112,41 @@ public class Player : MonoBehaviour
         // 前進
         if (Input.GetKeyDown(KeyCode.W))
         {
-            Debug.Log("W押した！");
+            direction = DIRECTION.TOP;
+            _setDirection();
             _move(1);
+            //_move(1);
         }
 
         // 右を向く
         if (Input.GetKeyDown(KeyCode.D))
         {
-            direction++;
+            direction = DIRECTION.RIGHT;
             _setDirection();
-            
+            _move(1);
+            //direction++;
+            //_setDirection();
+
         }
 
         // 後退
         if (Input.GetKeyDown(KeyCode.S))
         {
-            _move(-1);
+            direction = DIRECTION.DOWN;
+            _setDirection();
+            _move(1);
+            //_move(-1);
         }
 
         // 左を向く
         if (Input.GetKeyDown(KeyCode.A))
         {
-            direction--;
+            direction = DIRECTION.LEFT;
             _setDirection();
-            
+            _move(1);
+            //direction--;
+            //_setDirection();
+
         }
     }
 
@@ -146,10 +157,7 @@ public class Player : MonoBehaviour
 
     void _setDirection()
     {
-        int d =
-            ((int)direction + (int)DIRECTION.MAX)
-            % (int)DIRECTION.MAX;
-
+        int d = ((int)direction + (int)DIRECTION.MAX) % (int)DIRECTION.MAX;
         direction = (DIRECTION)d;
     }
 
@@ -162,12 +170,7 @@ public class Player : MonoBehaviour
     void _move(int dir)
     {
         // 次に移動する場所を計算
-        nextPos =
-            currentPos +
-            new Vector2Int(
-                move[(int)direction, 0] * dir,
-                move[(int)direction, 1] * dir
-            );
+        nextPos = currentPos + new Vector2Int(move[(int)direction, 0] * dir,move[(int)direction, 1] * dir);
 
         Debug.Log(nextPos);
 
@@ -182,8 +185,7 @@ public class Player : MonoBehaviour
             Debug.Log("現在位置：" + currentPos);
 
             // プレイヤーを移動
-            transform.localPosition =
-                mapGenerator.ScreenPos(currentPos);
+            transform.localPosition = mapGenerator.ScreenPos(currentPos);
 
             // 通った場所を記録
             mapGenerator.DiscoverPlayerPosition();

@@ -465,53 +465,43 @@ public class MapGenerator : MonoBehaviour
         Debug.Log("★★★ ミニマップ更新 ★★★");
 
         //==================================================
-        // 3×3ミニマップを更新
+        // 5×5ミニマップを更新
         //==================================================
 
-        // 前に作った3×3マップを削除
+        // 前に作った5×5マップを削除
         for (int i = minimap.childCount - 1; i >= 0; i--)
         {
             Destroy(minimap.GetChild(i).gameObject);
         }
 
         //==================================================
-        // プレイヤーを中心に3×3を表示
+        // プレイヤーを中心に5×5を表示
         //==================================================
 
-        for (int y = -1; y <= 1; y++)
+        for (int y = -2; y <= 2; y++)
         {
-            for (int x = -1; x <= 1; x++)
+            for (int x = -2; x <= 2; x++)
             {
                 // プレイヤーから見たマップ上の位置
-                Vector2Int pos =
-                    player.currentPos +
-                    new Vector2Int(x, y);
+                Vector2Int pos = player.currentPos + new Vector2Int(x, y);
 
                 // マップ外なら壁として扱う
-                MAP_TYPE type =
-                    GetNextMapType(pos);
+                MAP_TYPE type = GetNextMapType(pos);
 
 
                 //==================================================
                 // マスを作成
                 //==================================================
 
-                GameObject tile =
-                    Instantiate(
-                        prefabs[(int)MAP_TYPE.GROUND],
-                        minimap
-                    );
+                GameObject tile =Instantiate(prefabs[(int)MAP_TYPE.GROUND],minimap);
 
-                SpriteRenderer sr =
-                    tile.GetComponent<SpriteRenderer>();
+                SpriteRenderer sr = tile.GetComponent<SpriteRenderer>();
 
 
                 if (sr != null)
                 {
                     // マップの種類に応じた画像を取得
-                    SpriteRenderer original =
-                        prefabs[(int)type]
-                        .GetComponent<SpriteRenderer>();
+                    SpriteRenderer original = prefabs[(int)type].GetComponent<SpriteRenderer>();
 
                     if (original != null)
                     {
@@ -637,19 +627,13 @@ public class MapGenerator : MonoBehaviour
 
 
                 //==================================================
-                // 3×3上の位置
+                // 5×5上の位置
                 //==================================================
 
-                tile.transform.localPosition =
-                    new Vector3(
-                        x * minimapTileSize,
-                        -y * minimapTileSize,
-                        0
-                    );
+                tile.transform.localPosition = new Vector3(x * minimapTileSize, -y * minimapTileSize, 0);
 
-                // 3×3用の大きさ
-                tile.transform.localScale =
-                    Vector3.one*100f;
+                // 5×5用の大きさ
+                tile.transform.localScale = Vector3.one * 100f;
             }
         }
     }
