@@ -16,33 +16,31 @@ public class karikarikari : MonoBehaviour
         C
     }
 
-    // ‰¼‚Ìƒ‰ƒ“ƒN
-    public Rank rank = Rank.A;
-
     void Start()
     {
         // Å‰‚Í”ñ•\¦
         rankImage.enabled = false;
-
-        switch (rank)
-        {
-            case Rank.A:
-                rankImage.sprite = imageA;
-                break;
-
-            case Rank.B:
-                rankImage.sprite = imageB;
-                break;
-
-            case Rank.C:
-                rankImage.sprite = imageC;
-                break;
-        }
     }
 
     // ResultTime‚©‚çŒÄ‚Ño‚·
-    public void ShowRank()
+    public void ShowRank(float clearTime)
     {
+        // 3•ªˆÈ“à ¨ A
+        if (clearTime <= 180)
+        {
+            rankImage.sprite = imageA;
+        }
+        // 3•ª’´`6•ªˆÈ“à ¨ B
+        else if (clearTime <= 360)
+        {
+            rankImage.sprite = imageB;
+        }
+        // 6•ª’´`8•ªˆÈ“à ¨ C
+        else
+        {
+            rankImage.sprite = imageC;
+        }
+
         rankImage.enabled = true;
     }
 }

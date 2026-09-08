@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -239,6 +240,7 @@ public class Player : MonoBehaviour
         {
             Debug.Log("ステージクリア！");
             mapGenerator.ShowTreasureChest();
+            SceneManager.LoadScene("clear");
         }
 
 
@@ -301,6 +303,7 @@ public class Player : MonoBehaviour
         if (currentHP <= 0)
         {
             Debug.Log("ゲームオーバー");
+            SceneManager.LoadScene("Gameover.");
         }
     }
 }

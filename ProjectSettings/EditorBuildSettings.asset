@@ -14,8 +14,11 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/kudo/SentakuScene.unity
     guid: 86f8ec11a21acea4191368ef61e96af3
-  - enabled: 0
+  - enabled: 1
     path: Assets/saitou/scene/Gameover..unity
     guid: ec06be041e0460a41a2cb61d47a41507
+  - enabled: 1
+    path: Assets/saitou/scene/clear.unity
+    guid: 2b9eb410a15858f4c82f7b61f676b77f
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0
