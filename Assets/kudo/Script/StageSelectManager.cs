@@ -1,7 +1,7 @@
 using UnityEngine;
+using UnityEngine.EventSystems; //UIの選択検知に必要
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using UnityEngine.EventSystems; //UIの選択検知に必要
 
 public class StageSelectManager : MonoBehaviour
 {
@@ -25,6 +25,8 @@ public class StageSelectManager : MonoBehaviour
 
     [Header("プレイヤーの浮き上がりの高さ")]
     public float yOffset = 100;
+
+    [SerializeField] MapGenerator mapGenerator;
 
     void Start()
     {
@@ -130,8 +132,13 @@ public class StageSelectManager : MonoBehaviour
     }
 
     //ボタンが押されたときにシーンを読み込む
-    public void LoadStageScene(string sceneName)
+    public void LoadStage(int stage)
     {
-        SceneManager.LoadScene(sceneName);
+        // 選択したステージを保存
+        PlayerPrefs.SetInt("SelectedStage", stage);
+        PlayerPrefs.Save();
+
+        // メインゲームSceneへ移動
+        SceneManager.LoadScene("Main");
     }
 }

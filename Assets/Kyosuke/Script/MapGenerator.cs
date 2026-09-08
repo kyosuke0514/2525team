@@ -144,6 +144,11 @@ public class MapGenerator : MonoBehaviour
         yesButton.onClick.AddListener(Yes);
         noButton.onClick.AddListener(No);
 
+        int selectedStage = PlayerPrefs.GetInt("SelectedStage", 0);
+
+        currentStage = selectedStage;
+        currentFloor = 0;
+
         _loadMapData();
         _createMap();
         _updateStageText();
@@ -704,9 +709,16 @@ public class MapGenerator : MonoBehaviour
 
     public void ShowTreasureChest()
     {
+        Debug.Log("★★★ ShowTreasureChestが呼ばれた ★★★");
         treasureChestImage.SetActive(true);
 
         player.isPuzzle = true;
+
+        // 現在のステージをクリア済みにする
+        PlayerPrefs.SetInt("Stage" + (currentStage + 1) + "_Cleared", 1);
+        PlayerPrefs.Save();
+
+        Debug.Log("Stage" + (currentStage + 1) + " クリア情報を保存しました");
     }
 
     public void DiscoverPlayerPosition()
@@ -1104,6 +1116,8 @@ public class MapGenerator : MonoBehaviour
     {
         currentStage = stage;
         currentFloor = 0;
+
+        Debug.Log("★★★ ステージ" + (stage + 1) + "が呼ばれました ★★★");
 
         while (map2D.childCount > 0)
         {
