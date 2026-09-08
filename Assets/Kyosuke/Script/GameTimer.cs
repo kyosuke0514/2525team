@@ -5,7 +5,11 @@ public class GameTimer : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI timeText;
 
-    float elapsedTime = 0f;
+    public static float elapsedTime = 0f;
+    void Start()
+    {
+        elapsedTime = 0f;
+    }
 
     void Update()
     {

@@ -2,21 +2,24 @@ using UnityEngine;
 using TMPro;
 using System.Collections;
 
-public class ResultTime : MonoBehaviour
+public class cleartime1 : MonoBehaviour
 {
     public TextMeshProUGUI timeText;
 
     // ランク表示スクリプト
     public karikarikari rank;
 
-    // 仮のクリアタイム
-    public float clearTime = 90f;
+    // クリアタイム
+    public float clearTime;
 
     // 何秒かけてカウントアップするか
     public float animationTime = 3f;
 
     void Start()
     {
+        // メインゲームで計った時間を受け取る
+        clearTime = GameTimer.elapsedTime;
+
         StartCoroutine(CountUpTime());
     }
 
@@ -48,6 +51,6 @@ public class ResultTime : MonoBehaviour
         // 少し待ってからランク表示
         yield return new WaitForSeconds(0.3f);
 
-        rank.ShowRank();
+        rank.ShowRank(clearTime);
     }
 }
