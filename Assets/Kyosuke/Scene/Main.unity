@@ -2911,7 +2911,7 @@ SpriteRenderer:
   m_SortingOrder: -10
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 1, b: 0.91796017, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -10862,7 +10862,10 @@ MonoBehaviour:
     - {fileID: 4900000, guid: d0ad522183e77e348a09409c91077509, type: 3}
     - {fileID: 4900000, guid: 0810ec29fcdbb9241a4a83346f396d33, type: 3}
     - {fileID: 4900000, guid: b78ad765c3fc23241b86c4a71f6bb3ec, type: 3}
-  - floors: []
+  - floors:
+    - {fileID: 4900000, guid: b42bb87ef3c94eb41a5c251ccb15ac17, type: 3}
+    - {fileID: 4900000, guid: 2d9c7dfdf449ca34aad05224f19f9633, type: 3}
+    - {fileID: 4900000, guid: 70848627b017ab0409442249a0326674, type: 3}
   prefabs:
   - {fileID: 5008786257991223881, guid: fac76ec91a9cb4e41bcebb112deb1d06, type: 3}
   - {fileID: 1080759926175278120, guid: bf1e8272837a65048b682f04cc7b66f9, type: 3}

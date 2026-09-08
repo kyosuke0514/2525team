@@ -2,12 +2,13 @@ using UnityEngine;
 using UnityEngine.SceneManagement; //シーン移動に必要
 
 
-public class Starge1
+public class Starge1 : MonoBehaviour 
 {
- //ボタンクリックされたときに呼び出す関数
-  public void OnClickStart()
+    //ボタンクリックされたときに呼び出す関数
+    [SerializeField] MapGenerator mapGenerator;
+    public void OnClickStart()
     {
-        //シーン名
-        SceneManager.LoadScene("");
+        //ステージ1
+        mapGenerator.ChangeStage(0);
     }
 }
