@@ -12,12 +12,12 @@ public class cleartime1 : MonoBehaviour
     // クリアタイム
     public float clearTime;
 
-    // 何秒かけてカウントアップするか
+    //カウントアップするか
     public float animationTime = 3f;
 
     void Start()
     {
-        // メインゲームで計った時間を受け取る
+        // メインゲーム 時間を受け取る
         clearTime = GameTimer.elapsedTime;
 
         StartCoroutine(CountUpTime());
@@ -42,13 +42,13 @@ public class cleartime1 : MonoBehaviour
             yield return null;
         }
 
-        // 最後は正確な時間
+       
         int finalMinute = (int)(clearTime / 60);
         int finalSecond = (int)(clearTime % 60);
 
         timeText.text = string.Format("{0:00}:{1:00}", finalMinute, finalSecond);
 
-        // 少し待ってからランク表示
+        // 少し待ってからランク表示    
         yield return new WaitForSeconds(0.3f);
 
         rank.ShowRank(clearTime);

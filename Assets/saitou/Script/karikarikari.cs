@@ -25,17 +25,17 @@ public class karikarikari : MonoBehaviour
     // ResultTime‚©‚çŒÄ‚Ño‚·
     public void ShowRank(float clearTime)
     {
-        // 3•ªˆÈ“à ¨ A
+        // 3•ªˆÈ“à  A
         if (clearTime <= 180)
         {
             rankImage.sprite = imageA;
         }
-        // 3•ª’´`6•ªˆÈ“à ¨ B
+        // 3•ª’´`6•ªˆÈ“à  B
         else if (clearTime <= 360)
         {
             rankImage.sprite = imageB;
         }
-        // 6•ª’´`8•ªˆÈ“à ¨ C
+        // 6•ª’´`8•ªˆÈ“à  C
         else
         {
             rankImage.sprite = imageC;
