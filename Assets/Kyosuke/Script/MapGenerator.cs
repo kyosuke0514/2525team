@@ -57,15 +57,12 @@ public class MapGenerator : MonoBehaviour
     [SerializeField] Image puzzleConfirmImage;
     [SerializeField] Sprite puzzleConfirmSprite;
 
-    // 全体マップ
-    [SerializeField] GameObject FullMap;
-    [SerializeField] GameObject fullMapTilePrefab;
 
     // ミニマップ
     [SerializeField] float miniMapScale = 0.3f;
     [SerializeField] Vector2 miniMapOffset = new Vector2(-7.4f, -3.5f);
 
-    // 3*3ミニマップ
+    // 5*5ミニマップ
     [SerializeField] Transform minimap;
     [SerializeField] float minimapTileSize = 100f;
     [SerializeField] Sprite playerArrowSprite;
@@ -78,14 +75,20 @@ public class MapGenerator : MonoBehaviour
 
     public enum MAP_TYPE
     {
-        GROUND, // 0
-        WALL,   // 1
-        PLAYER, // 2
-        STAIR,  // 3
-        GOAL,   // 4
-        PIT,    // 5
-        PUZZLE, // 6
-        PUZZLE2 // 7
+        GROUND = 0, 
+        WALL = 1,   
+        PLAYER = 2, 
+        GOAL = 3,   
+        PIT = 4,    
+        PUZZLE = 30, 
+        PUZZLE2 = 31, 
+        PUZZLE3 = 32, 
+        PUZZLE4 = 33,    
+        PUZZLE5 = 34,     
+        PUZZLE6 = 35,    
+        STAIR_1_2 = 40,  
+        STAIR_2_3 = 41,  
+        STAIR_3_4 = 42   
     }
 
     MAP_TYPE[,] mapTable;
@@ -179,20 +182,22 @@ public class MapGenerator : MonoBehaviour
 
     private void Update()
     {
-        // Mキーで全体マップを開閉
-        if (Input.GetKeyDown(KeyCode.M))
+        // 1キー → ステージ1
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            FullMap.SetActive(!FullMap.activeSelf);
+            ChangeStage(0);
+        }
 
-            if (FullMap.activeSelf)
-            {
-                CreateFullMap();
-                player.isPuzzle = true;
-            }
-            else
-            {
-                player.isPuzzle = false;
-            }
+        // 2キー → ステージ2
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            ChangeStage(1);
+        }
+
+        // 3キー → ステージ3
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            ChangeStage(2);
         }
     }
 
@@ -267,9 +272,8 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
-
     //==================================================
-    // マップ生成
+    // 全体マップ生成
     //==================================================
 
     void _createMap()
@@ -311,14 +315,72 @@ public class MapGenerator : MonoBehaviour
                 Vector2Int pos =
                     new Vector2Int(x, y);
 
+                // 床Prefab
                 GameObject _ground =
                     Instantiate(
-                        prefabs[(int)MAP_TYPE.GROUND],
+                        prefabs[0],
                         map2D);
+
+                // マップの種類に応じてPrefabを選択
+                GameObject mapPrefab = null;
+
+                switch (mapTable[x, y])
+                {
+                    case MAP_TYPE.GROUND:
+                        // 床の場合は床Prefab
+                        mapPrefab = prefabs[0];
+                        break;
+
+                    case MAP_TYPE.WALL:
+                        mapPrefab = prefabs[1];
+                        break;
+
+                    case MAP_TYPE.PLAYER:
+                        mapPrefab = prefabs[2];
+                        break;
+
+                    case MAP_TYPE.GOAL:
+                        mapPrefab = prefabs[3];
+                        break;
+
+                    case MAP_TYPE.PIT:
+                        mapPrefab = prefabs[4];
+                        break;
+
+                    // パズル6種類は同じPrefabを使用
+                    case MAP_TYPE.PUZZLE:
+                    case MAP_TYPE.PUZZLE2:
+                    case MAP_TYPE.PUZZLE3:
+                    case MAP_TYPE.PUZZLE4:
+                    case MAP_TYPE.PUZZLE5:
+                    case MAP_TYPE.PUZZLE6:
+                        mapPrefab = prefabs[5];
+                        break;
+
+                    // 階段3種類は同じPrefabを使用
+                    case MAP_TYPE.STAIR_1_2:
+                    case MAP_TYPE.STAIR_2_3:
+                    case MAP_TYPE.STAIR_3_4:
+                        mapPrefab = prefabs[6];
+                        break;
+
+                    default:
+                        Debug.LogError(
+                            "対応するPrefabがありません：" +
+                            mapTable[x, y]);
+
+                        break;
+                }
+
+                if (mapPrefab == null)
+                {
+                    Destroy(_ground);
+                    continue;
+                }
 
                 GameObject _map =
                     Instantiate(
-                        prefabs[(int)mapTable[x, y]],
+                        mapPrefab,
                         map2D);
 
                 _ground.transform.localPosition =
@@ -363,116 +425,6 @@ public class MapGenerator : MonoBehaviour
                     DiscoverPlayerPosition();
 
                     Destroy(_map);
-                }
-            }
-        }
-    }
-
-
-    //==================================================
-    // 全体マップ生成
-    //==================================================
-
-    void CreateFullMap()
-    {
-        // 前回の全体マップを削除
-        for (int i = FullMap.transform.childCount - 1; i >= 0; i--)
-        {
-            Destroy(FullMap.transform.GetChild(i).gameObject);
-        }
-
-        int width = mapTable.GetLength(0);
-        int height = mapTable.GetLength(1);
-
-        for (int y = 0; y < height; y++)
-        {
-            for (int x = 0; x < width; x++)
-            {
-                bool show = false;
-
-                // 探索済みなら表示
-                if (discovered[x, y])
-                {
-                    show = true;
-                }
-
-                // 探索済みマスの周囲にある壁を表示
-                if (!show)
-                {
-                    Vector2Int[] directions =
-                    {
-                        new Vector2Int(0, 1),
-                        new Vector2Int(0, -1),
-                        new Vector2Int(1, 0),
-                        new Vector2Int(-1, 0)
-                    };
-
-                    foreach (Vector2Int dir in directions)
-                    {
-                        int nx = x + dir.x;
-                        int ny = y + dir.y;
-
-                        if (nx >= 0 && nx < width &&
-                            ny >= 0 && ny < height)
-                        {
-                            if (discovered[nx, ny] &&
-                                mapTable[x, y] == MAP_TYPE.WALL)
-                            {
-                                show = true;
-                            }
-                        }
-                    }
-                }
-
-                // マップ外周は常に表示
-                if (x == 0 || x == width - 1 ||
-                    y == 0 || y == height - 1)
-                {
-                    show = true;
-                }
-
-                if (!show)
-                {
-                    continue;
-                }
-
-                GameObject tile =
-                    Instantiate(
-                        fullMapTilePrefab,
-                        FullMap.transform);
-
-                RectTransform rect =
-                    tile.GetComponent<RectTransform>();
-
-                float tileSize = 30f;
-
-                float mapWidth =
-                    width * tileSize;
-
-                float mapHeight =
-                    height * tileSize;
-
-                // マップを中央に配置
-                rect.anchoredPosition = new Vector2(
-                    x * tileSize
-                    - mapWidth / 2f
-                    + tileSize / 2f,
-
-                    -y * tileSize
-                    + mapHeight / 2f
-                    - tileSize / 2f
-                );
-
-                // 壁を黒く表示
-                if (mapTable[x, y] == MAP_TYPE.WALL)
-                {
-                    Image image =
-                        tile.GetComponent<Image>();
-
-                    if (image != null)
-                    {
-                        image.color = Color.black;
-                    }
                 }
             }
         }
@@ -547,7 +499,7 @@ public class MapGenerator : MonoBehaviour
 
                 // 黒背景
                 sr.color = Color.black;
-                sr.sortingOrder = 100;
+                sr.sortingOrder = 97;
 
 
                 //==================================================
@@ -559,7 +511,7 @@ public class MapGenerator : MonoBehaviour
                     // 壁
                     sr.color = Color.gray;
                 }
-                else if (type == MAP_TYPE.STAIR)
+                else if (type == MAP_TYPE.STAIR_1_2 || type == MAP_TYPE.STAIR_2_3 || type == MAP_TYPE.STAIR_3_4)
                 {
                     // 階段
                     CreateMinimapIcon(tile, type);
@@ -580,17 +532,6 @@ public class MapGenerator : MonoBehaviour
                     CreateMinimapIcon(tile, type);
                 }
 
-
-                //==================================================
-                // プレイヤーのいる場所
-                //==================================================
-
-                if (x == 0 && y == 0)
-                {
-                    CreatePlayerArrow();
-                }
-
-
                 //==================================================
                 // 位置・大きさ
                 //==================================================
@@ -606,21 +547,102 @@ public class MapGenerator : MonoBehaviour
                     Vector3.one * 100f;
             }
         }
+        CreatePlayerArrow();
+    }
+
+    private void CreatePlayerArrow()
+    {
+        // プレイヤー画像を作成
+        GameObject arrow = new GameObject("Player");
+
+        // ミニマップの子にする
+        arrow.transform.SetParent(minimap, false);
+
+        // 5×5ミニマップの中央
+        arrow.transform.localPosition = Vector3.zero;
+
+        // タイルと同じくらいの大きさ
+        arrow.transform.localScale = Vector3.one * 100f;
+
+        // SpriteRendererを追加
+        SpriteRenderer arrowSR =
+            arrow.AddComponent<SpriteRenderer>();
+
+        arrowSR.sprite = playerArrowSprite;
+        arrowSR.color = Color.white;
+
+        // タイルより前に表示
+        arrowSR.sortingOrder = 100;
+
+        // プレイヤーの向きに合わせて回転
+        switch (player.direction)
+        {
+            case Player.DIRECTION.TOP:
+                arrow.transform.localRotation =
+                    Quaternion.Euler(0, 0, 0);
+                break;
+
+            case Player.DIRECTION.RIGHT:
+                arrow.transform.localRotation =
+                    Quaternion.Euler(0, 0, -90);
+                break;
+
+            case Player.DIRECTION.DOWN:
+                arrow.transform.localRotation =
+                    Quaternion.Euler(0, 0, 180);
+                break;
+
+            case Player.DIRECTION.LEFT:
+                arrow.transform.localRotation =
+                    Quaternion.Euler(0, 0, 90);
+                break;
+        }
     }
 
     private void CreateMinimapIcon(GameObject tile, MAP_TYPE type)
     {
-        SpriteRenderer original =
-            prefabs[(int)type].GetComponent<SpriteRenderer>();
+        GameObject sourcePrefab = null;
 
-        if (original == null)
+        // 表示するアイコンの元Prefabを種類ごとに選択
+        switch (type)
+        {
+            case MAP_TYPE.PUZZLE:
+            case MAP_TYPE.PUZZLE2:
+            case MAP_TYPE.PUZZLE3:
+            case MAP_TYPE.PUZZLE4:
+            case MAP_TYPE.PUZZLE5:
+            case MAP_TYPE.PUZZLE6:
+                sourcePrefab = prefabs[5];
+                break;
+
+            case MAP_TYPE.STAIR_1_2:
+            case MAP_TYPE.STAIR_2_3:
+            case MAP_TYPE.STAIR_3_4:
+                sourcePrefab = prefabs[6];
+                break;
+
+            case MAP_TYPE.PIT:
+                sourcePrefab = prefabs[4];
+                break;
+
+            default:
+                return;
+        }
+
+        if (sourcePrefab == null)
+        {
             return;
+        }
 
+        SpriteRenderer original =
+            sourcePrefab.GetComponent<SpriteRenderer>();
 
-        //==================================================
-        // アイコン作成
-        //==================================================
+        if (original == null || original.sprite == null)
+        {
+            return;
+        }
 
+        // ミニマップ用アイコンを作成
         GameObject icon =
             new GameObject("MinimapIcon");
 
@@ -632,84 +654,16 @@ public class MapGenerator : MonoBehaviour
         icon.transform.localScale =
             Vector3.one;
 
-
         SpriteRenderer iconSR =
             icon.AddComponent<SpriteRenderer>();
 
         iconSR.sprite = original.sprite;
-
         iconSR.color = Color.white;
-
-        // 黒背景より前
-        iconSR.sortingOrder = 110;
-    }
-
-    private void CreatePlayerArrow()
-    {
-        GameObject arrow =
-            new GameObject("MinimapPlayerArrow");
-
-        arrow.transform.SetParent(minimap);
-
-        arrow.transform.localPosition =
-            Vector3.zero;
-
-        arrow.transform.localScale =
-            Vector3.one * 100f;
-
-
-        SpriteRenderer arrowSR =
-            arrow.AddComponent<SpriteRenderer>();
-
-        arrowSR.sprite = playerArrowSprite;
-
-        arrowSR.color = Color.white;
-
-        arrowSR.sortingOrder = 110;
-
-
-        //==================================================
-        // プレイヤーの向き
-        //==================================================
-
-        switch (player.direction)
-        {
-            case Player.DIRECTION.TOP:
-
-                arrow.transform.localRotation =
-                    Quaternion.Euler(0, 0, 0);
-
-                break;
-
-
-            case Player.DIRECTION.RIGHT:
-
-                arrow.transform.localRotation =
-                    Quaternion.Euler(0, 0, -90);
-
-                break;
-
-
-            case Player.DIRECTION.DOWN:
-
-                arrow.transform.localRotation =
-                    Quaternion.Euler(0, 0, 180);
-
-                break;
-
-
-            case Player.DIRECTION.LEFT:
-
-                arrow.transform.localRotation =
-                    Quaternion.Euler(0, 0, 90);
-
-                break;
-        }
+        iconSR.sortingOrder = 98;
     }
 
     public void ShowTreasureChest()
     {
-        Debug.Log("★★★ ShowTreasureChestが呼ばれた ★★★");
         treasureChestImage.SetActive(true);
 
         player.isPuzzle = true;
@@ -717,8 +671,6 @@ public class MapGenerator : MonoBehaviour
         // 現在のステージをクリア済みにする
         PlayerPrefs.SetInt("Stage" + (currentStage + 1) + "_Cleared", 1);
         PlayerPrefs.Save();
-
-        Debug.Log("Stage" + (currentStage + 1) + " クリア情報を保存しました");
     }
 
     public void DiscoverPlayerPosition()
@@ -777,7 +729,9 @@ public class MapGenerator : MonoBehaviour
         {
             for (int x = 0;x < mapTable.GetLength(0);x++)
             {
-                if (mapTable[x, y] == MAP_TYPE.STAIR)
+                MAP_TYPE type = mapTable[x, y];
+
+                if (type == MAP_TYPE.STAIR_1_2 || type == MAP_TYPE.STAIR_2_3 || type == MAP_TYPE.STAIR_3_4)
                 {
                     return new Vector2Int(x, y);
                 }
@@ -993,18 +947,49 @@ public class MapGenerator : MonoBehaviour
 
     public void CheckStair()
     {
-        if (GetNextMapType(player.currentPos)
-            == MAP_TYPE.STAIR)
+        MAP_TYPE nextMapType = GetNextMapType(player.currentPos);
+
+        if (nextMapType == MAP_TYPE.STAIR_1_2 || nextMapType == MAP_TYPE.STAIR_2_3 || nextMapType == MAP_TYPE.STAIR_3_4)
         {
-            if (currentFloor == 0)
+            // 現在の階と階段の種類に応じて画像を変更
+            if (nextMapType == MAP_TYPE.STAIR_1_2)
             {
-                // 1F → 2F
-                stairImage.sprite = stairUpSprite;
+                if (currentFloor == 0)
+                {
+                    // 1F → 2F
+                    stairImage.sprite = stairUpSprite;
+                }
+                else
+                {
+                    // 2F → 1F
+                    stairImage.sprite = stairDownSprite;
+                }
             }
-            else
+            else if (nextMapType == MAP_TYPE.STAIR_2_3)
             {
-                // 2F → 1F
-                stairImage.sprite = stairDownSprite;
+                if (currentFloor == 1)
+                {
+                    // 2F → 3F
+                    stairImage.sprite = stairUpSprite;
+                }
+                else
+                {
+                    // 3F → 2F
+                    stairImage.sprite = stairDownSprite;
+                }
+            }
+            else if (nextMapType == MAP_TYPE.STAIR_3_4)
+            {
+                if (currentFloor == 2)
+                {
+                    // 3F → 4F
+                    stairImage.sprite = stairUpSprite;
+                }
+                else
+                {
+                    // 4F → 3F
+                    stairImage.sprite = stairDownSprite;
+                }
             }
 
             stairImage.gameObject.SetActive(true);
@@ -1042,13 +1027,56 @@ public class MapGenerator : MonoBehaviour
         }
 
         // 階段の場合
-        if (currentFloor == 0)
+        MAP_TYPE nextMapType = GetNextMapType(player.currentPos);
+
+        switch (nextMapType)
         {
-            ChangeFloor(1);
-        }
-        else
-        {
-            ChangeFloor(0);
+            case MAP_TYPE.STAIR_1_2:
+
+                if (currentFloor == 0)
+                {
+                    // 1F → 2F
+                    ChangeFloor(1);
+                }
+                else if (currentFloor == 1)
+                {
+                    // 2F → 1F
+                    ChangeFloor(0);
+                }
+
+                break;
+
+
+            case MAP_TYPE.STAIR_2_3:
+
+                if (currentFloor == 1)
+                {
+                    // 2F → 3F
+                    ChangeFloor(2);
+                }
+                else if (currentFloor == 2)
+                {
+                    // 3F → 2F
+                    ChangeFloor(1);
+                }
+
+                break;
+
+
+            case MAP_TYPE.STAIR_3_4:
+
+                if (currentFloor == 2)
+                {
+                    // 3F → 4F
+                    ChangeFloor(3);
+                }
+                else if (currentFloor == 3)
+                {
+                    // 4F → 3F
+                    ChangeFloor(2);
+                }
+
+                break;
         }
     }
 
@@ -1088,11 +1116,6 @@ public class MapGenerator : MonoBehaviour
         _createMap();
         _updateStageText();
 
-        // 全体マップを開いている場合は更新
-        if (FullMap.activeSelf)
-        {
-            CreateFullMap();
-        }
 
         // 階段の位置へプレイヤーを移動
         if (moveToStair)
