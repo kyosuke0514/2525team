@@ -228,7 +228,7 @@ public class Player : MonoBehaviour
 
         //--------------- ŠK’i ---------------
 
-        if (type == MapGenerator.MAP_TYPE.STAIR)
+        if (type == MapGenerator.MAP_TYPE.STAIR_1_2 || type == MapGenerator.MAP_TYPE.STAIR_2_3 || type == MapGenerator.MAP_TYPE.STAIR_3_4)
         {
             mapGenerator.CheckStair();
         }
