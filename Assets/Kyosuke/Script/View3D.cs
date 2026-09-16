@@ -4,6 +4,10 @@ public class View3D : MonoBehaviour
 {
     [SerializeField] MapGenerator mapGenerator;
 
+    //==================================================
+    // Near：1マス先
+    //==================================================
+
     [SerializeField] GameObject nearFront;
     [SerializeField] GameObject nearLeft;
     [SerializeField] GameObject nearRight;
@@ -11,6 +15,10 @@ public class View3D : MonoBehaviour
     [SerializeField] GameObject nearRightPath;
     [SerializeField] GameObject nearLeft2;
     [SerializeField] GameObject nearRight2;
+
+    //==================================================
+    // Mid：2マス先
+    //==================================================
 
     [SerializeField] GameObject midFront;
     [SerializeField] GameObject midLeft;
@@ -20,6 +28,10 @@ public class View3D : MonoBehaviour
     [SerializeField] GameObject midLeft2;
     [SerializeField] GameObject midRight2;
 
+    //==================================================
+    // Far：3マス先
+    //==================================================
+
     [SerializeField] GameObject farFront;
     [SerializeField] GameObject farLeft;
     [SerializeField] GameObject farRight;
@@ -27,189 +39,136 @@ public class View3D : MonoBehaviour
     [SerializeField] GameObject farRightPath;
     [SerializeField] GameObject farLeft2;
     [SerializeField] GameObject farRight2;
+
+
     void Update()
     {
         UpdateView();
     }
 
+
     void UpdateView()
     {
-        // 1マス先
-        Vector2Int nearLL = GetMapPos(1, -2);
-        Vector2Int nearL = GetMapPos(1, -1);
+
+        //==================================================
+        // 各距離の座標を取得
+        //==================================================
+
+        // Near：1マス先
+
+        // 正面
         Vector2Int nearF = GetMapPos(1, 0);
-        Vector2Int nearR = GetMapPos(1, 1);
+
+        // プレイヤーのすぐ左右
+        Vector2Int nearL = GetMapPos(0, -1);
+        Vector2Int nearR = GetMapPos(0, 1);
+
+        // 左右奥
+        Vector2Int nearLL = GetMapPos(1, -2);
         Vector2Int nearRR = GetMapPos(1, 2);
 
-        // 2マス先
-        Vector2Int midLL = GetMapPos(2, -2);
-        Vector2Int midL = GetMapPos(2, -1);
+
+        // Mid：2マス先
         Vector2Int midF = GetMapPos(2, 0);
-        Vector2Int midR = GetMapPos(2, 1);
+        Vector2Int midLL = GetMapPos(2, -2);
         Vector2Int midRR = GetMapPos(2, 2);
 
-        // 3マス先
-        Vector2Int farLL = GetMapPos(3, -2);
-        Vector2Int farL = GetMapPos(3, -1);
+
+        // Far：3マス先
         Vector2Int farF = GetMapPos(3, 0);
-        Vector2Int farR = GetMapPos(3, 1);
+        Vector2Int farLL = GetMapPos(3, -2);
         Vector2Int farRR = GetMapPos(3, 2);
 
-        // 4マス先
-        Vector2Int ultraLL = GetMapPos(4, -2);
-        Vector2Int ultraL = GetMapPos(4, -1);
-        Vector2Int ultraF = GetMapPos(4, 0);
-        Vector2Int ultraR = GetMapPos(4, 1);
-        Vector2Int ultraRR = GetMapPos(4, 2);
 
-        // 5マス先
-        Vector2Int extremeLL = GetMapPos(5, -2);
-        Vector2Int extremeL = GetMapPos(5, -1);
-        Vector2Int extremeF = GetMapPos(5, 0);
-        Vector2Int extremeR = GetMapPos(5, 1);
-        Vector2Int extremeRR = GetMapPos(5, 2);
+        //==================================================
+        // 各座標が壁かどうかを判定
+        //==================================================
 
-        // ===== 壁判定 =====
-        bool nearLeftWall = mapGenerator.GetNextMapType(nearL) == MapGenerator.MAP_TYPE.WALL;
-        bool nearFrontWall = mapGenerator.GetNextMapType(nearF) == MapGenerator.MAP_TYPE.WALL;
-        bool nearRightWall = mapGenerator.GetNextMapType(nearR) == MapGenerator.MAP_TYPE.WALL; 
-        bool nearLeft2Wall = mapGenerator.GetNextMapType(nearLL) == MapGenerator.MAP_TYPE.WALL;
-        bool nearRight2Wall = mapGenerator.GetNextMapType(nearRR) == MapGenerator.MAP_TYPE.WALL;
+        // Near
+        bool nearLeftWall = IsWall(nearL);
+        bool nearFrontWall = IsWall(nearF);
+        bool nearRightWall = IsWall(nearR);
+        bool nearLeft2Wall = IsWall(nearLL);
+        bool nearRight2Wall = IsWall(nearRR);
 
-        bool midLeftWall = mapGenerator.GetNextMapType(midL) == MapGenerator.MAP_TYPE.WALL;
-        bool midFrontWall = mapGenerator.GetNextMapType(midF) == MapGenerator.MAP_TYPE.WALL;
-        bool midRightWall = mapGenerator.GetNextMapType(midR) == MapGenerator.MAP_TYPE.WALL;
-        bool midLeft2Wall = mapGenerator.GetNextMapType(midLL) == MapGenerator.MAP_TYPE.WALL;
-        bool midRight2Wall = mapGenerator.GetNextMapType(midRR) == MapGenerator.MAP_TYPE.WALL;
+        // Mid
+        bool midFrontWall = IsWall(midF);
+        bool midLeft2Wall = IsWall(midLL);
+        bool midRight2Wall = IsWall(midRR);
 
-        bool farLeftWall = mapGenerator.GetNextMapType(farL) == MapGenerator.MAP_TYPE.WALL;
-        bool farFrontWall = mapGenerator.GetNextMapType(farF) == MapGenerator.MAP_TYPE.WALL;
-        bool farRightWall = mapGenerator.GetNextMapType(farR) == MapGenerator.MAP_TYPE.WALL;
-        bool farLeft2Wall = mapGenerator.GetNextMapType(farLL) == MapGenerator.MAP_TYPE.WALL;
-        bool farRight2Wall = mapGenerator.GetNextMapType(farRR) == MapGenerator.MAP_TYPE.WALL;
+        // Far
+        bool farFrontWall = IsWall(farF);
+        bool farLeft2Wall = IsWall(farLL);
+        bool farRight2Wall = IsWall(farRR);
 
 
-        // ===== Near =====
+        //==================================================
+        // Near：1マス先の表示
+        //==================================================
+
+        // プレイヤーのすぐ左右
         nearLeft.SetActive(nearLeftWall);
-        nearFront.SetActive(nearFrontWall);
         nearRight.SetActive(nearRightWall);
+
+        // 正面
+        nearFront.SetActive(nearFrontWall);
+
+        // 正面の壁に対応する通路
+        nearLeftPath.SetActive(nearFrontWall);
+        nearRightPath.SetActive(nearFrontWall);
+
+        // 左右奥
         nearLeft2.SetActive(nearLeft2Wall);
         nearRight2.SetActive(nearRight2Wall);
 
-        // ===== Mid =====
-        midLeft.SetActive(midLeftWall);
+
+        //==================================================
+        // Mid：2マス先の表示
+        //==================================================
+
+        // 正面
         midFront.SetActive(midFrontWall);
-        midRight.SetActive(midRightWall);
+
+        // 正面の壁に対応する通路
+        midLeftPath.SetActive(midFrontWall);
+        midRightPath.SetActive(midFrontWall);
+
+        // 左右奥
         midLeft2.SetActive(midLeft2Wall);
         midRight2.SetActive(midRight2Wall);
 
-        // ===== Far =====
-        farLeft.SetActive(farLeftWall);
+
+        //==================================================
+        // Far：3マス先の表示
+        //==================================================
+
+        // 正面
         farFront.SetActive(farFrontWall);
-        farRight.SetActive(farRightWall);
+
+        // 正面の壁に対応する通路
+        farLeftPath.SetActive(farFrontWall);
+        farRightPath.SetActive(farFrontWall);
+
+        // 左右奥
         farLeft2.SetActive(farLeft2Wall);
         farRight2.SetActive(farRight2Wall);
-
-        // ===== 左右の通路 =====
-        nearLeftPath.SetActive(false);
-        nearRightPath.SetActive(false);
-
-        midLeftPath.SetActive(false);
-        midRightPath.SetActive(false);
-
-        farLeftPath.SetActive(false);
-        farRightPath.SetActive(false);
-
-        bool openSpace =
-        !nearLeftWall && !nearRightWall &&
-        !midLeftWall && !midRightWall &&
-        !farLeftWall && !farRightWall;
-
-        if (openSpace)
-        {
-            nearLeft.SetActive(false);
-            nearRight.SetActive(false);
-
-            midLeft.SetActive(false);
-            midRight.SetActive(false);
-
-            farLeft.SetActive(false);
-            farRight.SetActive(false);
-
-            // ここでLeft2 / Right2を表示
-            nearLeft2.SetActive(true);
-            nearRight2.SetActive(true);
-
-            midLeft2.SetActive(true);
-            midRight2.SetActive(true);
-
-            farLeft2.SetActive(true);
-            farRight2.SetActive(true);
-        }
-        else
-        {
-            // 普通の通路ではLeft2 / Right2を消す
-            nearLeft2.SetActive(false);
-            nearRight2.SetActive(false);
-
-            midLeft2.SetActive(false);
-            midRight2.SetActive(false);
-
-            farLeft2.SetActive(false);
-            farRight2.SetActive(false);
-        }
-
-        // Near
-        if (!nearLeftWall && !nearLeft2Wall)
-        {
-            nearLeftPath.SetActive(true);
-        }
-
-        if (!nearRightWall && !nearRight2Wall)
-        {
-            nearRightPath.SetActive(true);
-        }
-
-        // Mid
-        if (!midLeftWall && !midLeft2Wall)
-        {
-            midLeftPath.SetActive(true);
-        }
-
-        if (!midRightWall && !midRight2Wall)
-        {
-            midRightPath.SetActive(true);
-        }
-
-        // Far
-        if (!farLeftWall && !farLeft2Wall)
-        {
-            farLeftPath.SetActive(true);
-        }
-
-        if (!farRightWall && !farRight2Wall)
-        {
-            farRightPath.SetActive(true);
-        }
-
-        bool leftPath =
-        mapGenerator.GetNextMapType(GetMapPos(1, -1)) != MapGenerator.MAP_TYPE.WALL &&
-        mapGenerator.GetNextMapType(GetMapPos(1, -2)) != MapGenerator.MAP_TYPE.WALL;
-        bool rightPath =
-        mapGenerator.GetNextMapType(GetMapPos(1, 1)) != MapGenerator.MAP_TYPE.WALL &&
-        mapGenerator.GetNextMapType(GetMapPos(1, 2)) != MapGenerator.MAP_TYPE.WALL;
-
-        if (leftPath)
-        {
-            Debug.Log("左に通路が続いている！");
-        }
-
-        if (rightPath)
-        {
-            Debug.Log("右に通路が続いている！");
-        }
-
     }
+
+
+    //==================================================
+    // 指定した座標が壁かどうかを判定
+    //==================================================
+
+    bool IsWall(Vector2Int pos)
+    {
+        return mapGenerator.GetNextMapType(pos)
+            == MapGenerator.MAP_TYPE.WALL;
+    }
+
+
+    //==================================================
+    // プレイヤーから見たマップ座標を取得
+    //==================================================
 
     Vector2Int GetMapPos(int forward, int side)
     {
