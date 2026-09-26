@@ -277,6 +277,15 @@ public class Player : MonoBehaviour
                     mapGenerator.ScreenPos(currentPos);
             }
         }
+
+        //--------------- ì≈ ---------------
+
+        if (type == MapGenerator.MAP_TYPE.POISON)
+        {
+            Debug.Log("ì≈Çì•ÇÒÇæÅI");
+
+            Damage(1);
+        }
     }
 
 

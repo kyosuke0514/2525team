@@ -80,6 +80,7 @@ public class MapGenerator : MonoBehaviour
         PLAYER = 2, 
         GOAL = 3,   
         PIT = 4,    
+        POISON = 5,
         PUZZLE = 30, 
         PUZZLE2 = 31, 
         PUZZLE3 = 32, 

@@ -15,6 +15,7 @@ public class View3D : MonoBehaviour
     [SerializeField] GameObject nearRightPath;
     [SerializeField] GameObject nearLeft2;
     [SerializeField] GameObject nearRight2;
+    [SerializeField] GameObject nearStair;
 
     //==================================================
     // Mid
@@ -27,6 +28,7 @@ public class View3D : MonoBehaviour
     [SerializeField] GameObject midRightPath;
     [SerializeField] GameObject midLeft2;
     [SerializeField] GameObject midRight2;
+    [SerializeField] GameObject midStair;
 
     //==================================================
     // Far
@@ -39,7 +41,7 @@ public class View3D : MonoBehaviour
     [SerializeField] GameObject farRightPath;
     [SerializeField] GameObject farLeft2;
     [SerializeField] GameObject farRight2;
-
+    [SerializeField] GameObject farStair;
 
     void Update()
     {
@@ -105,6 +107,12 @@ public class View3D : MonoBehaviour
             nearFront.SetActive(true);
         }
 
+        // 階段
+        if (IsStair(GetMapPos(1, 0)))
+        {
+            nearStair.SetActive(true);
+        }
+
         // (1,1)
         // NearRightPath + MidRight
         if (IsWall(GetMapPos(1, 1)))
@@ -147,6 +155,12 @@ public class View3D : MonoBehaviour
             midFront.SetActive(true);
         }
 
+        // 階段
+        if (IsStair(GetMapPos(2, 0)))
+        {
+            midStair.SetActive(true);
+        }
+
         // (1,2)
         // MidRightPath + FarRight
         if (IsWall(GetMapPos(2, 1)))
@@ -186,6 +200,12 @@ public class View3D : MonoBehaviour
         if (IsWall(GetMapPos(3, 0)))
         {
             farFront.SetActive(true);
+        }
+
+        // 階段
+        if (IsStair(GetMapPos(3, 0)))
+        {
+            farStair.SetActive(true);
         }
 
         // (1,3)
@@ -326,6 +346,7 @@ public class View3D : MonoBehaviour
         nearRightPath.SetActive(false);
         nearLeft2.SetActive(false);
         nearRight2.SetActive(false);
+        nearStair.SetActive(false);
 
         midFront.SetActive(false);
         midLeft.SetActive(false);
@@ -334,6 +355,7 @@ public class View3D : MonoBehaviour
         midRightPath.SetActive(false);
         midLeft2.SetActive(false);
         midRight2.SetActive(false);
+        midStair.SetActive(false);
 
         farFront.SetActive(false);
         farLeft.SetActive(false);
@@ -342,6 +364,7 @@ public class View3D : MonoBehaviour
         farRightPath.SetActive(false);
         farLeft2.SetActive(false);
         farRight2.SetActive(false);
+        farStair.SetActive(false);
     }
 
 
@@ -355,6 +378,14 @@ public class View3D : MonoBehaviour
             == MapGenerator.MAP_TYPE.WALL;
     }
 
+    bool IsStair(Vector2Int pos)
+    {
+        MapGenerator.MAP_TYPE type = mapGenerator.GetNextMapType(pos);
+
+        return type == MapGenerator.MAP_TYPE.STAIR_1_2
+            || type == MapGenerator.MAP_TYPE.STAIR_2_3
+            || type == MapGenerator.MAP_TYPE.STAIR_3_4;
+    }
 
     //==================================================
     // プレイヤーから見た座標を取得
