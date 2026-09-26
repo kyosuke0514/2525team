@@ -1976,7 +1976,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &268682517
 Transform:
   m_ObjectHideFlags: 0
@@ -3322,7 +3322,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 5
+  m_SortingOrder: 6
   m_MaskInteraction: 0
   m_Sprite: {fileID: -6611502759967541603, guid: 0dce8e8618a57b84799996cb81af7e6c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -8909,7 +8909,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 4
   m_MaskInteraction: 0
   m_Sprite: {fileID: 8867224358221452136, guid: 34c4922d36f021d4ca2df991c6722f18, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -12379,6 +12379,7 @@ MonoBehaviour:
   nearRightPath: {fileID: 727579086}
   nearLeft2: {fileID: 1543757104}
   nearRight2: {fileID: 927219458}
+  nearStair: {fileID: 528387878}
   midFront: {fileID: 268682516}
   midLeft: {fileID: 1092762702}
   midRight: {fileID: 2014565244}
@@ -12386,6 +12387,7 @@ MonoBehaviour:
   midRightPath: {fileID: 75299678}
   midLeft2: {fileID: 38866019}
   midRight2: {fileID: 63327182}
+  midStair: {fileID: 1130083023}
   farFront: {fileID: 717191679}
   farLeft: {fileID: 1213081816}
   farRight: {fileID: 1927053286}
@@ -12393,6 +12395,7 @@ MonoBehaviour:
   farRightPath: {fileID: 614874485}
   farLeft2: {fileID: 225232898}
   farRight2: {fileID: 1597854648}
+  farStair: {fileID: 188279941}
 --- !u!1 &1893878698
 GameObject:
   m_ObjectHideFlags: 0
