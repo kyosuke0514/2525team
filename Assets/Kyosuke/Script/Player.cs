@@ -197,6 +197,7 @@ public class Player : MonoBehaviour
             // 移動先のイベントを確認
             CheckEvent();
         }
+        SEManager.Instance.PlayWalk();
     }
 
 
@@ -249,7 +250,7 @@ public class Player : MonoBehaviour
         if (type == MapGenerator.MAP_TYPE.PIT)
         {
             Debug.Log("落とし穴に落ちた！");
-
+            SEManager.Instance.PlayPit();
             mapGenerator.DiscoverPit(currentPos);
 
             Damage(1);
@@ -283,7 +284,7 @@ public class Player : MonoBehaviour
         if (type == MapGenerator.MAP_TYPE.POISON)
         {
             Debug.Log("毒を踏んだ！");
-
+            SEManager.Instance.PlayPoison();
             Damage(1);
         }
     }

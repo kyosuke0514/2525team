@@ -881,6 +881,7 @@ public class MapGenerator : MonoBehaviour
             blueNumber == 9)
         {
             Debug.Log("謎解き正解！");
+            SEManager.Instance.PlayCorrect();
 
             puzzleSolved = true;
             Puzzle.SetActive(false);
@@ -890,6 +891,7 @@ public class MapGenerator : MonoBehaviour
         else
         {
             Debug.Log("不正解！");
+            SEManager.Instance.PlayWrong();
         }
     }
 
@@ -901,6 +903,7 @@ public class MapGenerator : MonoBehaviour
             blueNumber2 == 5)
         {
             Debug.Log("2F謎解き正解！");
+            SEManager.Instance.PlayCorrect();
 
             puzzle2Solved = true;
             Puzzle2.SetActive(false);
@@ -910,6 +913,7 @@ public class MapGenerator : MonoBehaviour
         else
         {
             Debug.Log("不正解！");
+            SEManager.Instance.PlayWrong();
         }
     }
 
@@ -920,6 +924,7 @@ public class MapGenerator : MonoBehaviour
             return;
         }
 
+        treasureChestImage.SetActive(true);
         puzzleConfirm = true;
         puzzleConfirmImage.sprite = puzzleConfirmSprite;
         puzzleConfirmImage.gameObject.SetActive(true);
@@ -934,6 +939,7 @@ public class MapGenerator : MonoBehaviour
             return;
         }
 
+        treasureChestImage.SetActive(true);
         puzzle2Confirm = true;
         puzzleConfirmImage.sprite = puzzleConfirmSprite;
         puzzleConfirmImage.gameObject.SetActive(true);
@@ -1002,6 +1008,7 @@ public class MapGenerator : MonoBehaviour
     public void Yes()
     {
         Panel.SetActive(false);
+        treasureChestImage.SetActive(false);
         puzzleConfirmImage.gameObject.SetActive(false);
         player.isPuzzle = false;
 
@@ -1084,6 +1091,7 @@ public class MapGenerator : MonoBehaviour
     public void No()
     {
         Panel.SetActive(false);
+        treasureChestImage.SetActive(false);
         puzzleConfirmImage.gameObject.SetActive(false);
         puzzleConfirm = false;
         puzzle2Confirm = false;
