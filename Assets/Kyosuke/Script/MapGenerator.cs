@@ -69,6 +69,10 @@ public class MapGenerator : MonoBehaviour
 
     [SerializeField] GameObject treasureChestImage;
 
+    // ギミック
+    [SerializeField] private GameObject pitGimmick1Image;
+    [SerializeField] private GameObject pitGimmick2Image;
+
     //==================================================
     // マップ関連
     //==================================================
@@ -89,7 +93,9 @@ public class MapGenerator : MonoBehaviour
         PUZZLE6 = 35,    
         STAIR_1_2 = 40,  
         STAIR_2_3 = 41,  
-        STAIR_3_4 = 42   
+        STAIR_3_4 = 42,
+        PIT_GIMMICK1 = 50,
+        PIT_GIMMICK2 = 51
     }
 
     MAP_TYPE[,] mapTable;
@@ -149,6 +155,11 @@ public class MapGenerator : MonoBehaviour
         noButton.onClick.AddListener(No);
 
         int selectedStage = PlayerPrefs.GetInt("SelectedStage", 0);
+
+        pitGimmick1Image.SetActive(false);
+        pitGimmick2Image.SetActive(false);
+
+
 
         currentStage = selectedStage;
         currentFloor = 0;
@@ -363,6 +374,11 @@ public class MapGenerator : MonoBehaviour
                     case MAP_TYPE.STAIR_2_3:
                     case MAP_TYPE.STAIR_3_4:
                         mapPrefab = prefabs[6];
+                        break;
+
+                    case MAP_TYPE.PIT_GIMMICK1:
+                    case MAP_TYPE.PIT_GIMMICK2:
+                        mapPrefab = prefabs[0];
                         break;
 
                     default:
@@ -695,6 +711,27 @@ public class MapGenerator : MonoBehaviour
         }
 
         UpdateMinimap();
+    }
+
+    public void CheckPitGimmick()
+    {
+        // まず両方消す
+        pitGimmick1Image.SetActive(false);
+        pitGimmick2Image.SetActive(false);
+
+        // プレイヤーがいる場所のマップタイプを取得
+        MAP_TYPE type = GetNextMapType(player.currentPos);
+
+        // 50
+        if (type == MAP_TYPE.PIT_GIMMICK1)
+        {
+            pitGimmick1Image.SetActive(true);
+        }
+        // 51
+        else if (type == MAP_TYPE.PIT_GIMMICK2)
+        {
+            pitGimmick2Image.SetActive(true);
+        }
     }
 
     public Vector2 ScreenPos(Vector2Int _pos)
@@ -1149,7 +1186,7 @@ public class MapGenerator : MonoBehaviour
         currentStage = stage;
         currentFloor = 0;
 
-        Debug.Log("★★★ ステージ" + (stage + 1) + "が呼ばれました ★★★");
+        Debug.Log("★★★ ステージ" + (stage + 1) + "が呼ばれました ★★★");   
 
         while (map2D.childCount > 0)
         {

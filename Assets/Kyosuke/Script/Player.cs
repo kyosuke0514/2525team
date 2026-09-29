@@ -194,6 +194,9 @@ public class Player : MonoBehaviour
             // 3×3ミニマップを更新
             mapGenerator.UpdateMinimap();
 
+            // ギミックを確認
+            mapGenerator.CheckPitGimmick();
+
             // 移動先のイベントを確認
             CheckEvent();
         }
