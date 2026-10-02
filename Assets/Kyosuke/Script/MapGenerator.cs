@@ -72,6 +72,30 @@ public class MapGenerator : MonoBehaviour
     // ギミック
     [SerializeField] private GameObject pitGimmick1Image;
     [SerializeField] private GameObject pitGimmick2Image;
+    [SerializeField] private GameObject GIMMICK2_1;
+    [SerializeField] private GameObject GIMMICK2_2;
+    [SerializeField] private GameObject GIMMICK2_3;
+    [SerializeField] private GameObject GIMMICK2_4;
+    [SerializeField] private GameObject GIMMICK2_5;
+    [SerializeField] private GameObject GIMMICK2_6;
+    [SerializeField] private GameObject GIMMICK2_7;
+    [SerializeField] private GameObject GIMMICK2_8;
+    [SerializeField] private GameObject GIMMICK2_9;
+    [SerializeField] private GameObject GIMMICK2_10;
+    [SerializeField] private GameObject GIMMICK2_11;
+    [SerializeField] private GameObject GIMMICK2_12;
+    [SerializeField] private GameObject GIMMICK2_13;
+    [SerializeField] private GameObject GIMMICK2_14;
+    [SerializeField] private GameObject GIMMICK2_15;
+    [SerializeField] private GameObject GIMMICK3_1;
+    [SerializeField] private GameObject GIMMICK3_2;
+    [SerializeField] private GameObject GIMMICK3_3;
+    [SerializeField] private GameObject GIMMICK3_4;
+    [SerializeField] private GameObject GIMMICK3_5;
+    [SerializeField] private GameObject GIMMICK3_R;
+    [SerializeField] private GameObject GIMMICK3_G;
+    [SerializeField] private GameObject GIMMICK3_Y;
+    [SerializeField] private GameObject GIMMICK3_B;
 
     //==================================================
     // マップ関連
@@ -95,7 +119,31 @@ public class MapGenerator : MonoBehaviour
         STAIR_2_3 = 41,  
         STAIR_3_4 = 42,
         PIT_GIMMICK1 = 50,
-        PIT_GIMMICK2 = 51
+        PIT_GIMMICK2 = 51,
+        GIMMICK2_1 = 60,
+        GIMMICK2_2 = 61,
+        GIMMICK2_3 = 62,
+        GIMMICK2_4 = 63,
+        GIMMICK2_5 = 64,
+        GIMMICK2_6 = 65,
+        GIMMICK2_7 = 66,
+        GIMMICK2_8 = 67,
+        GIMMICK2_9 = 68,
+        GIMMICK2_10 = 69,
+        GIMMICK2_11 = 70,
+        GIMMICK2_12 = 71,
+        GIMMICK2_13 = 72,
+        GIMMICK2_14 = 73,
+        GIMMICK2_15 = 74,
+        GIMMICK3_1 = 80,
+        GIMMICK3_2 = 81,
+        GIMMICK3_3 = 82,
+        GIMMICK3_4 = 83,
+        GIMMICK3_5 = 84,
+        GIMMICK3_R = 85,
+        GIMMICK3_G = 86,
+        GIMMICK3_Y = 87,
+        GIMMICK3_B = 88
     }
 
     MAP_TYPE[,] mapTable;
@@ -156,8 +204,33 @@ public class MapGenerator : MonoBehaviour
 
         int selectedStage = PlayerPrefs.GetInt("SelectedStage", 0);
 
+        
         pitGimmick1Image.SetActive(false);
         pitGimmick2Image.SetActive(false);
+        GIMMICK2_1.SetActive(false);
+        GIMMICK2_2.SetActive(false);
+        GIMMICK2_3.SetActive(false);
+        GIMMICK2_4.SetActive(false);
+        GIMMICK2_5.SetActive(false);
+        GIMMICK2_6.SetActive(false);
+        GIMMICK2_7.SetActive(false);
+        GIMMICK2_8.SetActive(false);
+        GIMMICK2_9.SetActive(false);
+        GIMMICK2_10.SetActive(false);
+        GIMMICK2_11.SetActive(false);
+        GIMMICK2_12.SetActive(false);
+        GIMMICK2_13.SetActive(false);
+        GIMMICK2_14.SetActive(false);
+        GIMMICK2_15.SetActive(false);
+        GIMMICK3_1.SetActive(false);
+        GIMMICK3_2.SetActive(false);
+        GIMMICK3_3.SetActive(false);
+        GIMMICK3_4.SetActive(false);
+        GIMMICK3_5.SetActive(false);
+        GIMMICK3_R.SetActive(false);
+        GIMMICK3_G.SetActive(false);
+        GIMMICK3_Y.SetActive(false);
+        GIMMICK3_B.SetActive(false);
 
 
 
@@ -378,6 +451,30 @@ public class MapGenerator : MonoBehaviour
 
                     case MAP_TYPE.PIT_GIMMICK1:
                     case MAP_TYPE.PIT_GIMMICK2:
+                    case MAP_TYPE.GIMMICK2_1:
+                    case MAP_TYPE.GIMMICK2_2:
+                    case MAP_TYPE.GIMMICK2_3:
+                    case MAP_TYPE.GIMMICK2_4:
+                    case MAP_TYPE.GIMMICK2_5:
+                    case MAP_TYPE.GIMMICK2_6:
+                    case MAP_TYPE.GIMMICK2_7:
+                    case MAP_TYPE.GIMMICK2_8:
+                    case MAP_TYPE.GIMMICK2_9:
+                    case MAP_TYPE.GIMMICK2_10:
+                    case MAP_TYPE.GIMMICK2_11:
+                    case MAP_TYPE.GIMMICK2_12:
+                    case MAP_TYPE.GIMMICK2_13:
+                    case MAP_TYPE.GIMMICK2_14:
+                    case MAP_TYPE.GIMMICK2_15:
+                    case MAP_TYPE.GIMMICK3_1:
+                    case MAP_TYPE.GIMMICK3_2:
+                    case MAP_TYPE.GIMMICK3_3:
+                    case MAP_TYPE.GIMMICK3_4:
+                    case MAP_TYPE.GIMMICK3_5:
+                    case MAP_TYPE.GIMMICK3_R:
+                    case MAP_TYPE.GIMMICK3_G:
+                    case MAP_TYPE.GIMMICK3_Y:
+                    case MAP_TYPE.GIMMICK3_B:
                         mapPrefab = prefabs[0];
                         break;
 
@@ -718,6 +815,31 @@ public class MapGenerator : MonoBehaviour
         // まず両方消す
         pitGimmick1Image.SetActive(false);
         pitGimmick2Image.SetActive(false);
+        GIMMICK2_1.SetActive(false);
+        GIMMICK2_2.SetActive(false);
+        GIMMICK2_3.SetActive(false);
+        GIMMICK2_4.SetActive(false);
+        GIMMICK2_5.SetActive(false);
+        GIMMICK2_6.SetActive(false);
+        GIMMICK2_7.SetActive(false);
+        GIMMICK2_8.SetActive(false);
+        GIMMICK2_9.SetActive(false);
+        GIMMICK2_10.SetActive(false);
+        GIMMICK2_11.SetActive(false);
+        GIMMICK2_12.SetActive(false);
+        GIMMICK2_13.SetActive(false);
+        GIMMICK2_14.SetActive(false);
+        GIMMICK2_15.SetActive(false);
+        GIMMICK3_1.SetActive(false);
+        GIMMICK3_2.SetActive(false);
+        GIMMICK3_3.SetActive(false);
+        GIMMICK3_4.SetActive(false);
+        GIMMICK3_5.SetActive(false);
+        GIMMICK3_R.SetActive(false);
+        GIMMICK3_G.SetActive(false);
+        GIMMICK3_Y.SetActive(false);
+        GIMMICK3_B.SetActive(false);
+
 
         // プレイヤーがいる場所のマップタイプを取得
         MAP_TYPE type = GetNextMapType(player.currentPos);
