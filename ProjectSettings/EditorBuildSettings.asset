@@ -18,7 +18,12 @@ EditorBuildSettings:
     path: Assets/saitou/scene/Gameover..unity
     guid: ec06be041e0460a41a2cb61d47a41507
   - enabled: 1
+
+    path: Assets/kudo/SetumeiScene.unity
+    guid: e55b6aefee540ca48a4447f0fa7e6c93
+
     path: Assets/saitou/scene/clear.unity
     guid: 2b9eb410a15858f4c82f7b61f676b77f
+
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0
