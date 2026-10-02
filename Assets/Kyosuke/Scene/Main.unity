@@ -14042,6 +14042,7 @@ MonoBehaviour:
   - {fileID: 7685205501938025461, guid: 437f726464d97e04c901761fba2647f2, type: 3}
   - {fileID: 4383836756901241256, guid: a56eac5ac71e2c2458e4b410b10e91eb, type: 3}
   - {fileID: 2708996250313357848, guid: f3f7a1f2e384fc34b99925cb2bf522bd, type: 3}
+  - {fileID: 5555296944818630529, guid: 1f8e5f2ba77383647bd5f68fc42d762d, type: 3}
   map2D: {fileID: 395422469}
   player: {fileID: 532176311}
   Panel: {fileID: 326406816}
