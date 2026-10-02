@@ -17,11 +17,11 @@ public class Fade2 : MonoBehaviour
         // フェードイン
         float time = 0f;
 
-        while (time < 1f)
+        while (time < 3f)
         {
             time += Time.deltaTime;
 
-            color.a = Mathf.Lerp(1f, 0f, time / 1f);
+            color.a = Mathf.Lerp(1f, 0f, time / 3f);
 
             fadeImage.color = color;
 
