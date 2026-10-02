@@ -97,6 +97,8 @@ public class MapGenerator : MonoBehaviour
     [SerializeField] private GameObject GIMMICK3_Y;
     [SerializeField] private GameObject GIMMICK3_B;
 
+
+
     //==================================================
     // マップ関連
     //==================================================
@@ -143,7 +145,23 @@ public class MapGenerator : MonoBehaviour
         GIMMICK3_R = 85,
         GIMMICK3_G = 86,
         GIMMICK3_Y = 87,
-        GIMMICK3_B = 88
+        GIMMICK3_B = 88,
+        WARP1 = 90,
+        WARP2 = 91,
+        WARP3 = 92,
+        WARP4 = 93,
+        WARP5 = 94,
+        WARP6 = 95,
+        WARP7 = 96,
+        WARP8 = 97,
+        WARP9 = 98,
+        WARP10 = 99,
+        WARP11 = 100,
+        WARP12 = 101,
+        WARP13 = 102,
+        WARP14 = 103,
+        WARP15 = 104,
+        WARP16 = 105
     }
 
     MAP_TYPE[,] mapTable;
@@ -363,8 +381,7 @@ public class MapGenerator : MonoBehaviour
 
     void _createMap()
     {
-        float tileSize =
-            prefabs[1].GetComponent<SpriteRenderer>().bounds.size.x;
+        float tileSize = prefabs[1].GetComponent<SpriteRenderer>().bounds.size.x;
 
         mapSize = tileSize;
 
@@ -477,6 +494,27 @@ public class MapGenerator : MonoBehaviour
                     case MAP_TYPE.GIMMICK3_B:
                         mapPrefab = prefabs[0];
                         break;
+
+                    case MAP_TYPE.WARP1:
+                    case MAP_TYPE.WARP2:
+                    case MAP_TYPE.WARP3:
+                    case MAP_TYPE.WARP4:
+                    case MAP_TYPE.WARP5:
+                    case MAP_TYPE.WARP6:
+                    case MAP_TYPE.WARP7:
+                    case MAP_TYPE.WARP8:
+                    case MAP_TYPE.WARP9:
+                    case MAP_TYPE.WARP10:
+                    case MAP_TYPE.WARP11:
+                    case MAP_TYPE.WARP12:
+                    case MAP_TYPE.WARP13:
+                    case MAP_TYPE.WARP14:
+                    case MAP_TYPE.WARP15:
+                    case MAP_TYPE.WARP16:
+                        mapPrefab = prefabs[7];
+                        Debug.Log("ワープPrefab：" + mapPrefab);
+                        break;
+
 
                     default:
                         Debug.LogError(
@@ -645,6 +683,11 @@ public class MapGenerator : MonoBehaviour
                     // 発見済み落とし穴
                     CreateMinimapIcon(tile, type);
                 }
+                else if (type >= MAP_TYPE.WARP1 && type <= MAP_TYPE.WARP16)
+                {
+                    // ワープ
+                    CreateMinimapIcon(tile, type);
+                }
 
                 //==================================================
                 // 位置・大きさ
@@ -737,6 +780,25 @@ public class MapGenerator : MonoBehaviour
 
             case MAP_TYPE.PIT:
                 sourcePrefab = prefabs[4];
+                break;
+
+            case MAP_TYPE.WARP1:
+            case MAP_TYPE.WARP2:
+            case MAP_TYPE.WARP3:
+            case MAP_TYPE.WARP4:
+            case MAP_TYPE.WARP5:
+            case MAP_TYPE.WARP6:
+            case MAP_TYPE.WARP7:
+            case MAP_TYPE.WARP8:
+            case MAP_TYPE.WARP9:
+            case MAP_TYPE.WARP10:
+            case MAP_TYPE.WARP11:
+            case MAP_TYPE.WARP12:
+            case MAP_TYPE.WARP13:
+            case MAP_TYPE.WARP14:
+            case MAP_TYPE.WARP15:
+            case MAP_TYPE.WARP16:
+                sourcePrefab = prefabs[7];
                 break;
 
             default:
@@ -854,7 +916,194 @@ public class MapGenerator : MonoBehaviour
         {
             pitGimmick2Image.SetActive(true);
         }
+        else if (type == MAP_TYPE.GIMMICK2_1)
+        {
+            GIMMICK2_1.SetActive(true);
+        }
+        else if (type == MAP_TYPE.GIMMICK2_2)
+        {
+            GIMMICK2_2.SetActive(true);
+        }
+        else if (type == MAP_TYPE.GIMMICK2_3)
+        {
+            GIMMICK2_3.SetActive(true);
+        }
+        else if (type == MAP_TYPE.GIMMICK2_4)
+        {
+            GIMMICK2_4.SetActive(true);
+        }
+        else if (type == MAP_TYPE.GIMMICK2_5)
+        {
+            GIMMICK2_5.SetActive(true);
+        }
+        else if (type == MAP_TYPE.GIMMICK2_6)
+        {
+            GIMMICK2_6.SetActive(true);
+        }
+        else if (type == MAP_TYPE.GIMMICK2_7)
+        {
+            GIMMICK2_7.SetActive(true);
+        }
+        else if (type == MAP_TYPE.GIMMICK2_8)
+        {
+            GIMMICK2_8.SetActive(true);
+        }
+        else if (type == MAP_TYPE.GIMMICK2_9)
+        { 
+            GIMMICK2_9.SetActive(true);
+        }
+        else if (type == MAP_TYPE.GIMMICK2_10)
+        {
+            GIMMICK2_10.SetActive(true);
+        }
+        else if (type == MAP_TYPE.GIMMICK2_11)
+        {
+            GIMMICK2_11.SetActive(true);
+        }
+        else if (type == MAP_TYPE.GIMMICK2_12)
+        {
+            GIMMICK2_12.SetActive(true);
+        }
+        else if (type == MAP_TYPE.GIMMICK2_13)
+        {
+            GIMMICK2_13.SetActive(true);
+        }
+        else if (type == MAP_TYPE.GIMMICK2_14)
+        {
+            GIMMICK2_14.SetActive(true);
+        }
+        else if (type == MAP_TYPE.GIMMICK2_15)
+        {
+            GIMMICK2_15.SetActive(true);
+        }
+        else if (type == MAP_TYPE.GIMMICK3_1)
+        {
+            GIMMICK3_1.SetActive(true);
+        }
+        else if (type == MAP_TYPE.GIMMICK3_2)
+        {
+            GIMMICK3_2.SetActive(true);
+        }
+        else if (type == MAP_TYPE.GIMMICK3_3)
+        {
+            GIMMICK3_3.SetActive(true);
+        }
+        else if (type == MAP_TYPE.GIMMICK3_4)
+        {
+            GIMMICK3_4.SetActive(true);
+        }
+        else if (type == MAP_TYPE.GIMMICK3_5)
+        {
+            GIMMICK3_5.SetActive(true);
+        }
+        else if (type == MAP_TYPE.GIMMICK3_R)
+        {
+            GIMMICK3_R.SetActive(true);
+        }
+        else if (type == MAP_TYPE.GIMMICK3_G)
+        {
+            GIMMICK3_G.SetActive(true);
+        }
+        else if (type == MAP_TYPE.GIMMICK3_Y)
+        {
+            GIMMICK3_Y.SetActive(true);
+        }
+        else if (type == MAP_TYPE.GIMMICK3_B)
+        {
+            GIMMICK3_B.SetActive(true);
+        }
     }
+
+    public Vector2Int GetWarpTarget(Vector2Int currentPos)
+    {
+        MAP_TYPE type = GetNextMapType(currentPos);
+
+        MAP_TYPE targetType;
+
+        switch (type)
+        {
+            case MAP_TYPE.WARP1:
+                targetType = MAP_TYPE.WARP2;
+                break;
+
+            case MAP_TYPE.WARP2:
+                targetType = MAP_TYPE.WARP1;
+                break;
+
+            case MAP_TYPE.WARP3:
+                targetType = MAP_TYPE.WARP4;
+                break;
+
+            case MAP_TYPE.WARP4:
+                targetType = MAP_TYPE.WARP3;
+                break;
+
+            case MAP_TYPE.WARP5:
+                targetType = MAP_TYPE.WARP6;
+                break;
+
+            case MAP_TYPE.WARP6:
+                targetType = MAP_TYPE.WARP5;
+                break;
+
+            case MAP_TYPE.WARP7:
+                targetType = MAP_TYPE.WARP8;
+                break;
+
+            case MAP_TYPE.WARP8:
+                targetType = MAP_TYPE.WARP7;
+                break;
+
+            case MAP_TYPE.WARP9:
+                targetType = MAP_TYPE.WARP10;
+                break;
+
+            case MAP_TYPE.WARP10:
+                targetType = MAP_TYPE.WARP9;
+                break;
+
+            case MAP_TYPE.WARP11:
+                targetType = MAP_TYPE.WARP12;
+                break;
+
+            case MAP_TYPE.WARP12:
+                targetType = MAP_TYPE.WARP11;
+                break;
+
+            case MAP_TYPE.WARP13:
+                targetType = MAP_TYPE.WARP14;
+                break;
+
+            case MAP_TYPE.WARP14:
+                targetType = MAP_TYPE.WARP13;
+                break;
+
+            case MAP_TYPE.WARP15:
+                targetType = MAP_TYPE.WARP16;
+                break;
+
+            case MAP_TYPE.WARP16:
+                targetType = MAP_TYPE.WARP15;
+                break;
+
+            default:
+                return currentPos;
+        }
+
+        for (int x = 0; x < mapTable.GetLength(0); x++)
+        {
+            for (int y = 0; y < mapTable.GetLength(1); y++)
+            {
+                if (mapTable[x, y] == targetType)
+                {
+                    return new Vector2Int(x, y);
+                }
+            }
+        }
+
+        return currentPos;
+    }
+
 
     public Vector2 ScreenPos(Vector2Int _pos)
     {
