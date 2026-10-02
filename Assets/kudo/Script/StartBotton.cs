@@ -7,6 +7,6 @@ public class StartBotton : MonoBehaviour
     public void OnClickStart()
     {
         //""‚Ì’†‚ÍˆÚ“®‚µ‚½‚¢ƒV[ƒ“–¼
-        SceneManager.LoadScene("SentakuScene");
+        SceneManager.LoadScene("SetumeiScene");
     }
 }
