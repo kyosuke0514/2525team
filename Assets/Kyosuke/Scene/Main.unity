@@ -14044,6 +14044,7 @@ MonoBehaviour:
   - {fileID: 2708996250313357848, guid: f3f7a1f2e384fc34b99925cb2bf522bd, type: 3}
   - {fileID: 5555296944818630529, guid: 1f8e5f2ba77383647bd5f68fc42d762d, type: 3}
   map2D: {fileID: 395422469}
+  miniMapGenerator: {fileID: 1905043466}
   player: {fileID: 532176311}
   Panel: {fileID: 326406816}
   Puzzle: {fileID: 105289217}
@@ -14098,6 +14099,10 @@ MonoBehaviour:
   GIMMICK3_Y: {fileID: 1147411850}
   GIMMICK3_B: {fileID: 1611831966}
   startPos: {x: 0, y: 0}
+  currentStage: 0
+  currentFloor: 0
+  puzzleSolved: 0
+  puzzle2Solved: 0
 --- !u!1 &1829135242
 GameObject:
   m_ObjectHideFlags: 0
@@ -14457,6 +14462,54 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1893878698}
   m_CullTransparentMesh: 1
+--- !u!1 &1905043465
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1905043467}
+  - component: {fileID: 1905043466}
+  m_Layer: 0
+  m_Name: MiniMap
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1905043466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1905043465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9aed30d48fb7b742909b8e63cb542d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MiniMapGenerator
+  mapGenerator: {fileID: 1824957435}
+  minimap: {fileID: 478135952}
+  minimapTileSize: 1
+  playerArrowSprite: {fileID: -2311659948842064771, guid: e310a7fac03f14447947744eee734cdb, type: 3}
+--- !u!4 &1905043467
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1905043465}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.17541, y: -0.42459, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1927053286
 GameObject:
   m_ObjectHideFlags: 0
@@ -16354,3 +16407,4 @@ SceneRoots:
   - {fileID: 415250813}
   - {fileID: 572544403}
   - {fileID: 632381824}
+  - {fileID: 1905043467}
