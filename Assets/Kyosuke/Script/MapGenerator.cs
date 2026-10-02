@@ -13,8 +13,9 @@ public class MapGenerator : MonoBehaviour
 
     // マップデータ・マップ生成
     [SerializeField] StageData[] stages;
-    [SerializeField] GameObject[] prefabs;
+    [SerializeField] public GameObject[] prefabs;
     [SerializeField] Transform map2D;
+    [SerializeField] private MiniMapGenerator miniMapGenerator;
 
     // プレイヤー
     public Player player;
@@ -57,20 +58,47 @@ public class MapGenerator : MonoBehaviour
     [SerializeField] Image puzzleConfirmImage;
     [SerializeField] Sprite puzzleConfirmSprite;
 
-    // 全体マップ
-    [SerializeField] GameObject FullMap;
-    [SerializeField] GameObject fullMapTilePrefab;
 
     // ミニマップ
     [SerializeField] float miniMapScale = 0.3f;
     [SerializeField] Vector2 miniMapOffset = new Vector2(-7.4f, -3.5f);
 
-    // 3*3ミニマップ
+    // 5*5ミニマップ
     [SerializeField] Transform minimap;
     [SerializeField] float minimapTileSize = 100f;
     [SerializeField] Sprite playerArrowSprite;
 
     [SerializeField] GameObject treasureChestImage;
+
+    // ギミック
+    [SerializeField] private GameObject pitGimmick1Image;
+    [SerializeField] private GameObject pitGimmick2Image;
+    [SerializeField] private GameObject GIMMICK2_1;
+    [SerializeField] private GameObject GIMMICK2_2;
+    [SerializeField] private GameObject GIMMICK2_3;
+    [SerializeField] private GameObject GIMMICK2_4;
+    [SerializeField] private GameObject GIMMICK2_5;
+    [SerializeField] private GameObject GIMMICK2_6;
+    [SerializeField] private GameObject GIMMICK2_7;
+    [SerializeField] private GameObject GIMMICK2_8;
+    [SerializeField] private GameObject GIMMICK2_9;
+    [SerializeField] private GameObject GIMMICK2_10;
+    [SerializeField] private GameObject GIMMICK2_11;
+    [SerializeField] private GameObject GIMMICK2_12;
+    [SerializeField] private GameObject GIMMICK2_13;
+    [SerializeField] private GameObject GIMMICK2_14;
+    [SerializeField] private GameObject GIMMICK2_15;
+    [SerializeField] private GameObject GIMMICK3_1;
+    [SerializeField] private GameObject GIMMICK3_2;
+    [SerializeField] private GameObject GIMMICK3_3;
+    [SerializeField] private GameObject GIMMICK3_4;
+    [SerializeField] private GameObject GIMMICK3_5;
+    [SerializeField] private GameObject GIMMICK3_R;
+    [SerializeField] private GameObject GIMMICK3_G;
+    [SerializeField] private GameObject GIMMICK3_Y;
+    [SerializeField] private GameObject GIMMICK3_B;
+
+
 
     //==================================================
     // マップ関連
@@ -78,23 +106,78 @@ public class MapGenerator : MonoBehaviour
 
     public enum MAP_TYPE
     {
-        GROUND, // 0
-        WALL,   // 1
-        PLAYER, // 2
-        STAIR,  // 3
-        GOAL,   // 4
-        PIT,    // 5
-        PUZZLE, // 6
-        PUZZLE2 // 7
+        GROUND = 0, 
+        WALL = 1,   
+        PLAYER = 2, 
+        GOAL = 3,   
+        PIT = 4,    
+        POISON = 5,
+        PUZZLE = 30, 
+        PUZZLE2 = 31, 
+        PUZZLE3 = 32, 
+        PUZZLE4 = 33,    
+        PUZZLE5 = 34,     
+        PUZZLE6 = 35,    
+        STAIR_1_2 = 40,  
+        STAIR_2_3 = 41,  
+        STAIR_3_4 = 42,
+        PIT_GIMMICK1 = 50,
+        PIT_GIMMICK2 = 51,
+        GIMMICK2_1 = 60,
+        GIMMICK2_2 = 61,
+        GIMMICK2_3 = 62,
+        GIMMICK2_4 = 63,
+        GIMMICK2_5 = 64,
+        GIMMICK2_6 = 65,
+        GIMMICK2_7 = 66,
+        GIMMICK2_8 = 67,
+        GIMMICK2_9 = 68,
+        GIMMICK2_10 = 69,
+        GIMMICK2_11 = 70,
+        GIMMICK2_12 = 71,
+        GIMMICK2_13 = 72,
+        GIMMICK2_14 = 73,
+        GIMMICK2_15 = 74,
+        GIMMICK3_1 = 80,
+        GIMMICK3_2 = 81,
+        GIMMICK3_3 = 82,
+        GIMMICK3_4 = 83,
+        GIMMICK3_5 = 84,
+        GIMMICK3_R = 85,
+        GIMMICK3_G = 86,
+        GIMMICK3_Y = 87,
+        GIMMICK3_B = 88,
+        WARP1 = 90,
+        WARP2 = 91,
+        WARP3 = 92,
+        WARP4 = 93,
+        WARP5 = 94,
+        WARP6 = 95,
+        WARP7 = 96,
+        WARP8 = 97,
+        WARP9 = 98,
+        WARP10 = 99,
+        WARP11 = 100,
+        WARP12 = 101,
+        WARP13 = 102,
+        WARP14 = 103,
+        WARP15 = 104,
+        WARP16 = 105
     }
 
-    MAP_TYPE[,] mapTable;
+    public MAP_TYPE[,] mapTable;
 
     // 探索済みマップ
-    Dictionary<string, bool[,]> discoveredMaps =
-        new Dictionary<string, bool[,]>();
+    public Dictionary<string, bool[,]> discoveredMaps = new Dictionary<string, bool[,]>();
+    // 発見した落とし穴
+    public Dictionary<string, bool[,]> discoveredPitMaps = new Dictionary<string, bool[,]>();
+    // 謎解きクリア済み
+    public Dictionary<string, bool[,]> solvedPuzzleMaps = new Dictionary<string, bool[,]>();
 
+    // 現在の階の探索済みマップ
     bool[,] discovered;
+    // 現在の階の落とし穴探索済み
+    bool[,] discoveredPit;　
 
     Vector2 centerPos;
     float mapSize;
@@ -106,16 +189,16 @@ public class MapGenerator : MonoBehaviour
     // ステージ・階層
     //==================================================
 
-    int currentStage = 0;
-    int currentFloor = 0;
+    public int currentStage = 0;
+    public int currentFloor = 0;
 
 
     //==================================================
     // 謎解き状態
     //==================================================
 
-    bool puzzleSolved = false;
-    bool puzzle2Solved = false;
+    public bool puzzleSolved = false;
+    public bool puzzle2Solved = false;
     bool puzzleConfirm = false;
     bool puzzle2Confirm = false;
 
@@ -137,6 +220,41 @@ public class MapGenerator : MonoBehaviour
 
         yesButton.onClick.AddListener(Yes);
         noButton.onClick.AddListener(No);
+
+        int selectedStage = PlayerPrefs.GetInt("SelectedStage", 0);
+
+        
+        pitGimmick1Image.SetActive(false);
+        pitGimmick2Image.SetActive(false);
+        GIMMICK2_1.SetActive(false);
+        GIMMICK2_2.SetActive(false);
+        GIMMICK2_3.SetActive(false);
+        GIMMICK2_4.SetActive(false);
+        GIMMICK2_5.SetActive(false);
+        GIMMICK2_6.SetActive(false);
+        GIMMICK2_7.SetActive(false);
+        GIMMICK2_8.SetActive(false);
+        GIMMICK2_9.SetActive(false);
+        GIMMICK2_10.SetActive(false);
+        GIMMICK2_11.SetActive(false);
+        GIMMICK2_12.SetActive(false);
+        GIMMICK2_13.SetActive(false);
+        GIMMICK2_14.SetActive(false);
+        GIMMICK2_15.SetActive(false);
+        GIMMICK3_1.SetActive(false);
+        GIMMICK3_2.SetActive(false);
+        GIMMICK3_3.SetActive(false);
+        GIMMICK3_4.SetActive(false);
+        GIMMICK3_5.SetActive(false);
+        GIMMICK3_R.SetActive(false);
+        GIMMICK3_G.SetActive(false);
+        GIMMICK3_Y.SetActive(false);
+        GIMMICK3_B.SetActive(false);
+
+
+
+        currentStage = selectedStage;
+        currentFloor = 0;
 
         _loadMapData();
         _createMap();
@@ -168,20 +286,22 @@ public class MapGenerator : MonoBehaviour
 
     private void Update()
     {
-        // Mキーで全体マップを開閉
-        if (Input.GetKeyDown(KeyCode.M))
+        // 1キー → ステージ1
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            FullMap.SetActive(!FullMap.activeSelf);
+            ChangeStage(0);
+        }
 
-            if (FullMap.activeSelf)
-            {
-                CreateFullMap();
-                player.isPuzzle = true;
-            }
-            else
-            {
-                player.isPuzzle = false;
-            }
+        // 2キー → ステージ2
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            ChangeStage(1);
+        }
+
+        // 3キー → ステージ3
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            ChangeStage(2);
         }
     }
 
@@ -241,23 +361,28 @@ public class MapGenerator : MonoBehaviour
         // ステージ・階層ごとに探索状況を保存
         string mapKey = currentStage + "_" + currentFloor;
 
+        // 探索済み
         if (!discoveredMaps.ContainsKey(mapKey))
         {
             discoveredMaps[mapKey] = new bool[col, row];
         }
 
         discovered = discoveredMaps[mapKey];
+
+        // 落とし穴
+        if (!discoveredPitMaps.ContainsKey(mapKey))
+        {
+            discoveredPitMaps[mapKey] = new bool[col, row];
+        }
     }
 
-
     //==================================================
-    // マップ生成
+    // 全体マップ生成
     //==================================================
 
     void _createMap()
     {
-        float tileSize =
-            prefabs[1].GetComponent<SpriteRenderer>().bounds.size.x;
+        float tileSize = prefabs[1].GetComponent<SpriteRenderer>().bounds.size.x;
 
         mapSize = tileSize;
 
@@ -293,14 +418,122 @@ public class MapGenerator : MonoBehaviour
                 Vector2Int pos =
                     new Vector2Int(x, y);
 
+                // 床Prefab
                 GameObject _ground =
                     Instantiate(
-                        prefabs[(int)MAP_TYPE.GROUND],
+                        prefabs[0],
                         map2D);
+
+                // マップの種類に応じてPrefabを選択
+                GameObject mapPrefab = null;
+
+                switch (mapTable[x, y])
+                {
+                    case MAP_TYPE.GROUND:
+                        // 床の場合は床Prefab
+                        mapPrefab = prefabs[0];
+                        break;
+
+                    case MAP_TYPE.WALL:
+                        mapPrefab = prefabs[1];
+                        break;
+
+                    case MAP_TYPE.PLAYER:
+                        mapPrefab = prefabs[2];
+                        break;
+
+                    case MAP_TYPE.GOAL:
+                        mapPrefab = prefabs[3];
+                        break;
+
+                    case MAP_TYPE.PIT:
+                        mapPrefab = prefabs[4];
+                        break;
+
+                    // パズル6種類は同じPrefabを使用
+                    case MAP_TYPE.PUZZLE:
+                    case MAP_TYPE.PUZZLE2:
+                    case MAP_TYPE.PUZZLE3:
+                    case MAP_TYPE.PUZZLE4:
+                    case MAP_TYPE.PUZZLE5:
+                    case MAP_TYPE.PUZZLE6:
+                        mapPrefab = prefabs[5];
+                        break;
+
+                    // 階段3種類は同じPrefabを使用
+                    case MAP_TYPE.STAIR_1_2:
+                    case MAP_TYPE.STAIR_2_3:
+                    case MAP_TYPE.STAIR_3_4:
+                        mapPrefab = prefabs[6];
+                        break;
+
+                    case MAP_TYPE.PIT_GIMMICK1:
+                    case MAP_TYPE.PIT_GIMMICK2:
+                    case MAP_TYPE.GIMMICK2_1:
+                    case MAP_TYPE.GIMMICK2_2:
+                    case MAP_TYPE.GIMMICK2_3:
+                    case MAP_TYPE.GIMMICK2_4:
+                    case MAP_TYPE.GIMMICK2_5:
+                    case MAP_TYPE.GIMMICK2_6:
+                    case MAP_TYPE.GIMMICK2_7:
+                    case MAP_TYPE.GIMMICK2_8:
+                    case MAP_TYPE.GIMMICK2_9:
+                    case MAP_TYPE.GIMMICK2_10:
+                    case MAP_TYPE.GIMMICK2_11:
+                    case MAP_TYPE.GIMMICK2_12:
+                    case MAP_TYPE.GIMMICK2_13:
+                    case MAP_TYPE.GIMMICK2_14:
+                    case MAP_TYPE.GIMMICK2_15:
+                    case MAP_TYPE.GIMMICK3_1:
+                    case MAP_TYPE.GIMMICK3_2:
+                    case MAP_TYPE.GIMMICK3_3:
+                    case MAP_TYPE.GIMMICK3_4:
+                    case MAP_TYPE.GIMMICK3_5:
+                    case MAP_TYPE.GIMMICK3_R:
+                    case MAP_TYPE.GIMMICK3_G:
+                    case MAP_TYPE.GIMMICK3_Y:
+                    case MAP_TYPE.GIMMICK3_B:
+                        mapPrefab = prefabs[0];
+                        break;
+
+                    case MAP_TYPE.WARP1:
+                    case MAP_TYPE.WARP2:
+                    case MAP_TYPE.WARP3:
+                    case MAP_TYPE.WARP4:
+                    case MAP_TYPE.WARP5:
+                    case MAP_TYPE.WARP6:
+                    case MAP_TYPE.WARP7:
+                    case MAP_TYPE.WARP8:
+                    case MAP_TYPE.WARP9:
+                    case MAP_TYPE.WARP10:
+                    case MAP_TYPE.WARP11:
+                    case MAP_TYPE.WARP12:
+                    case MAP_TYPE.WARP13:
+                    case MAP_TYPE.WARP14:
+                    case MAP_TYPE.WARP15:
+                    case MAP_TYPE.WARP16:
+                        mapPrefab = prefabs[7];
+                        Debug.Log("ワープPrefab：" + mapPrefab);
+                        break;
+
+
+                    default:
+                        Debug.LogError(
+                            "対応するPrefabがありません：" +
+                            mapTable[x, y]);
+
+                        break;
+                }
+
+                if (mapPrefab == null)
+                {
+                    Destroy(_ground);
+                    continue;
+                }
 
                 GameObject _map =
                     Instantiate(
-                        prefabs[(int)mapTable[x, y]],
+                        mapPrefab,
                         map2D);
 
                 _ground.transform.localPosition =
@@ -350,308 +583,9 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
-
-    //==================================================
-    // 全体マップ生成
-    //==================================================
-
-    void CreateFullMap()
-    {
-        // 前回の全体マップを削除
-        for (int i = FullMap.transform.childCount - 1; i >= 0; i--)
-        {
-            Destroy(FullMap.transform.GetChild(i).gameObject);
-        }
-
-        int width = mapTable.GetLength(0);
-        int height = mapTable.GetLength(1);
-
-        for (int y = 0; y < height; y++)
-        {
-            for (int x = 0; x < width; x++)
-            {
-                bool show = false;
-
-                // 探索済みなら表示
-                if (discovered[x, y])
-                {
-                    show = true;
-                }
-
-                // 探索済みマスの周囲にある壁を表示
-                if (!show)
-                {
-                    Vector2Int[] directions =
-                    {
-                        new Vector2Int(0, 1),
-                        new Vector2Int(0, -1),
-                        new Vector2Int(1, 0),
-                        new Vector2Int(-1, 0)
-                    };
-
-                    foreach (Vector2Int dir in directions)
-                    {
-                        int nx = x + dir.x;
-                        int ny = y + dir.y;
-
-                        if (nx >= 0 && nx < width &&
-                            ny >= 0 && ny < height)
-                        {
-                            if (discovered[nx, ny] &&
-                                mapTable[x, y] == MAP_TYPE.WALL)
-                            {
-                                show = true;
-                            }
-                        }
-                    }
-                }
-
-                // マップ外周は常に表示
-                if (x == 0 || x == width - 1 ||
-                    y == 0 || y == height - 1)
-                {
-                    show = true;
-                }
-
-                if (!show)
-                {
-                    continue;
-                }
-
-                GameObject tile =
-                    Instantiate(
-                        fullMapTilePrefab,
-                        FullMap.transform);
-
-                RectTransform rect =
-                    tile.GetComponent<RectTransform>();
-
-                float tileSize = 30f;
-
-                float mapWidth =
-                    width * tileSize;
-
-                float mapHeight =
-                    height * tileSize;
-
-                // マップを中央に配置
-                rect.anchoredPosition = new Vector2(
-                    x * tileSize
-                    - mapWidth / 2f
-                    + tileSize / 2f,
-
-                    -y * tileSize
-                    + mapHeight / 2f
-                    - tileSize / 2f
-                );
-
-                // 壁を黒く表示
-                if (mapTable[x, y] == MAP_TYPE.WALL)
-                {
-                    Image image =
-                        tile.GetComponent<Image>();
-
-                    if (image != null)
-                    {
-                        image.color = Color.black;
-                    }
-                }
-            }
-        }
-    }
-
     public void UpdateMinimap()
     {
-        Debug.Log("★★★ ミニマップ更新 ★★★");
-
-        //==================================================
-        // 3×3ミニマップを更新
-        //==================================================
-
-        // 前に作った3×3マップを削除
-        for (int i = minimap.childCount - 1; i >= 0; i--)
-        {
-            Destroy(minimap.GetChild(i).gameObject);
-        }
-
-        //==================================================
-        // プレイヤーを中心に3×3を表示
-        //==================================================
-
-        for (int y = -1; y <= 1; y++)
-        {
-            for (int x = -1; x <= 1; x++)
-            {
-                // プレイヤーから見たマップ上の位置
-                Vector2Int pos =
-                    player.currentPos +
-                    new Vector2Int(x, y);
-
-                // マップ外なら壁として扱う
-                MAP_TYPE type =
-                    GetNextMapType(pos);
-
-
-                //==================================================
-                // マスを作成
-                //==================================================
-
-                GameObject tile =
-                    Instantiate(
-                        prefabs[(int)MAP_TYPE.GROUND],
-                        minimap
-                    );
-
-                SpriteRenderer sr =
-                    tile.GetComponent<SpriteRenderer>();
-
-
-                if (sr != null)
-                {
-                    // マップの種類に応じた画像を取得
-                    SpriteRenderer original =
-                        prefabs[(int)type]
-                        .GetComponent<SpriteRenderer>();
-
-                    if (original != null)
-                    {
-                        sr.sprite = original.sprite;
-                    }
-
-                    // プレイヤーの初期位置だった場所は
-                    // ミニマップでは普通の床として表示
-                    if (type == MAP_TYPE.PLAYER)
-                    {
-                        SpriteRenderer ground =
-                            prefabs[(int)MAP_TYPE.GROUND]
-                            .GetComponent<SpriteRenderer>();
-
-                        if (ground != null)
-                        {
-                            sr.sprite = ground.sprite;
-                        }
-
-                        sr.color = Color.black;
-                    }
-
-                    // 色を設定
-                    if (x == 0 && y == 0)
-                    {
-                        // プレイヤー → 白
-                        sr.color = Color.white;
-
-                        // プレイヤーを一番手前に表示
-                        sr.sortingOrder = 110;
-                    }
-                    else if (type == MAP_TYPE.WALL)
-                    {
-                        // 壁 → グレー
-                        sr.color = Color.gray;
-
-                        sr.sortingOrder = 100;
-                    }
-                    else
-                    {
-                        // 床 → 黒
-                        sr.color = Color.black;
-
-                        sr.sortingOrder = 100;
-                    }
-
-                    //==================================================
-                    // プレイヤーを中央に表示
-                    //==================================================
-
-                    if (x == 0 && y == 0)
-                    {
-                        if (x == 0 && y == 0)
-                        {
-                            //==================================================
-                            // 中央は「黒い床」
-                            //==================================================
-
-                            sr.color = Color.black;
-                            sr.sortingOrder = 100;
-
-
-                            //==================================================
-                            // その上にプレイヤーの矢印を作る
-                            //==================================================
-
-                            GameObject arrow =
-                                new GameObject("MinimapPlayerArrow");
-
-                            arrow.transform.SetParent(minimap);
-
-                            arrow.transform.localPosition = Vector3.zero;
-
-                            arrow.transform.localScale =
-                                Vector3.one * 100f;
-
-                            SpriteRenderer arrowSR =
-                                arrow.AddComponent<SpriteRenderer>();
-
-                            // 作った矢印画像
-                            arrowSR.sprite = playerArrowSprite;
-
-                            // 白色
-                            arrowSR.color = Color.white;
-
-                            // 床より前
-                            arrowSR.sortingOrder = 110;
-
-
-                            //==================================================
-                            // プレイヤーの向き
-                            //==================================================
-
-                            switch (player.direction)
-                            {
-                                case Player.DIRECTION.TOP:
-                                    arrow.transform.localRotation =
-                                        Quaternion.Euler(0, 0, 0);
-                                    break;
-
-                                case Player.DIRECTION.RIGHT:
-                                    arrow.transform.localRotation =
-                                        Quaternion.Euler(0, 0, -90);
-                                    break;
-
-                                case Player.DIRECTION.DOWN:
-                                    arrow.transform.localRotation =
-                                        Quaternion.Euler(0, 0, 180);
-                                    break;
-
-                                case Player.DIRECTION.LEFT:
-                                    arrow.transform.localRotation =
-                                        Quaternion.Euler(0, 0, 90);
-                                    break;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        sr.sortingOrder = 100;
-                    }
-                }
-
-
-                //==================================================
-                // 3×3上の位置
-                //==================================================
-
-                tile.transform.localPosition =
-                    new Vector3(
-                        x * minimapTileSize,
-                        -y * minimapTileSize,
-                        0
-                    );
-
-                // 3×3用の大きさ
-                tile.transform.localScale =
-                    Vector3.one*100f;
-            }
-        }
+        miniMapGenerator.UpdateMinimap();
     }
 
     public void ShowTreasureChest()
@@ -659,6 +593,10 @@ public class MapGenerator : MonoBehaviour
         treasureChestImage.SetActive(true);
 
         player.isPuzzle = true;
+
+        // 現在のステージをクリア済みにする
+        PlayerPrefs.SetInt("Stage" + (currentStage + 1) + "_Cleared", 1);
+        PlayerPrefs.Save();
     }
 
     public void DiscoverPlayerPosition()
@@ -672,6 +610,250 @@ public class MapGenerator : MonoBehaviour
             discovered[x, y] = true;
         }
     }
+    public void DiscoverPit(Vector2Int pos)
+    {
+        string mapKey = currentStage + "_" + currentFloor;
+
+        if (discoveredPitMaps.ContainsKey(mapKey))
+        {
+            discoveredPitMaps[mapKey][pos.x, pos.y] = true;
+        }
+
+        UpdateMinimap();
+    }
+
+    public void CheckPitGimmick()
+    {
+        // まず両方消す
+        pitGimmick1Image.SetActive(false);
+        pitGimmick2Image.SetActive(false);
+        GIMMICK2_1.SetActive(false);
+        GIMMICK2_2.SetActive(false);
+        GIMMICK2_3.SetActive(false);
+        GIMMICK2_4.SetActive(false);
+        GIMMICK2_5.SetActive(false);
+        GIMMICK2_6.SetActive(false);
+        GIMMICK2_7.SetActive(false);
+        GIMMICK2_8.SetActive(false);
+        GIMMICK2_9.SetActive(false);
+        GIMMICK2_10.SetActive(false);
+        GIMMICK2_11.SetActive(false);
+        GIMMICK2_12.SetActive(false);
+        GIMMICK2_13.SetActive(false);
+        GIMMICK2_14.SetActive(false);
+        GIMMICK2_15.SetActive(false);
+        GIMMICK3_1.SetActive(false);
+        GIMMICK3_2.SetActive(false);
+        GIMMICK3_3.SetActive(false);
+        GIMMICK3_4.SetActive(false);
+        GIMMICK3_5.SetActive(false);
+        GIMMICK3_R.SetActive(false);
+        GIMMICK3_G.SetActive(false);
+        GIMMICK3_Y.SetActive(false);
+        GIMMICK3_B.SetActive(false);
+
+
+        // プレイヤーがいる場所のマップタイプを取得
+        MAP_TYPE type = GetNextMapType(player.currentPos);
+
+        // 50
+        if (type == MAP_TYPE.PIT_GIMMICK1)
+        {
+            pitGimmick1Image.SetActive(true);
+        }
+        // 51
+        else if (type == MAP_TYPE.PIT_GIMMICK2)
+        {
+            pitGimmick2Image.SetActive(true);
+        }
+        else if (type == MAP_TYPE.GIMMICK2_1)
+        {
+            GIMMICK2_1.SetActive(true);
+        }
+        else if (type == MAP_TYPE.GIMMICK2_2)
+        {
+            GIMMICK2_2.SetActive(true);
+        }
+        else if (type == MAP_TYPE.GIMMICK2_3)
+        {
+            GIMMICK2_3.SetActive(true);
+        }
+        else if (type == MAP_TYPE.GIMMICK2_4)
+        {
+            GIMMICK2_4.SetActive(true);
+        }
+        else if (type == MAP_TYPE.GIMMICK2_5)
+        {
+            GIMMICK2_5.SetActive(true);
+        }
+        else if (type == MAP_TYPE.GIMMICK2_6)
+        {
+            GIMMICK2_6.SetActive(true);
+        }
+        else if (type == MAP_TYPE.GIMMICK2_7)
+        {
+            GIMMICK2_7.SetActive(true);
+        }
+        else if (type == MAP_TYPE.GIMMICK2_8)
+        {
+            GIMMICK2_8.SetActive(true);
+        }
+        else if (type == MAP_TYPE.GIMMICK2_9)
+        { 
+            GIMMICK2_9.SetActive(true);
+        }
+        else if (type == MAP_TYPE.GIMMICK2_10)
+        {
+            GIMMICK2_10.SetActive(true);
+        }
+        else if (type == MAP_TYPE.GIMMICK2_11)
+        {
+            GIMMICK2_11.SetActive(true);
+        }
+        else if (type == MAP_TYPE.GIMMICK2_12)
+        {
+            GIMMICK2_12.SetActive(true);
+        }
+        else if (type == MAP_TYPE.GIMMICK2_13)
+        {
+            GIMMICK2_13.SetActive(true);
+        }
+        else if (type == MAP_TYPE.GIMMICK2_14)
+        {
+            GIMMICK2_14.SetActive(true);
+        }
+        else if (type == MAP_TYPE.GIMMICK2_15)
+        {
+            GIMMICK2_15.SetActive(true);
+        }
+        else if (type == MAP_TYPE.GIMMICK3_1)
+        {
+            GIMMICK3_1.SetActive(true);
+        }
+        else if (type == MAP_TYPE.GIMMICK3_2)
+        {
+            GIMMICK3_2.SetActive(true);
+        }
+        else if (type == MAP_TYPE.GIMMICK3_3)
+        {
+            GIMMICK3_3.SetActive(true);
+        }
+        else if (type == MAP_TYPE.GIMMICK3_4)
+        {
+            GIMMICK3_4.SetActive(true);
+        }
+        else if (type == MAP_TYPE.GIMMICK3_5)
+        {
+            GIMMICK3_5.SetActive(true);
+        }
+        else if (type == MAP_TYPE.GIMMICK3_R)
+        {
+            GIMMICK3_R.SetActive(true);
+        }
+        else if (type == MAP_TYPE.GIMMICK3_G)
+        {
+            GIMMICK3_G.SetActive(true);
+        }
+        else if (type == MAP_TYPE.GIMMICK3_Y)
+        {
+            GIMMICK3_Y.SetActive(true);
+        }
+        else if (type == MAP_TYPE.GIMMICK3_B)
+        {
+            GIMMICK3_B.SetActive(true);
+        }
+    }
+
+    public Vector2Int GetWarpTarget(Vector2Int currentPos)
+    {
+        MAP_TYPE type = GetNextMapType(currentPos);
+
+        MAP_TYPE targetType;
+
+        switch (type)
+        {
+            case MAP_TYPE.WARP1:
+                targetType = MAP_TYPE.WARP2;
+                break;
+
+            case MAP_TYPE.WARP2:
+                targetType = MAP_TYPE.WARP1;
+                break;
+
+            case MAP_TYPE.WARP3:
+                targetType = MAP_TYPE.WARP4;
+                break;
+
+            case MAP_TYPE.WARP4:
+                targetType = MAP_TYPE.WARP3;
+                break;
+
+            case MAP_TYPE.WARP5:
+                targetType = MAP_TYPE.WARP6;
+                break;
+
+            case MAP_TYPE.WARP6:
+                targetType = MAP_TYPE.WARP5;
+                break;
+
+            case MAP_TYPE.WARP7:
+                targetType = MAP_TYPE.WARP8;
+                break;
+
+            case MAP_TYPE.WARP8:
+                targetType = MAP_TYPE.WARP7;
+                break;
+
+            case MAP_TYPE.WARP9:
+                targetType = MAP_TYPE.WARP10;
+                break;
+
+            case MAP_TYPE.WARP10:
+                targetType = MAP_TYPE.WARP9;
+                break;
+
+            case MAP_TYPE.WARP11:
+                targetType = MAP_TYPE.WARP12;
+                break;
+
+            case MAP_TYPE.WARP12:
+                targetType = MAP_TYPE.WARP11;
+                break;
+
+            case MAP_TYPE.WARP13:
+                targetType = MAP_TYPE.WARP14;
+                break;
+
+            case MAP_TYPE.WARP14:
+                targetType = MAP_TYPE.WARP13;
+                break;
+
+            case MAP_TYPE.WARP15:
+                targetType = MAP_TYPE.WARP16;
+                break;
+
+            case MAP_TYPE.WARP16:
+                targetType = MAP_TYPE.WARP15;
+                break;
+
+            default:
+                return currentPos;
+        }
+
+        for (int x = 0; x < mapTable.GetLength(0); x++)
+        {
+            for (int y = 0; y < mapTable.GetLength(1); y++)
+            {
+                if (mapTable[x, y] == targetType)
+                {
+                    return new Vector2Int(x, y);
+                }
+            }
+        }
+
+        return currentPos;
+    }
+
 
     public Vector2 ScreenPos(Vector2Int _pos)
     {
@@ -706,7 +888,9 @@ public class MapGenerator : MonoBehaviour
         {
             for (int x = 0;x < mapTable.GetLength(0);x++)
             {
-                if (mapTable[x, y] == MAP_TYPE.STAIR)
+                MAP_TYPE type = mapTable[x, y];
+
+                if (type == MAP_TYPE.STAIR_1_2 || type == MAP_TYPE.STAIR_2_3 || type == MAP_TYPE.STAIR_3_4)
                 {
                     return new Vector2Int(x, y);
                 }
@@ -855,15 +1039,18 @@ public class MapGenerator : MonoBehaviour
             blueNumber == 9)
         {
             Debug.Log("謎解き正解！");
+            SEManager.Instance.PlayCorrect();
 
             puzzleSolved = true;
             Puzzle.SetActive(false);
             player.isPuzzle = false;
+            UpdateMinimap();
         }
         else
         {
             Debug.Log("不正解！");
-       }
+            SEManager.Instance.PlayWrong();
+        }
     }
 
     public void CheckPuzzle2F()
@@ -874,14 +1061,17 @@ public class MapGenerator : MonoBehaviour
             blueNumber2 == 5)
         {
             Debug.Log("2F謎解き正解！");
+            SEManager.Instance.PlayCorrect();
 
             puzzle2Solved = true;
             Puzzle2.SetActive(false);
             player.isPuzzle = false;
+            UpdateMinimap();
         }
         else
         {
             Debug.Log("不正解！");
+            SEManager.Instance.PlayWrong();
         }
     }
 
@@ -892,6 +1082,7 @@ public class MapGenerator : MonoBehaviour
             return;
         }
 
+        treasureChestImage.SetActive(true);
         puzzleConfirm = true;
         puzzleConfirmImage.sprite = puzzleConfirmSprite;
         puzzleConfirmImage.gameObject.SetActive(true);
@@ -906,6 +1097,7 @@ public class MapGenerator : MonoBehaviour
             return;
         }
 
+        treasureChestImage.SetActive(true);
         puzzle2Confirm = true;
         puzzleConfirmImage.sprite = puzzleConfirmSprite;
         puzzleConfirmImage.gameObject.SetActive(true);
@@ -920,18 +1112,49 @@ public class MapGenerator : MonoBehaviour
 
     public void CheckStair()
     {
-        if (GetNextMapType(player.currentPos)
-            == MAP_TYPE.STAIR)
+        MAP_TYPE nextMapType = GetNextMapType(player.currentPos);
+
+        if (nextMapType == MAP_TYPE.STAIR_1_2 || nextMapType == MAP_TYPE.STAIR_2_3 || nextMapType == MAP_TYPE.STAIR_3_4)
         {
-            if (currentFloor == 0)
+            // 現在の階と階段の種類に応じて画像を変更
+            if (nextMapType == MAP_TYPE.STAIR_1_2)
             {
-                // 1F → 2F
-                stairImage.sprite = stairUpSprite;
+                if (currentFloor == 0)
+                {
+                    // 1F → 2F
+                    stairImage.sprite = stairUpSprite;
+                }
+                else
+                {
+                    // 2F → 1F
+                    stairImage.sprite = stairDownSprite;
+                }
             }
-            else
+            else if (nextMapType == MAP_TYPE.STAIR_2_3)
             {
-                // 2F → 1F
-                stairImage.sprite = stairDownSprite;
+                if (currentFloor == 1)
+                {
+                    // 2F → 3F
+                    stairImage.sprite = stairUpSprite;
+                }
+                else
+                {
+                    // 3F → 2F
+                    stairImage.sprite = stairDownSprite;
+                }
+            }
+            else if (nextMapType == MAP_TYPE.STAIR_3_4)
+            {
+                if (currentFloor == 2)
+                {
+                    // 3F → 4F
+                    stairImage.sprite = stairUpSprite;
+                }
+                else
+                {
+                    // 4F → 3F
+                    stairImage.sprite = stairDownSprite;
+                }
             }
 
             stairImage.gameObject.SetActive(true);
@@ -943,6 +1166,7 @@ public class MapGenerator : MonoBehaviour
     public void Yes()
     {
         Panel.SetActive(false);
+        treasureChestImage.SetActive(false);
         puzzleConfirmImage.gameObject.SetActive(false);
         player.isPuzzle = false;
 
@@ -969,19 +1193,63 @@ public class MapGenerator : MonoBehaviour
         }
 
         // 階段の場合
-        if (currentFloor == 0)
+        MAP_TYPE nextMapType = GetNextMapType(player.currentPos);
+
+        switch (nextMapType)
         {
-            ChangeFloor(1);
-        }
-        else
-        {
-            ChangeFloor(0);
+            case MAP_TYPE.STAIR_1_2:
+
+                if (currentFloor == 0)
+                {
+                    // 1F → 2F
+                    ChangeFloor(1);
+                }
+                else if (currentFloor == 1)
+                {
+                    // 2F → 1F
+                    ChangeFloor(0);
+                }
+
+                break;
+
+
+            case MAP_TYPE.STAIR_2_3:
+
+                if (currentFloor == 1)
+                {
+                    // 2F → 3F
+                    ChangeFloor(2);
+                }
+                else if (currentFloor == 2)
+                {
+                    // 3F → 2F
+                    ChangeFloor(1);
+                }
+
+                break;
+
+
+            case MAP_TYPE.STAIR_3_4:
+
+                if (currentFloor == 2)
+                {
+                    // 3F → 4F
+                    ChangeFloor(3);
+                }
+                else if (currentFloor == 3)
+                {
+                    // 4F → 3F
+                    ChangeFloor(2);
+                }
+
+                break;
         }
     }
 
     public void No()
     {
         Panel.SetActive(false);
+        treasureChestImage.SetActive(false);
         puzzleConfirmImage.gameObject.SetActive(false);
         puzzleConfirm = false;
         puzzle2Confirm = false;
@@ -1015,11 +1283,6 @@ public class MapGenerator : MonoBehaviour
         _createMap();
         _updateStageText();
 
-        // 全体マップを開いている場合は更新
-        if (FullMap.activeSelf)
-        {
-            CreateFullMap();
-        }
 
         // 階段の位置へプレイヤーを移動
         if (moveToStair)
@@ -1043,6 +1306,8 @@ public class MapGenerator : MonoBehaviour
     {
         currentStage = stage;
         currentFloor = 0;
+
+        Debug.Log("★★★ ステージ" + (stage + 1) + "が呼ばれました ★★★");   
 
         while (map2D.childCount > 0)
         {

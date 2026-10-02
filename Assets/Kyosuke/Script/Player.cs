@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -112,30 +113,41 @@ public class Player : MonoBehaviour
         // 前進
         if (Input.GetKeyDown(KeyCode.W))
         {
-            Debug.Log("W押した！");
+            direction = DIRECTION.TOP;
+            _setDirection();
             _move(1);
+            //_move(1);
         }
 
         // 右を向く
         if (Input.GetKeyDown(KeyCode.D))
         {
-            direction++;
+            direction = DIRECTION.RIGHT;
             _setDirection();
-            
+            _move(1);
+            //direction++;
+            //_setDirection();
+
         }
 
         // 後退
         if (Input.GetKeyDown(KeyCode.S))
         {
-            _move(-1);
+            direction = DIRECTION.DOWN;
+            _setDirection();
+            _move(1);
+            //_move(-1);
         }
 
         // 左を向く
         if (Input.GetKeyDown(KeyCode.A))
         {
-            direction--;
+            direction = DIRECTION.LEFT;
             _setDirection();
-            
+            _move(1);
+            //direction--;
+            //_setDirection();
+
         }
     }
 
@@ -146,10 +158,7 @@ public class Player : MonoBehaviour
 
     void _setDirection()
     {
-        int d =
-            ((int)direction + (int)DIRECTION.MAX)
-            % (int)DIRECTION.MAX;
-
+        int d = ((int)direction + (int)DIRECTION.MAX) % (int)DIRECTION.MAX;
         direction = (DIRECTION)d;
     }
 
@@ -162,12 +171,7 @@ public class Player : MonoBehaviour
     void _move(int dir)
     {
         // 次に移動する場所を計算
-        nextPos =
-            currentPos +
-            new Vector2Int(
-                move[(int)direction, 0] * dir,
-                move[(int)direction, 1] * dir
-            );
+        nextPos = currentPos + new Vector2Int(move[(int)direction, 0] * dir,move[(int)direction, 1] * dir);
 
         Debug.Log(nextPos);
 
@@ -182,8 +186,7 @@ public class Player : MonoBehaviour
             Debug.Log("現在位置：" + currentPos);
 
             // プレイヤーを移動
-            transform.localPosition =
-                mapGenerator.ScreenPos(currentPos);
+            transform.localPosition = mapGenerator.ScreenPos(currentPos);
 
             // 通った場所を記録
             mapGenerator.DiscoverPlayerPosition();
@@ -191,9 +194,13 @@ public class Player : MonoBehaviour
             // 3×3ミニマップを更新
             mapGenerator.UpdateMinimap();
 
+            // ギミックを確認
+            mapGenerator.CheckPitGimmick();
+
             // 移動先のイベントを確認
             CheckEvent();
         }
+        SEManager.Instance.PlayWalk();
     }
 
 
@@ -225,7 +232,7 @@ public class Player : MonoBehaviour
 
         //--------------- 階段 ---------------
 
-        if (type == MapGenerator.MAP_TYPE.STAIR)
+        if (type == MapGenerator.MAP_TYPE.STAIR_1_2 || type == MapGenerator.MAP_TYPE.STAIR_2_3 || type == MapGenerator.MAP_TYPE.STAIR_3_4)
         {
             mapGenerator.CheckStair();
         }
@@ -237,6 +244,7 @@ public class Player : MonoBehaviour
         {
             Debug.Log("ステージクリア！");
             mapGenerator.ShowTreasureChest();
+            SceneManager.LoadScene("clear");
         }
 
 
@@ -245,6 +253,8 @@ public class Player : MonoBehaviour
         if (type == MapGenerator.MAP_TYPE.PIT)
         {
             Debug.Log("落とし穴に落ちた！");
+            SEManager.Instance.PlayPit();
+            mapGenerator.DiscoverPit(currentPos);
 
             Damage(1);
 
@@ -271,7 +281,38 @@ public class Player : MonoBehaviour
                     mapGenerator.ScreenPos(currentPos);
             }
         }
+
+        //--------------- 毒 ---------------
+
+        if (type == MapGenerator.MAP_TYPE.POISON)
+        {
+            Debug.Log("毒を踏んだ！");
+            SEManager.Instance.PlayPoison();
+            Damage(1);
+        }
+
+        //--------------- ワープ ---------------
+
+        if (type >= MapGenerator.MAP_TYPE.WARP1 &&
+            type <= MapGenerator.MAP_TYPE.WARP16)
+        {
+            Debug.Log("ワープした！");
+
+            Vector2Int warpTarget =
+                mapGenerator.GetWarpTarget(currentPos);
+
+            currentPos = warpTarget;
+
+            transform.localPosition =
+                mapGenerator.ScreenPos(currentPos);
+
+            mapGenerator.DiscoverPlayerPosition();
+            mapGenerator.UpdateMinimap();
+        }
     }
+    
+
+
 
 
     //==================================================
@@ -297,6 +338,7 @@ public class Player : MonoBehaviour
         if (currentHP <= 0)
         {
             Debug.Log("ゲームオーバー");
+            SceneManager.LoadScene("Gameover.");
         }
     }
 }

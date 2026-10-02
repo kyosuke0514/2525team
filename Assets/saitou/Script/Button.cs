@@ -31,7 +31,7 @@ public class GameOverButton : MonoBehaviour
 
         yield return new WaitForSeconds(0.3f);
 
-        // SceneManager.LoadScene("‚à‚¤ˆê“xƒƒCƒ“ƒQ[ƒ€");
-       //SceneManager.LoadScene(GameManager.stageName);
+        SceneManager.LoadScene("Main");
+       
     }
 }

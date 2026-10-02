@@ -7,6 +7,7 @@ using UnityEngine.UI; //ボタンコンポーネントを操作する為に必�
 
 public class Starge2 : MonoBehaviour
 {
+    [SerializeField] MapGenerator mapGenerator;
     void Start()
     {
         //自分のオブジェクトからコンポーネントを取得
@@ -26,11 +27,10 @@ public class Starge2 : MonoBehaviour
 
     }
         //ボタンがクリックされた時に呼び出す関数
-        public void OnClickStart()
-        {
-           //移動したいシーン
-           SceneManager.LoadScene("");
-        }  
+    public void OnClickStart()
+    {
+        mapGenerator.ChangeStage(1);
+    }  
 }
 
 //クリア画面の次へボタンとかにこのコードを書く

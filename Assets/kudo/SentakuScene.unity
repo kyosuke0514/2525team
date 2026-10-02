@@ -203,8 +203,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1392742770}
         m_TargetAssemblyTypeName: StageSelectManager, Assembly-CSharp
-        m_MethodName: LoadStageScene
-        m_Mode: 5
+        m_MethodName: LoadStage
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -335,8 +335,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1392742770}
         m_TargetAssemblyTypeName: StageSelectManager, Assembly-CSharp
-        m_MethodName: LoadStageScene
-        m_Mode: 5
+        m_MethodName: LoadStage
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -777,8 +777,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1392742770}
         m_TargetAssemblyTypeName: StageSelectManager, Assembly-CSharp
-        m_MethodName: LoadStageScene
-        m_Mode: 5
+        m_MethodName: LoadStage
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -939,6 +939,7 @@ MonoBehaviour:
   lockedSprite: {fileID: -1356123486509985370, guid: 0f5700321a80811419e0da66da50271d, type: 3}
   playerCursor: {fileID: 1738564854}
   yOffset: 100
+  mapGenerator: {fileID: 0}
 --- !u!4 &1392742771
 Transform:
   m_ObjectHideFlags: 0
