@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;//追加　saitou
 using static MapGenerator;
 
 public class MapGenerator : MonoBehaviour
@@ -359,6 +360,10 @@ public class MapGenerator : MonoBehaviour
                         mapPrefab = prefabs[4];
                         break;
 
+                    case MAP_TYPE.POISON:
+                        mapPrefab = prefabs[4];
+                        break;   //追加　消してもいいかも？
+
                     // パズル6種類は同じPrefabを使用
                     case MAP_TYPE.PUZZLE:
                     case MAP_TYPE.PUZZLE2:
@@ -688,6 +693,16 @@ public class MapGenerator : MonoBehaviour
         // 現在のステージをクリア済みにする
         PlayerPrefs.SetInt("Stage" + (currentStage + 1) + "_Cleared", 1);
         PlayerPrefs.Save();
+        CheckAllStageClear();//追加　
+    }
+    void CheckAllStageClear()
+    {
+        if (PlayerPrefs.GetInt("Stage1_Cleared", 0) == 1 &&
+            PlayerPrefs.GetInt("Stage2_Cleared", 0) == 1 &&
+            PlayerPrefs.GetInt("Stage3_Cleared", 0) == 1)
+        {
+            SceneManager.LoadScene("Ending");
+        }
     }
 
     public void DiscoverPlayerPosition()
@@ -1209,6 +1224,13 @@ public class MapGenerator : MonoBehaviour
         get
         {
             return currentFloor;
+        }
+    }
+    public int CurrentStage
+    {
+        get
+        {
+            return currentStage; 
         }
     }
 }
