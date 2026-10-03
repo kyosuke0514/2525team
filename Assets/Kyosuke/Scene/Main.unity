@@ -14319,6 +14319,7 @@ MonoBehaviour:
   - {fileID: 4383836756901241256, guid: a56eac5ac71e2c2458e4b410b10e91eb, type: 3}
   - {fileID: 2708996250313357848, guid: f3f7a1f2e384fc34b99925cb2bf522bd, type: 3}
   - {fileID: 5555296944818630529, guid: 1f8e5f2ba77383647bd5f68fc42d762d, type: 3}
+  - {fileID: 138542981232825318, guid: 0354ddd7c48e25a4e9f916e4ac786582, type: 3}
   map2D: {fileID: 395422469}
   miniMapGenerator: {fileID: 1905043466}
   player: {fileID: 532176311}
