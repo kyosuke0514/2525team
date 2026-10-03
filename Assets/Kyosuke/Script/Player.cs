@@ -338,6 +338,8 @@ public class Player : MonoBehaviour
         if (currentHP <= 0)
         {
             Debug.Log("ゲームオーバー");
+            PlayerPrefs.SetInt("SelectedStage", mapGenerator.CurrentStage);
+            PlayerPrefs.Save();
             SceneManager.LoadScene("Gameover.");
         }
     }
