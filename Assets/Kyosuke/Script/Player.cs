@@ -290,7 +290,29 @@ public class Player : MonoBehaviour
             SEManager.Instance.PlayPoison();
             Damage(1);
         }
+
+        //--------------- ワープ ---------------
+
+        if (type >= MapGenerator.MAP_TYPE.WARP1 &&
+            type <= MapGenerator.MAP_TYPE.WARP16)
+        {
+            Debug.Log("ワープした！");
+
+            Vector2Int warpTarget =
+                mapGenerator.GetWarpTarget(currentPos);
+
+            currentPos = warpTarget;
+
+            transform.localPosition =
+                mapGenerator.ScreenPos(currentPos);
+
+            mapGenerator.DiscoverPlayerPosition();
+            mapGenerator.UpdateMinimap();
+        }
     }
+    
+
+
 
 
     //==================================================
