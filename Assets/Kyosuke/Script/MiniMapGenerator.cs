@@ -61,6 +61,7 @@ public class MiniMapGenerator : MonoBehaviour
                 //==================================================
 
                 bool pitDiscovered = false;
+                bool poisonDiscovered = false;
 
                 if (pos.x >= 0 &&
                     pos.x < mapGenerator.mapTable.GetLength(0) &&
@@ -71,6 +72,11 @@ public class MiniMapGenerator : MonoBehaviour
                     {
                         pitDiscovered =
                             mapGenerator.discoveredPitMaps[mapKey][pos.x, pos.y];
+                    }
+                    if (mapGenerator.discoveredPoisonMaps.ContainsKey(mapKey))
+                    {
+                        poisonDiscovered =
+                            mapGenerator.discoveredPoisonMaps[mapKey][pos.x, pos.y];
                     }
                 }
 
@@ -129,6 +135,12 @@ public class MiniMapGenerator : MonoBehaviour
                          pitDiscovered)
                 {
                     // 発見済み落とし穴
+                    CreateMinimapIcon(tile, type);
+                }
+                else if (type == MapGenerator.MAP_TYPE.POISON &&
+                        poisonDiscovered)
+                {
+                    // 発見済み毒沼
                     CreateMinimapIcon(tile, type);
                 }
                 else if (type >= MapGenerator.MAP_TYPE.WARP1 &&
@@ -206,6 +218,13 @@ public class MiniMapGenerator : MonoBehaviour
 
                 break;
 
+            // 毒
+            case MapGenerator.MAP_TYPE.POISON:
+
+                sourcePrefab =
+                    mapGenerator.prefabs[8];
+
+                break;
 
             // ワープ
             case MapGenerator.MAP_TYPE.WARP1:
@@ -324,8 +343,15 @@ public class MiniMapGenerator : MonoBehaviour
         //==================================================
         // プレイヤーの向きに合わせて回転
         //==================================================
+        Player.DIRECTION displayDirection = mapGenerator.player.direction;
 
-        switch (mapGenerator.player.direction)
+        if (mapGenerator.player.isBackMove)
+        {
+            displayDirection =
+                (Player.DIRECTION)(((int)displayDirection + 2) % 4);
+        }
+
+        switch (displayDirection)
         {
             case Player.DIRECTION.TOP:
 

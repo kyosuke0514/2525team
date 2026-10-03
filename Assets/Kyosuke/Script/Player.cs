@@ -26,6 +26,7 @@ public class Player : MonoBehaviour
     }
 
     public DIRECTION direction;
+    public bool isBackMove = false;
 
 
     //==================================================
@@ -113,41 +114,33 @@ public class Player : MonoBehaviour
         // 前進
         if (Input.GetKeyDown(KeyCode.W))
         {
-            direction = DIRECTION.TOP;
-            _setDirection();
+            isBackMove = false;
             _move(1);
-            //_move(1);
+            mapGenerator.UpdateMinimap();
         }
 
         // 右を向く
         if (Input.GetKeyDown(KeyCode.D))
         {
-            direction = DIRECTION.RIGHT;
+            direction++;
             _setDirection();
-            _move(1);
-            //direction++;
-            //_setDirection();
-
+            mapGenerator.UpdateMinimap();
         }
 
         // 後退
         if (Input.GetKeyDown(KeyCode.S))
         {
-            direction = DIRECTION.DOWN;
-            _setDirection();
-            _move(1);
-            //_move(-1);
+            isBackMove = true;
+            _move(-1);
+            mapGenerator.UpdateMinimap();
         }
 
         // 左を向く
         if (Input.GetKeyDown(KeyCode.A))
         {
-            direction = DIRECTION.LEFT;
+            direction--;
             _setDirection();
-            _move(1);
-            //direction--;
-            //_setDirection();
-
+            mapGenerator.UpdateMinimap();
         }
     }
 
@@ -289,6 +282,7 @@ public class Player : MonoBehaviour
             Debug.Log("毒を踏んだ！");
             SEManager.Instance.PlayPoison();
             Damage(1);
+            mapGenerator.DiscoverPoison(currentPos);
         }
 
         //--------------- ワープ ---------------

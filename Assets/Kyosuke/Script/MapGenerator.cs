@@ -174,7 +174,8 @@ public class MapGenerator : MonoBehaviour
     public Dictionary<string, bool[,]> discoveredPitMaps = new Dictionary<string, bool[,]>();
     // 謎解きクリア済み
     public Dictionary<string, bool[,]> solvedPuzzleMaps = new Dictionary<string, bool[,]>();
-
+    // 発見した毒
+    public Dictionary<string, bool[,]> discoveredPoisonMaps = new Dictionary<string, bool[,]>();
     // 現在の階の探索済みマップ
     bool[,] discovered;
     // 現在の階の落とし穴探索済み
@@ -375,6 +376,11 @@ public class MapGenerator : MonoBehaviour
         {
             discoveredPitMaps[mapKey] = new bool[col, row];
         }
+        // 毒
+        if (!discoveredPoisonMaps.ContainsKey(mapKey))
+        {
+            discoveredPoisonMaps[mapKey] = new bool[col, row];
+        }
     }
 
     //==================================================
@@ -451,9 +457,7 @@ public class MapGenerator : MonoBehaviour
                         mapPrefab = prefabs[4];
                         break;
 
-                    case MAP_TYPE.POISON:
-                        mapPrefab = prefabs[4];
-                        break;   //追加　消してもいいかも？
+                     
 
                     // パズル6種類は同じPrefabを使用
                     case MAP_TYPE.PUZZLE:
@@ -521,6 +525,9 @@ public class MapGenerator : MonoBehaviour
                         Debug.Log("ワープPrefab：" + mapPrefab);
                         break;
 
+                    case MAP_TYPE.POISON:
+                        mapPrefab = prefabs[8];
+                        break;
 
                     default:
                         Debug.LogError(
@@ -632,6 +639,17 @@ public class MapGenerator : MonoBehaviour
         if (discoveredPitMaps.ContainsKey(mapKey))
         {
             discoveredPitMaps[mapKey][pos.x, pos.y] = true;
+        }
+
+        UpdateMinimap();
+    }
+    public void DiscoverPoison(Vector2Int pos)
+    {
+        string mapKey = currentStage + "_" + currentFloor;
+
+        if (discoveredPoisonMaps.ContainsKey(mapKey))
+        {
+            discoveredPoisonMaps[mapKey][pos.x, pos.y] = true;
         }
 
         UpdateMinimap();
