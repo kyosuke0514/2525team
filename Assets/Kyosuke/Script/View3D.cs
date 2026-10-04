@@ -9,39 +9,58 @@ public class View3D : MonoBehaviour
     //==================================================
 
     [SerializeField] GameObject nearFront;
+
     [SerializeField] GameObject nearLeft;
     [SerializeField] GameObject nearRight;
+
     [SerializeField] GameObject nearLeftPath;
     [SerializeField] GameObject nearRightPath;
+
+    // 追加
+    [SerializeField] GameObject nearLeft2Path;
+    [SerializeField] GameObject nearRight2Path;
+
     [SerializeField] GameObject nearLeft2;
     [SerializeField] GameObject nearRight2;
+
     [SerializeField] GameObject nearStair;
+
 
     //==================================================
     // Mid
     //==================================================
 
     [SerializeField] GameObject midFront;
+
     [SerializeField] GameObject midLeft;
     [SerializeField] GameObject midRight;
+
     [SerializeField] GameObject midLeftPath;
     [SerializeField] GameObject midRightPath;
+
     [SerializeField] GameObject midLeft2;
     [SerializeField] GameObject midRight2;
+
     [SerializeField] GameObject midStair;
+
 
     //==================================================
     // Far
     //==================================================
 
     [SerializeField] GameObject farFront;
+
     [SerializeField] GameObject farLeft;
     [SerializeField] GameObject farRight;
+
     [SerializeField] GameObject farLeftPath;
     [SerializeField] GameObject farRightPath;
+
     [SerializeField] GameObject farLeft2;
     [SerializeField] GameObject farRight2;
+
     [SerializeField] GameObject farStair;
+
 
     void Update()
     {
@@ -60,7 +79,7 @@ public class View3D : MonoBehaviour
 
 
         //==================================================
-        // 1マス前後
+        // 1マス左右
         //==================================================
 
         // (-2,0) 左2
@@ -69,17 +88,20 @@ public class View3D : MonoBehaviour
             nearLeft2.SetActive(true);
         }
 
+
         // (-1,0) 左
         if (IsWall(GetMapPos(0, -1)))
         {
             nearLeft.SetActive(true);
         }
 
+
         // (1,0) 右
         if (IsWall(GetMapPos(0, 1)))
         {
             nearRight.SetActive(true);
         }
+
 
         // (2,0) 右2
         if (IsWall(GetMapPos(0, 2)))
@@ -100,6 +122,7 @@ public class View3D : MonoBehaviour
             midLeft.SetActive(true);
         }
 
+
         // (0,1)
         // NearFront
         if (IsWall(GetMapPos(1, 0)))
@@ -113,6 +136,7 @@ public class View3D : MonoBehaviour
             nearStair.SetActive(true);
         }
 
+
         // (1,1)
         // NearRightPath + MidRight
         if (IsWall(GetMapPos(1, 1)))
@@ -121,12 +145,14 @@ public class View3D : MonoBehaviour
             midRight.SetActive(true);
         }
 
+
         // (-2,1)
         // MidLeft2
         if (IsWall(GetMapPos(1, -2)))
         {
             midLeft2.SetActive(true);
         }
+
 
         // (2,1)
         // MidRight2
@@ -148,6 +174,7 @@ public class View3D : MonoBehaviour
             farLeft.SetActive(true);
         }
 
+
         // (0,2)
         // MidFront
         if (IsWall(GetMapPos(2, 0)))
@@ -161,6 +188,7 @@ public class View3D : MonoBehaviour
             midStair.SetActive(true);
         }
 
+
         // (1,2)
         // MidRightPath + FarRight
         if (IsWall(GetMapPos(2, 1)))
@@ -169,12 +197,14 @@ public class View3D : MonoBehaviour
             farRight.SetActive(true);
         }
 
+
         // (-2,2)
         // FarLeft2
         if (IsWall(GetMapPos(2, -2)))
         {
             farLeft2.SetActive(true);
         }
+
 
         // (2,2)
         // FarRight2
@@ -195,6 +225,7 @@ public class View3D : MonoBehaviour
             farLeftPath.SetActive(true);
         }
 
+
         // (0,3)
         // FarFront
         if (IsWall(GetMapPos(3, 0)))
@@ -208,12 +239,14 @@ public class View3D : MonoBehaviour
             farStair.SetActive(true);
         }
 
+
         // (1,3)
         // FarRightPath
         if (IsWall(GetMapPos(3, 1)))
         {
             farRightPath.SetActive(true);
         }
+
 
         //==================================================
         // 壁が近い場合、2枚目の壁を消す
@@ -232,7 +265,10 @@ public class View3D : MonoBehaviour
         bool rightPathWall = IsWall(GetMapPos(1, 1));
 
 
+        // -------------------------
         // 左側
+        // -------------------------
+
         if (leftWall || leftPathWall)
         {
             nearLeft2.SetActive(false);
@@ -244,7 +280,10 @@ public class View3D : MonoBehaviour
         }
 
 
+        // -------------------------
         // 右側
+        // -------------------------
+
         if (rightWall || rightPathWall)
         {
             nearRight2.SetActive(false);
@@ -255,6 +294,7 @@ public class View3D : MonoBehaviour
             midRight2.SetActive(false);
         }
 
+
         //==================================================
         // 手前の壁がある場合、奥のPathを消す
         //==================================================
@@ -263,24 +303,29 @@ public class View3D : MonoBehaviour
         // 左側
         // -------------------------
 
-        // (-1,0) に壁がある
+        // NearLeftに壁がある
         if (nearLeft.activeSelf)
         {
-            // (-1,1) のPathを消す
+            // NearLeftPathを消す
             nearLeftPath.SetActive(false);
+
+            // ★ NearLeft2Pathも同じ処理
+            nearLeft2Path.SetActive(false);
         }
 
-        // (-1,1) に壁がある
+
+        // MidLeftに壁がある
         if (midLeft.activeSelf)
         {
-            // (-1,2) のPathを消す
+            // MidLeftPathを消す
             midLeftPath.SetActive(false);
         }
 
-        // (-1,2) に壁がある
+
+        // FarLeftに壁がある
         if (farLeft.activeSelf)
         {
-            // (-1,3) のPathを消す
+            // FarLeftPathを消す
             farLeftPath.SetActive(false);
         }
 
@@ -289,29 +334,36 @@ public class View3D : MonoBehaviour
         // 右側
         // -------------------------
 
-        // (1,0) に壁がある
+        // NearRightに壁がある
         if (nearRight.activeSelf)
         {
-            // (1,1) のPathを消す
+            // NearRightPathを消す
             nearRightPath.SetActive(false);
+
+            // ★ NearRight2Pathも同じ処理
+            nearRight2Path.SetActive(false);
         }
 
-        // (1,1) に壁がある
+
+        // MidRightに壁がある
         if (midRight.activeSelf)
         {
-            // (1,2) のPathを消す
+            // MidRightPathを消す
             midRightPath.SetActive(false);
         }
 
-        // (1,2) に壁がある
+
+        // FarRightに壁がある
         if (farRight.activeSelf)
         {
-            // (1,3) のPathを消す
+            // FarRightPathを消す
             farRightPath.SetActive(false);
         }
 
+
         //==================================================
-        // MidPathが表示されている場合、左右の2枚目を全部消す
+        // MidPathが表示されている場合、
+        // 左右の2枚目を全部消す
         //==================================================
 
         // 左のMidPathが表示されている
@@ -322,6 +374,7 @@ public class View3D : MonoBehaviour
             farLeft2.SetActive(false);
         }
 
+
         // 右のMidPathが表示されている
         if (midRightPath.activeSelf)
         {
@@ -329,7 +382,6 @@ public class View3D : MonoBehaviour
             midRight2.SetActive(false);
             farRight2.SetActive(false);
         }
-
     }
 
 
@@ -340,30 +392,48 @@ public class View3D : MonoBehaviour
     void HideAll()
     {
         nearFront.SetActive(false);
+
         nearLeft.SetActive(false);
         nearRight.SetActive(false);
+
         nearLeftPath.SetActive(false);
         nearRightPath.SetActive(false);
+
+        // 追加
+        nearLeft2Path.SetActive(false);
+        nearRight2Path.SetActive(false);
+
         nearLeft2.SetActive(false);
         nearRight2.SetActive(false);
+
         nearStair.SetActive(false);
 
+
         midFront.SetActive(false);
+
         midLeft.SetActive(false);
         midRight.SetActive(false);
+
         midLeftPath.SetActive(false);
         midRightPath.SetActive(false);
+
         midLeft2.SetActive(false);
         midRight2.SetActive(false);
+
         midStair.SetActive(false);
 
+
         farFront.SetActive(false);
+
         farLeft.SetActive(false);
         farRight.SetActive(false);
+
         farLeftPath.SetActive(false);
         farRightPath.SetActive(false);
+
         farLeft2.SetActive(false);
         farRight2.SetActive(false);
+
         farStair.SetActive(false);
     }
 
@@ -378,14 +448,17 @@ public class View3D : MonoBehaviour
             == MapGenerator.MAP_TYPE.WALL;
     }
 
+
     bool IsStair(Vector2Int pos)
     {
-        MapGenerator.MAP_TYPE type = mapGenerator.GetNextMapType(pos);
+        MapGenerator.MAP_TYPE type =
+            mapGenerator.GetNextMapType(pos);
 
         return type == MapGenerator.MAP_TYPE.STAIR_1_2
             || type == MapGenerator.MAP_TYPE.STAIR_2_3
             || type == MapGenerator.MAP_TYPE.STAIR_3_4;
     }
+
 
     //==================================================
     // プレイヤーから見た座標を取得
