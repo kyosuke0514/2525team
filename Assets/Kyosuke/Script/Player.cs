@@ -222,6 +222,20 @@ public class Player : MonoBehaviour
             mapGenerator.OpenPuzzle2();
         }
 
+        //--------------- “ä‰ð‚«‡B ---------------
+
+        if (type == MapGenerator.MAP_TYPE.PUZZLE3)
+        {
+            mapGenerator.OpenPuzzle3();
+        }
+
+
+        //--------------- “ä‰ð‚«‡C ---------------
+
+        if (type == MapGenerator.MAP_TYPE.PUZZLE4)
+        {
+            mapGenerator.OpenPuzzle4();
+        }
 
         //--------------- ŠK’i ---------------
 

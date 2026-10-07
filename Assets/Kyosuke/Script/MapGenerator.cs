@@ -25,6 +25,8 @@ public class MapGenerator : MonoBehaviour
     [SerializeField] GameObject Panel;
     [SerializeField] GameObject Puzzle;
     [SerializeField] GameObject Puzzle2;
+    [SerializeField] GameObject Puzzle3;
+    [SerializeField] GameObject Puzzle4;
 
     [SerializeField] TMP_Text stageText;
     [SerializeField] TMP_Text floorText;
@@ -45,6 +47,9 @@ public class MapGenerator : MonoBehaviour
     int greenNumber2 = 1;
     int yellowNumber2 = 1;
     int blueNumber2 = 1;
+
+    private Toggle[] puzzle3Toggles;
+    private Toggle[] puzzle4Toggles;
 
     [SerializeField] UnityEngine.UI.Button yesButton;
     [SerializeField] UnityEngine.UI.Button noButton;
@@ -201,8 +206,12 @@ public class MapGenerator : MonoBehaviour
 
     public bool puzzleSolved = false;
     public bool puzzle2Solved = false;
+    public bool puzzle3Solved = false;
+    public bool puzzle4Solved = false;
     bool puzzleConfirm = false;
     bool puzzle2Confirm = false;
+    bool puzzle3Confirm = false;
+    bool puzzle4Confirm = false;
 
     //==================================================
     // 初期化
@@ -213,6 +222,8 @@ public class MapGenerator : MonoBehaviour
         Panel.SetActive(false);
         Puzzle.SetActive(false);
         Puzzle2.SetActive(false);
+        Puzzle3.SetActive(false);
+        Puzzle4.SetActive(false);
         puzzleConfirmImage.gameObject.SetActive(false);
         treasureChestImage.SetActive(false);
 
@@ -225,7 +236,11 @@ public class MapGenerator : MonoBehaviour
 
         int selectedStage = PlayerPrefs.GetInt("SelectedStage", 0);
 
+        puzzle3Toggles = Puzzle3.GetComponentsInChildren<Toggle>(true);
+        puzzle4Toggles = Puzzle4.GetComponentsInChildren<Toggle>(true);
+
         
+
         pitGimmick1Image.SetActive(false);
         pitGimmick2Image.SetActive(false);
         GIMMICK2_1.SetActive(false);
@@ -1108,6 +1123,63 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
+    int GetSelectedAnswer(Toggle[] toggles)
+    {
+        for (int i = 0; i < toggles.Length; i++)
+        {
+            if (toggles[i].isOn)
+            {
+                return i + 1;
+            }
+        }
+
+        return 0;
+    }
+
+    public void CheckPuzzle3()
+    {
+        int answer = GetSelectedAnswer(puzzle3Toggles);
+
+        if (answer == 1)
+        {
+            Debug.Log("Puzzle3正解！");
+            SEManager.Instance.PlayCorrect();
+
+            puzzle3Solved = true;
+            Puzzle3.SetActive(false);
+            player.isPuzzle = false;
+
+            UpdateMinimap();
+        }
+        else
+        {
+            Debug.Log("Puzzle3不正解！");
+            SEManager.Instance.PlayWrong();
+        }
+    }
+
+    public void CheckPuzzle4()
+    {
+        int answer = GetSelectedAnswer(puzzle4Toggles);
+
+        if (answer == 4)
+        {
+            Debug.Log("Puzzle4正解！");
+            SEManager.Instance.PlayCorrect();
+
+            puzzle4Solved = true;
+            Puzzle4.SetActive(false);
+            player.isPuzzle = false;
+
+            UpdateMinimap();
+        }
+        else
+        {
+            Debug.Log("Puzzle4不正解！");
+            SEManager.Instance.PlayWrong();
+        }
+    }
+
     public void OpenPuzzle()
     {
         if (puzzleSolved)
@@ -1138,6 +1210,35 @@ public class MapGenerator : MonoBehaviour
         player.isPuzzle = true;
     }
 
+    public void OpenPuzzle3()
+    {
+        if (puzzle3Solved)
+        {
+            return;
+        }
+
+        treasureChestImage.SetActive(true);
+        puzzle3Confirm = true;
+        puzzleConfirmImage.sprite = puzzleConfirmSprite;
+        puzzleConfirmImage.gameObject.SetActive(true);
+        Panel.SetActive(true);
+        player.isPuzzle = true;
+    }
+
+    public void OpenPuzzle4()
+    {
+        if (puzzle4Solved)
+        {
+            return;
+        }
+
+        treasureChestImage.SetActive(true);
+        puzzle4Confirm = true;
+        puzzleConfirmImage.sprite = puzzleConfirmSprite;
+        puzzleConfirmImage.gameObject.SetActive(true);
+        Panel.SetActive(true);
+        player.isPuzzle = true;
+    }
 
     //==================================================
     // 階段
@@ -1225,6 +1326,28 @@ public class MapGenerator : MonoBehaviour
             return;
         }
 
+        // Puzzle3
+        if (puzzle3Confirm)
+        {
+            puzzle3Confirm = false;
+
+            Puzzle3.SetActive(true);
+            player.isPuzzle = true;
+
+            return;
+        }
+
+        // Puzzle4
+        if (puzzle4Confirm)
+        {
+            puzzle4Confirm = false;
+
+            Puzzle4.SetActive(true);
+            player.isPuzzle = true;
+
+            return;
+        }
+
         // 階段の場合
         MAP_TYPE nextMapType = GetNextMapType(player.currentPos);
 
@@ -1284,8 +1407,12 @@ public class MapGenerator : MonoBehaviour
         Panel.SetActive(false);
         treasureChestImage.SetActive(false);
         puzzleConfirmImage.gameObject.SetActive(false);
+
         puzzleConfirm = false;
         puzzle2Confirm = false;
+        puzzle3Confirm = false;
+        puzzle4Confirm = false;
+
         player.isPuzzle = false;
     }
 
