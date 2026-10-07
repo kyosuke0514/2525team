@@ -122,13 +122,25 @@ public class MiniMapGenerator : MonoBehaviour
                 else if (type == MapGenerator.MAP_TYPE.PUZZLE &&
                          !mapGenerator.puzzleSolved)
                 {
-                    // 1F“ä‰ð‚«
+                    // 1“ä‰ð‚«
                     CreateMinimapIcon(tile, type);
                 }
                 else if (type == MapGenerator.MAP_TYPE.PUZZLE2 &&
                          !mapGenerator.puzzle2Solved)
                 {
-                    // 2F“ä‰ð‚«
+                    // 2“ä‰ð‚«
+                    CreateMinimapIcon(tile, type);
+                }
+                else if (type == MapGenerator.MAP_TYPE.PUZZLE3 &&
+                         !mapGenerator.puzzle3Solved)
+                {
+                    // 3“ä‰ð‚«
+                    CreateMinimapIcon(tile, type);
+                }
+                else if (type == MapGenerator.MAP_TYPE.PUZZLE4 &&
+                         !mapGenerator.puzzle4Solved)
+                {
+                    // 4“ä‰ð‚«
                     CreateMinimapIcon(tile, type);
                 }
                 else if (type == MapGenerator.MAP_TYPE.PIT &&
