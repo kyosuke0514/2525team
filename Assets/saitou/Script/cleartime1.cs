@@ -11,6 +11,7 @@ public class cleartime1 : MonoBehaviour
 
     // クリアタイム
     public float clearTime;
+    public int stageNum = 1;
 
     //カウントアップするか
     public float animationTime = 3f;
@@ -51,6 +52,6 @@ public class cleartime1 : MonoBehaviour
         // 少し待ってからランク表示    
         yield return new WaitForSeconds(0.3f);
 
-        rank.ShowRank(clearTime);
+        rank.ShowRank(clearTime,stageNum);
     }
 }
