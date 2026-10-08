@@ -30,6 +30,9 @@ public class PuzzleManager : MonoBehaviour
     [Header("階段")]
     [SerializeField] private Image stairImage;
 
+    [Header("ミニマップ")]
+    [SerializeField] private MiniMapGenerator miniMapGenerator;
+
     //==================================================
     // Puzzle1 入力
     //==================================================
@@ -264,7 +267,7 @@ public class PuzzleManager : MonoBehaviour
             SEManager.Instance.PlayCorrect();
 
             puzzleSolved = true;
-
+            miniMapGenerator.UpdateMinimap();
             Puzzle.SetActive(false);
             player.isPuzzle = false;
 
@@ -288,7 +291,7 @@ public class PuzzleManager : MonoBehaviour
             SEManager.Instance.PlayCorrect();
 
             puzzle2Solved = true;
-
+            miniMapGenerator.UpdateMinimap();
             Puzzle2.SetActive(false);
             player.isPuzzle = false;
 
@@ -324,7 +327,7 @@ public class PuzzleManager : MonoBehaviour
             SEManager.Instance.PlayCorrect();
 
             puzzle3Solved = true;
-
+            miniMapGenerator.UpdateMinimap();
             Puzzle3.SetActive(false);
             player.isPuzzle = false;
 
@@ -347,7 +350,7 @@ public class PuzzleManager : MonoBehaviour
             SEManager.Instance.PlayCorrect();
 
             puzzle4Solved = true;
-
+            miniMapGenerator.UpdateMinimap();
             Puzzle4.SetActive(false);
             player.isPuzzle = false;
 
@@ -477,6 +480,31 @@ public class PuzzleManager : MonoBehaviour
         player.isPuzzle = false;
     }
 
+    public void Back()
+    {
+        // パネルを閉じる
+        Panel.SetActive(false);
+
+        // パズル画面を閉じる
+        Puzzle.SetActive(false);
+        Puzzle2.SetActive(false);
+        Puzzle3.SetActive(false);
+        Puzzle4.SetActive(false);
+
+        // 確認画面を閉じる
+        treasureChestImage.SetActive(false);
+        puzzleConfirmImage.gameObject.SetActive(false);
+        stairImage.gameObject.SetActive(false);
+
+        // 確認状態をリセット
+        puzzleConfirm = false;
+        puzzle2Confirm = false;
+        puzzle3Confirm = false;
+        puzzle4Confirm = false;
+
+        // プレイヤー操作を戻す
+        player.isPuzzle = false;
+    }
     public void OpenStair(Sprite stairSprite)
     {
         stairImage.sprite = stairSprite;

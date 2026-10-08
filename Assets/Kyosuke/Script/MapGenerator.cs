@@ -1,17 +1,11 @@
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;//追加　saitou
-using static MapGenerator;
 
 public class MapGenerator : MonoBehaviour
 {
-    //==================================================
-    // インスペクター設定
-    //==================================================
-
     // マップデータ・マップ生成
     [SerializeField] StageData[] stages;
     [SerializeField] public GameObject[] prefabs;
@@ -73,12 +67,9 @@ public class MapGenerator : MonoBehaviour
     [SerializeField] private GameObject GIMMICK3_Y;
     [SerializeField] private GameObject GIMMICK3_B;
 
-
-
     //==================================================
     // マップ関連
     //==================================================
-
     public enum MAP_TYPE
     {
         GROUND = 0, 
@@ -190,15 +181,7 @@ public class MapGenerator : MonoBehaviour
     {
         treasureChestImage.SetActive(false);
 
-        
-
-        
-
         int selectedStage = PlayerPrefs.GetInt("SelectedStage", 0);
-
- 
-
-        
 
         pitGimmick1Image.SetActive(false);
         pitGimmick2Image.SetActive(false);
@@ -226,8 +209,6 @@ public class MapGenerator : MonoBehaviour
         GIMMICK3_G.SetActive(false);
         GIMMICK3_Y.SetActive(false);
         GIMMICK3_B.SetActive(false);
-
-
 
         currentStage = selectedStage;
         currentFloor = 0;
