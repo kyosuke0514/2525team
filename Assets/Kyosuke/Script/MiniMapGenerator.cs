@@ -8,7 +8,7 @@ public class MiniMapGenerator : MonoBehaviour
     //==================================================
 
     [SerializeField] private MapGenerator mapGenerator;
-
+    [SerializeField] private PuzzleManager puzzleManager;
 
     //==================================================
     // ミニマップ設定
@@ -120,25 +120,25 @@ public class MiniMapGenerator : MonoBehaviour
                     CreateMinimapIcon(tile, type);
                 }
                 else if (type == MapGenerator.MAP_TYPE.PUZZLE &&
-                         !mapGenerator.puzzleSolved)
+                         !puzzleManager.puzzleSolved)
                 {
                     // 1謎解き
                     CreateMinimapIcon(tile, type);
                 }
                 else if (type == MapGenerator.MAP_TYPE.PUZZLE2 &&
-                         !mapGenerator.puzzle2Solved)
+                         !puzzleManager.puzzle2Solved)
                 {
                     // 2謎解き
                     CreateMinimapIcon(tile, type);
                 }
                 else if (type == MapGenerator.MAP_TYPE.PUZZLE3 &&
-                         !mapGenerator.puzzle3Solved)
+                         !puzzleManager.puzzle3Solved)
                 {
                     // 3謎解き
                     CreateMinimapIcon(tile, type);
                 }
                 else if (type == MapGenerator.MAP_TYPE.PUZZLE4 &&
-                         !mapGenerator.puzzle4Solved)
+                         !puzzleManager.puzzle4Solved)
                 {
                     // 4謎解き
                     CreateMinimapIcon(tile, type);
