@@ -368,8 +368,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1824957435}
-        m_TargetAssemblyTypeName: MapGenerator, Assembly-CSharp
+      - m_Target: {fileID: 990075742}
+        m_TargetAssemblyTypeName: PuzzleManager, Assembly-CSharp
         m_MethodName: GreenUp2
         m_Mode: 1
         m_Arguments:
@@ -592,8 +592,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1824957435}
-        m_TargetAssemblyTypeName: MapGenerator, Assembly-CSharp
+      - m_Target: {fileID: 990075742}
+        m_TargetAssemblyTypeName: PuzzleManager, Assembly-CSharp
         m_MethodName: BlueDown
         m_Mode: 1
         m_Arguments:
@@ -1239,8 +1239,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1824957435}
-        m_TargetAssemblyTypeName: MapGenerator, Assembly-CSharp
+      - m_Target: {fileID: 990075742}
+        m_TargetAssemblyTypeName: PuzzleManager, Assembly-CSharp
         m_MethodName: BlueDown2
         m_Mode: 1
         m_Arguments:
@@ -1447,8 +1447,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1824957435}
-        m_TargetAssemblyTypeName: MapGenerator, Assembly-CSharp
+      - m_Target: {fileID: 990075742}
+        m_TargetAssemblyTypeName: PuzzleManager, Assembly-CSharp
         m_MethodName: CheckPuzzle4
         m_Mode: 1
         m_Arguments:
@@ -3457,8 +3457,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1824957435}
-        m_TargetAssemblyTypeName: MapGenerator, Assembly-CSharp
+      - m_Target: {fileID: 990075742}
+        m_TargetAssemblyTypeName: PuzzleManager, Assembly-CSharp
         m_MethodName: BlueUp2
         m_Mode: 1
         m_Arguments:
@@ -4342,7 +4342,7 @@ SpriteRenderer:
   m_SortingOrder: -10
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.24056602, g: 0.05106355, b: 0.05106355, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -5437,7 +5437,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &632381821
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5857,8 +5857,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1824957435}
-        m_TargetAssemblyTypeName: MapGenerator, Assembly-CSharp
+      - m_Target: {fileID: 990075742}
+        m_TargetAssemblyTypeName: PuzzleManager, Assembly-CSharp
         m_MethodName: YellowDown2
         m_Mode: 1
         m_Arguments:
@@ -6516,8 +6516,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1824957435}
-        m_TargetAssemblyTypeName: MapGenerator, Assembly-CSharp
+      - m_Target: {fileID: 990075742}
+        m_TargetAssemblyTypeName: PuzzleManager, Assembly-CSharp
         m_MethodName: GreenDown
         m_Mode: 1
         m_Arguments:
@@ -7240,13 +7240,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1824957435}
     - target: {fileID: 3631643987657699120, guid: ca495180232cdfb4b80f532c9b745edc, type: 3}
+      propertyPath: puzzleManager
+      value: 
+      objectReference: {fileID: 990075742}
+    - target: {fileID: 3631643987657699120, guid: ca495180232cdfb4b80f532c9b745edc, type: 3}
       propertyPath: directionArrow
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3631643987657699120, guid: ca495180232cdfb4b80f532c9b745edc, type: 3}
       propertyPath: treasureChestImage
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2106056093}
     - target: {fileID: 6629355760312141229, guid: ca495180232cdfb4b80f532c9b745edc, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -7852,7 +7856,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 796794113}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1824957435}
+        m_TargetAssemblyTypeName: MapGenerator, Assembly-CSharp
+        m_MethodName: Yes
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &796794113
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8538,8 +8554,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1824957435}
-        m_TargetAssemblyTypeName: MapGenerator, Assembly-CSharp
+      - m_Target: {fileID: 990075742}
+        m_TargetAssemblyTypeName: PuzzleManager, Assembly-CSharp
         m_MethodName: BlueUp
         m_Mode: 1
         m_Arguments:
@@ -8885,8 +8901,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1824957435}
-        m_TargetAssemblyTypeName: MapGenerator, Assembly-CSharp
+      - m_Target: {fileID: 990075742}
+        m_TargetAssemblyTypeName: PuzzleManager, Assembly-CSharp
         m_MethodName: RedUp2
         m_Mode: 1
         m_Arguments:
@@ -9018,8 +9034,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1824957435}
-        m_TargetAssemblyTypeName: MapGenerator, Assembly-CSharp
+      - m_Target: {fileID: 990075742}
+        m_TargetAssemblyTypeName: PuzzleManager, Assembly-CSharp
         m_MethodName: CheckPuzzle
         m_Mode: 1
         m_Arguments:
@@ -10134,6 +10150,73 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1 &990075741
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 990075743}
+  - component: {fileID: 990075742}
+  m_Layer: 0
+  m_Name: PuzzleManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &990075742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 990075741}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca85e06fa331a7e469e5dda2196c8f60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PuzzleManager
+  Panel: {fileID: 326406816}
+  Puzzle: {fileID: 105289217}
+  Puzzle2: {fileID: 1024266912}
+  Puzzle3: {fileID: 848450545}
+  Puzzle4: {fileID: 1922444606}
+  player: {fileID: 532176311}
+  yesButton: {fileID: 796794112}
+  noButton: {fileID: 1466979608}
+  puzzleConfirmImage: {fileID: 843274978}
+  puzzleConfirmSprite: {fileID: 21300000, guid: 8c5c1da03d843de40a38e18dc8c79c95, type: 3}
+  treasureChestImage: {fileID: 2106056093}
+  stairImage: {fileID: 1591714815}
+  redNumberText: {fileID: 1561191374}
+  greenNumberText: {fileID: 1459655192}
+  blueNumberText: {fileID: 1120893067}
+  redNumberText2: {fileID: 637355908}
+  greenNumberText2: {fileID: 2131370947}
+  yellowNumberText2: {fileID: 783642087}
+  blueNumberText2: {fileID: 209410318}
+  puzzleSolved: 0
+  puzzle2Solved: 0
+  puzzle3Solved: 0
+  puzzle4Solved: 0
+--- !u!4 &990075743
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 990075741}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &995196322
 GameObject:
   m_ObjectHideFlags: 0
@@ -12456,8 +12539,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1824957435}
-        m_TargetAssemblyTypeName: MapGenerator, Assembly-CSharp
+      - m_Target: {fileID: 990075742}
+        m_TargetAssemblyTypeName: PuzzleManager, Assembly-CSharp
         m_MethodName: RedUp
         m_Mode: 1
         m_Arguments:
@@ -13484,8 +13567,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1824957435}
-        m_TargetAssemblyTypeName: MapGenerator, Assembly-CSharp
+      - m_Target: {fileID: 990075742}
+        m_TargetAssemblyTypeName: PuzzleManager, Assembly-CSharp
         m_MethodName: GreenDown2
         m_Mode: 1
         m_Arguments:
@@ -14124,8 +14207,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1824957435}
-        m_TargetAssemblyTypeName: MapGenerator, Assembly-CSharp
+      - m_Target: {fileID: 990075742}
+        m_TargetAssemblyTypeName: PuzzleManager, Assembly-CSharp
         m_MethodName: CheckPuzzle3
         m_Mode: 1
         m_Arguments:
@@ -14393,7 +14476,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1466979609}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 990075742}
+        m_TargetAssemblyTypeName: PuzzleManager, Assembly-CSharp
+        m_MethodName: No
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1466979609
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15076,8 +15171,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1824957435}
-        m_TargetAssemblyTypeName: MapGenerator, Assembly-CSharp
+      - m_Target: {fileID: 990075742}
+        m_TargetAssemblyTypeName: PuzzleManager, Assembly-CSharp
         m_MethodName: RedDown2
         m_Mode: 1
         m_Arguments:
@@ -15209,8 +15304,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1824957435}
-        m_TargetAssemblyTypeName: MapGenerator, Assembly-CSharp
+      - m_Target: {fileID: 990075742}
+        m_TargetAssemblyTypeName: PuzzleManager, Assembly-CSharp
         m_MethodName: CheckPuzzle2F
         m_Mode: 1
         m_Arguments:
@@ -17343,28 +17438,12 @@ MonoBehaviour:
   map2D: {fileID: 395422469}
   miniMapGenerator: {fileID: 1905043466}
   player: {fileID: 532176311}
-  Panel: {fileID: 326406816}
-  Puzzle: {fileID: 105289217}
-  Puzzle2: {fileID: 1024266912}
-  Puzzle3: {fileID: 848450545}
-  Puzzle4: {fileID: 1922444606}
   stageText: {fileID: 828211419}
   floorText: {fileID: 950623080}
-  redNumberText: {fileID: 1561191374}
-  greenNumberText: {fileID: 1459655192}
-  blueNumberText: {fileID: 1120893067}
-  redNumberText2: {fileID: 637355908}
-  greenNumberText2: {fileID: 2131370947}
-  yellowNumberText2: {fileID: 783642087}
-  blueNumberText2: {fileID: 209410318}
-  yesButton: {fileID: 796794112}
-  noButton: {fileID: 1466979608}
-  answerButton: {fileID: 902049107}
   stairImage: {fileID: 1591714815}
   stairUpSprite: {fileID: 21300000, guid: b9eb0e4d28bd3a2478543f4f65a912f1, type: 3}
   stairDownSprite: {fileID: 21300000, guid: 2713bc6ddeda90a45a4ce00b3b8cf397, type: 3}
-  puzzleConfirmImage: {fileID: 843274978}
-  puzzleConfirmSprite: {fileID: 21300000, guid: 8c5c1da03d843de40a38e18dc8c79c95, type: 3}
+  puzzleManager: {fileID: 990075742}
   miniMapScale: 0.3
   miniMapOffset: {x: -7.4, y: -3.5}
   minimap: {fileID: 478135952}
@@ -18381,8 +18460,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1824957435}
-        m_TargetAssemblyTypeName: MapGenerator, Assembly-CSharp
+      - m_Target: {fileID: 990075742}
+        m_TargetAssemblyTypeName: PuzzleManager, Assembly-CSharp
         m_MethodName: GreenUp
         m_Mode: 1
         m_Arguments:
@@ -19449,8 +19528,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1824957435}
-        m_TargetAssemblyTypeName: MapGenerator, Assembly-CSharp
+      - m_Target: {fileID: 990075742}
+        m_TargetAssemblyTypeName: PuzzleManager, Assembly-CSharp
         m_MethodName: YellowUp2
         m_Mode: 1
         m_Arguments:
@@ -19762,8 +19841,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1824957435}
-        m_TargetAssemblyTypeName: MapGenerator, Assembly-CSharp
+      - m_Target: {fileID: 990075742}
+        m_TargetAssemblyTypeName: PuzzleManager, Assembly-CSharp
         m_MethodName: RedDown
         m_Mode: 1
         m_Arguments:
@@ -20061,3 +20140,4 @@ SceneRoots:
   - {fileID: 572544403}
   - {fileID: 632381824}
   - {fileID: 1905043467}
+  - {fileID: 990075743}

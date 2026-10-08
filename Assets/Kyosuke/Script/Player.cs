@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
 
     [SerializeField] private HP hp;
     [SerializeField] GameObject treasureChestImage;
+    [SerializeField] private PuzzleManager puzzleManager;
 
     //==================================================
     // プレイヤーの向き
@@ -211,7 +212,7 @@ public class Player : MonoBehaviour
 
         if (type == MapGenerator.MAP_TYPE.PUZZLE)
         {
-            mapGenerator.OpenPuzzle();
+            puzzleManager.OpenPuzzle();
         }
 
 
@@ -219,14 +220,14 @@ public class Player : MonoBehaviour
 
         if (type == MapGenerator.MAP_TYPE.PUZZLE2)
         {
-            mapGenerator.OpenPuzzle2();
+            puzzleManager.OpenPuzzle2();
         }
 
         //--------------- 謎解き③ ---------------
 
         if (type == MapGenerator.MAP_TYPE.PUZZLE3)
         {
-            mapGenerator.OpenPuzzle3();
+            puzzleManager.OpenPuzzle3();
         }
 
 
@@ -234,7 +235,7 @@ public class Player : MonoBehaviour
 
         if (type == MapGenerator.MAP_TYPE.PUZZLE4)
         {
-            mapGenerator.OpenPuzzle4();
+            puzzleManager.OpenPuzzle4();
         }
 
         //--------------- 階段 ---------------
