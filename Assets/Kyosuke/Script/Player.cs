@@ -47,6 +47,8 @@ public class Player : MonoBehaviour
     public int maxHP = 5;
     public int currentHP;
 
+    // デバッグ用：体力減少を無効化
+    private bool godMode = false;
 
     //==================================================
     // 状態
@@ -142,6 +144,15 @@ public class Player : MonoBehaviour
             direction--;
             _setDirection();
             mapGenerator.UpdateMinimap();
+        }
+
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            godMode = !godMode;
+
+            Debug.Log(godMode
+                ? "デバッグ：体力が減らない状態"
+                : "デバッグ：通常状態");
         }
     }
 
@@ -272,7 +283,6 @@ public class Player : MonoBehaviour
             Debug.Log("落とし穴に落ちた！");
             SEManager.Instance.PlayPit();
             mapGenerator.DiscoverPit(currentPos);
-
             Damage(1);
 
 
@@ -339,6 +349,12 @@ public class Player : MonoBehaviour
 
     public void Damage(int damage)
     {
+        // デバッグモード中は体力を減らさない
+        if (godMode)
+        {
+            return;
+        }
+
         currentHP -= damage;
 
         Debug.Log("HP : " + currentHP);
