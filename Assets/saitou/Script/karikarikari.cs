@@ -25,19 +25,19 @@ public class karikarikari : MonoBehaviour
     // ResultTime‚©‚çŒÄ‚Ño‚·
     public void ShowRank(float clearTime, int stageNum)
     {
-        float rankATime = stageNum * 60;
+        float rankATime = (stageNum-1) * 60+120;
         // 60•bˆÈ“à  A
         if (clearTime <= rankATime)
         {
             rankImage.sprite = imageA;
         }
         // ‚Q•ª  B
-        else if (clearTime <= rankATime+60)
+        else if (clearTime < rankATime+60)
         {
             rankImage.sprite = imageB;
         }
         // ‚R•ª  C
-        else if(clearTime <= rankATime + 120)
+        else
         {
             rankImage.sprite = imageC;
         }
