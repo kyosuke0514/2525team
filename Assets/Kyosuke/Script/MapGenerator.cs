@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -66,6 +67,11 @@ public class MapGenerator : MonoBehaviour
     [SerializeField] private GameObject GIMMICK3_G;
     [SerializeField] private GameObject GIMMICK3_Y;
     [SerializeField] private GameObject GIMMICK3_B;
+
+    [SerializeField] private GameObject keyMessageImage;
+    [SerializeField] private Image keyIcon1;
+    [SerializeField] private Image keyIcon2;
+    private Coroutine keyMessageCoroutine;
 
     //==================================================
     // マップ関連
@@ -234,6 +240,26 @@ public class MapGenerator : MonoBehaviour
         {
             playerSR.enabled = false;
         }
+
+        if (keyMessageImage != null)
+        {
+            keyMessageImage.SetActive(false);
+        }
+
+        // テスト用：全ステージの鍵取得記録をリセット
+        for (int stage = 1; stage <= 3; stage++)
+        {
+            for (int puzzle = 1; puzzle <= 4; puzzle++)
+            {
+                string key = "Stage" + stage
+                           + "_Puzzle" + puzzle + "_Solved";
+
+                PlayerPrefs.DeleteKey(key);
+            }
+        }
+
+        PlayerPrefs.Save();
+        UpdateKeyUI();
     }
 
 
@@ -555,17 +581,104 @@ public class MapGenerator : MonoBehaviour
         miniMapGenerator.UpdateMinimap();
     }
 
-    public void ShowTreasureChest()
+    public bool ShowTreasureChest()
     {
-        treasureChestImage.SetActive(true);
+        // 鍵が2個未満ならクリアさせない
+        if (GetCurrentStageKeyCount() < 2)
+        {
+            ShowNeedKeyMessage();
+            return false;
+        }
 
+        // 鍵が2個そろっていれば、宝箱を表示
+        treasureChestImage.SetActive(true);
         player.isPuzzle = true;
 
         // 現在のステージをクリア済みにする
         PlayerPrefs.SetInt("Stage" + (currentStage + 1) + "_Cleared", 1);
         PlayerPrefs.Save();
-        CheckAllStageClear();//追加　
+
+        CheckAllStageClear();
+
+        return true;
     }
+
+    private const int RequiredKeyCount = 2;
+
+    public int GetCurrentStageKeyCount()
+    {
+        int stageNumber = currentStage + 1;
+        int keyCount = 0;
+
+        for (int puzzleId = 1; puzzleId <= 4; puzzleId++)
+        {
+            string key = "Stage" + stageNumber
+                       + "_Puzzle" + puzzleId + "_Solved";
+
+            if (PlayerPrefs.GetInt(key, 0) == 1)
+            {
+                keyCount++;
+            }
+        }
+
+        return keyCount;
+    }
+
+    private void UpdateKeyUI()
+    {
+        int keyCount = GetCurrentStageKeyCount();
+
+        if (keyIcon1 != null)
+            keyIcon1.gameObject.SetActive(keyCount >= 1);
+
+        if (keyIcon2 != null)
+            keyIcon2.gameObject.SetActive(keyCount >= 2);
+    }
+
+    public void RegisterPuzzleKey(int puzzleId)
+    {
+        string key = "Stage" + (currentStage + 1)
+                   + "_Puzzle" + puzzleId + "_Solved";
+
+        PlayerPrefs.SetInt(key, 1);
+        PlayerPrefs.Save();
+
+        UpdateKeyUI();
+
+        Debug.Log("鍵を取得！ 現在の鍵の数："
+                  + GetCurrentStageKeyCount());
+    }
+
+
+    public void ShowNeedKeyMessage()
+    {
+        if (keyMessageImage == null)
+        {
+            Debug.LogWarning("鍵が必要なときの画像が設定されていません。");
+            return;
+        }
+
+        if (keyMessageCoroutine != null)
+        {
+            StopCoroutine(keyMessageCoroutine);
+        }
+
+        keyMessageImage.SetActive(true);
+        keyMessageCoroutine = StartCoroutine(HideKeyMessageAfterSeconds());
+    }
+
+    private IEnumerator HideKeyMessageAfterSeconds()
+    {
+        yield return new WaitForSeconds(2f);
+
+        if (keyMessageImage != null)
+        {
+            keyMessageImage.SetActive(false);
+        }
+
+        keyMessageCoroutine = null;
+    }
+
     void CheckAllStageClear()
     {
         if (PlayerPrefs.GetInt("Stage1_Cleared", 0) == 1 &&
@@ -1071,6 +1184,8 @@ public class MapGenerator : MonoBehaviour
         _loadMapData();
         _createMap();
         _updateStageText();
+
+        UpdateKeyUI();
     }
 
 

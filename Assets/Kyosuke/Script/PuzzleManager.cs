@@ -267,6 +267,7 @@ public class PuzzleManager : MonoBehaviour
             SEManager.Instance.PlayCorrect();
 
             puzzleSolved = true;
+            player.mapGenerator.RegisterPuzzleKey(1);
             miniMapGenerator.UpdateMinimap();
             Puzzle.SetActive(false);
             player.isPuzzle = false;
@@ -291,6 +292,7 @@ public class PuzzleManager : MonoBehaviour
             SEManager.Instance.PlayCorrect();
 
             puzzle2Solved = true;
+            player.mapGenerator.RegisterPuzzleKey(2);
             miniMapGenerator.UpdateMinimap();
             Puzzle2.SetActive(false);
             player.isPuzzle = false;
@@ -327,6 +329,7 @@ public class PuzzleManager : MonoBehaviour
             SEManager.Instance.PlayCorrect();
 
             puzzle3Solved = true;
+            player.mapGenerator.RegisterPuzzleKey(3);
             miniMapGenerator.UpdateMinimap();
             Puzzle3.SetActive(false);
             player.isPuzzle = false;
@@ -350,6 +353,7 @@ public class PuzzleManager : MonoBehaviour
             SEManager.Instance.PlayCorrect();
 
             puzzle4Solved = true;
+            player.mapGenerator.RegisterPuzzleKey(4);
             miniMapGenerator.UpdateMinimap();
             Puzzle4.SetActive(false);
             player.isPuzzle = false;

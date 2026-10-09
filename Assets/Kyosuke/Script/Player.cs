@@ -250,9 +250,18 @@ public class Player : MonoBehaviour
 
         if (type == MapGenerator.MAP_TYPE.GOAL)
         {
-            Debug.Log("ステージクリア！");
-            mapGenerator.ShowTreasureChest();
-            SceneManager.LoadScene("clear");
+            Debug.Log("ゴールに到着！");
+
+            if (mapGenerator.GetCurrentStageKeyCount() < 2)
+            {
+                mapGenerator.ShowNeedKeyMessage();
+                return;
+            }
+
+            if (mapGenerator.ShowTreasureChest())
+            {
+                SceneManager.LoadScene("clear");
+            }
         }
 
 
