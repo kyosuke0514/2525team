@@ -269,23 +269,23 @@ public class MapGenerator : MonoBehaviour
 
     private void Update()
     {
-        // 1キー → ステージ1
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            ChangeStage(0);
-        }
+        //// 1キー → ステージ1
+        //if (Input.GetKeyDown(KeyCode.Alpha1))
+        //{
+        //    ChangeStage(0);
+        //}
 
-        // 2キー → ステージ2
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            ChangeStage(1);
-        }
+        //// 2キー → ステージ2
+        //if (Input.GetKeyDown(KeyCode.Alpha2))
+        //{
+        //    ChangeStage(1);
+        //}
 
-        // 3キー → ステージ3
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            ChangeStage(2);
-        }
+        //// 3キー → ステージ3
+        //if (Input.GetKeyDown(KeyCode.Alpha3))
+        //{
+        //    ChangeStage(2);
+        //}
     }
 
 

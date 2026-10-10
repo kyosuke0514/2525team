@@ -146,14 +146,14 @@ public class Player : MonoBehaviour
             mapGenerator.UpdateMinimap();
         }
 
-        if (Input.GetKeyDown(KeyCode.F1))
-        {
-            godMode = !godMode;
+        //if (Input.GetKeyDown(KeyCode.F1))
+        //{
+        //    godMode = !godMode;
 
-            Debug.Log(godMode
-                ? "デバッグ：体力が減らない状態"
-                : "デバッグ：通常状態");
-        }
+        //    Debug.Log(godMode
+        //        ? "デバッグ：体力が減らない状態"
+        //        : "デバッグ：通常状態");
+        //}
     }
 
 
